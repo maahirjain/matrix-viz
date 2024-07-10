@@ -17,10 +17,6 @@ const arr3D = [
 const matrix = new Matrix(arr3D);
 const mlMatrix = new MLMatrix(matrix.matrix);
 
-console.log(matrix.SVD(mlMatrix).U);
-console.log(matrix.SVD(mlMatrix).D);
-console.log(matrix.SVD(mlMatrix).V);
-
 // console.log(matrix);
 // const [cssTransforms, outTransforms] =
 //   matrix.improperRotationTransforms(mlMatrix);

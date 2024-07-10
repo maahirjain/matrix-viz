@@ -1,4 +1,8 @@
-import { determinant, Matrix as MLMatrix, SingularValueDecomposition } from "ml-matrix";
+import {
+  Matrix as MLMatrix,
+  determinant,
+  SingularValueDecomposition
+} from "ml-matrix";
 import { evaluate } from "mathjs";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -19,6 +23,56 @@ export class Matrix {
 
   public get dimension() {
     return this._dimension;
+  }
+
+  /**
+   * Computes an ordered array of linear transformations associated with this Matrix.
+   *
+   * @returns a permutation of rotations, scaling, reflections, projections, and shears.
+   */
+  public computeTransforms(): string[] {
+    return this.computeTransformsArr(this._mlMatrix)[1];
+  }
+
+  private computeTransformsArr(mlMatrix: MLMatrix): string[][] {
+    let cssTransforms: string[];
+    let outTransforms: string[];
+
+    if (this.isDiagonal(mlMatrix)) {
+      return this.diagTransforms(mlMatrix);
+    } else if (this.isShear(mlMatrix)) {
+      return this.shearTransforms(mlMatrix);
+    } else {
+      const SVD: { U: MLMatrix; D: MLMatrix; V: MLMatrix } = this.SVD(mlMatrix);
+      const U: MLMatrix = SVD.U;
+      const D: MLMatrix = SVD.D;
+      const V: MLMatrix = SVD.V;
+
+      if (this.isDetOne(V)) {
+        [cssTransforms, outTransforms] = this.properRotationTransforms(V);
+      } else {
+        [cssTransforms, outTransforms] = this.improperRotationTransforms(V);
+      }
+
+      const [cssTransformsD, outTransformsD]: string[][] =
+        this.diagTransforms(D);
+
+      cssTransforms = cssTransforms.concat(cssTransformsD);
+      outTransforms = outTransforms.concat(outTransformsD);
+
+      let cssTransformsU: string[];
+      let outTransformsU: string[];
+      if (this.isDetOne(U)) {
+        [cssTransformsU, outTransformsU] = this.properRotationTransforms(U);
+      } else {
+        [cssTransformsU, outTransformsU] = this.improperRotationTransforms(U);
+      }
+
+      cssTransforms = cssTransforms.concat(cssTransformsU);
+      outTransforms = outTransforms.concat(outTransformsU);
+    }
+
+    return [cssTransforms, outTransforms];
   }
 
   private SVD(mlMatrix: MLMatrix) {
@@ -60,11 +114,27 @@ export class Matrix {
 
     for (let i = 0; i < diag.length; i++) {
       const axis: string = i === 0 ? "X" : i === 1 ? "Y" : "Z";
+      const projectionAxis: string = axis === "X" ? "Y" : "X";
+      const plane: string = i === 0 ? "YZ" : i === 1 ? "XZ" : "XY";
+      const projectionStr: string =
+        diag.length === 2 ? `${projectionAxis}-axis` : `${plane}-plane`;
 
       if (diag[i] != 1) {
-        cssTransforms[i] = `scale${axis}(${diag[i]})`;
-        outTransforms[i] =
-          diag[i] === 0 ? `project(${axis}-axis)` : `scale${axis}(${diag[i]})`;
+        if (diag[i] >= 0) {
+          cssTransforms[i] = `scale${axis}(${diag[i]})`;
+          outTransforms[i] =
+            diag[i] === 0
+              ? `project(${projectionStr})`
+              : `scale${axis}(${diag[i]})`;
+        } else {
+          if (diag[i] !== -1) {
+            cssTransforms.push(`scale${axis}(${-1 * diag[i]})`);
+            outTransforms.push(`scale${axis}(${-1 * diag[i]})`);
+          }
+
+          cssTransforms.push(`scale${axis}(-1)`);
+          outTransforms.push(`reflect(${projectionStr})`);
+        }
       }
     }
 
