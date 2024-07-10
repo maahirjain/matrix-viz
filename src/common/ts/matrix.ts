@@ -1,4 +1,4 @@
-import { determinant, Matrix as MLMatrix } from "ml-matrix";
+import { determinant, Matrix as MLMatrix, SingularValueDecomposition } from "ml-matrix";
 import { evaluate } from "mathjs";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -13,18 +13,29 @@ export class Matrix {
     this._mlMatrix = new MLMatrix(this._matrix);
   }
 
-  private evaluateMatrix(matrix: string[][]): number[][] {
-    return matrix.map((row) => {
-      return row.map((cell) => +(+evaluate(cell).toFixed(2)));
-    });
-  }
-
   public get matrix() {
     return this._matrix;
   }
 
   public get dimension() {
     return this._dimension;
+  }
+
+  private SVD(mlMatrix: MLMatrix) {
+    const SVD: SingularValueDecomposition = new SingularValueDecomposition(
+      mlMatrix
+    );
+    return {
+      U: SVD.leftSingularVectors,
+      D: SVD.diagonalMatrix,
+      V: SVD.rightSingularVectors
+    };
+  }
+
+  private evaluateMatrix(matrix: string[][]): number[][] {
+    return matrix.map((row) => {
+      return row.map((cell) => evaluate(cell));
+    });
   }
 
   private isDiagonal(mlMatrix: MLMatrix): boolean {
@@ -142,33 +153,42 @@ export class Matrix {
     let angleX: number;
     let angleY: number;
     let angleZ: number;
-
-    if (matrix[2][0] === 1 || matrix[2][0] === -1) {
-      const multiplier: number = -1 * matrix[2][0];
-      angleZ = 0;
-      angleX = Math.atan2(multiplier * matrix[0][1], multiplier * matrix[0][2]);
-      angleY = multiplier * (Math.PI / 2);
-    } else {
-      angleY = -1 * Math.asin(matrix[2][0]);
-      const divider: number = Math.cos(angleY);
-      angleX = Math.atan2(matrix[2][1] / divider, matrix[2][2] / divider);
-      angleZ = Math.atan2(matrix[1][0] / divider, matrix[0][0] / divider);
-    }
-
-    angleX = this.radToDeg(angleX);
-    angleY = this.radToDeg(angleY);
-    angleZ = this.radToDeg(angleZ);
-
-    let transforms: string[];
+    const transforms: string[] = [];
 
     if (matrix.length === 2) {
-      transforms = [`rotate(${this.radToDeg(Math.acos(matrix[0][0]))}deg)`];
+      const angle = +this.radToDeg(Math.acos(matrix[0][0])).toFixed(2);
+      if (angle != 0) {
+        transforms.push(`rotate(${angle}deg)`);
+      }
     } else {
-      transforms = [
-        `rotateX(${angleX}deg)`,
-        `rotateY(${angleY}deg)`,
-        `rotateZ(${angleZ}deg)`
-      ];
+      if (matrix[2][0] === 1 || matrix[2][0] === -1) {
+        const multiplier: number = -1 * matrix[2][0];
+        angleZ = 0;
+        angleX = Math.atan2(
+          multiplier * matrix[0][1],
+          multiplier * matrix[0][2]
+        );
+        angleY = multiplier * (Math.PI / 2);
+      } else {
+        angleY = -1 * Math.asin(matrix[2][0]);
+        const divider: number = Math.cos(angleY);
+        angleX = Math.atan2(matrix[2][1] / divider, matrix[2][2] / divider);
+        angleZ = Math.atan2(matrix[1][0] / divider, matrix[0][0] / divider);
+      }
+
+      angleX = +this.radToDeg(angleX).toFixed(2);
+      angleY = +this.radToDeg(angleY).toFixed(2);
+      angleZ = +this.radToDeg(angleZ).toFixed(2);
+
+      if (angleX != 0) {
+        transforms.push(`rotateX(${angleX}deg)`);
+      }
+      if (angleY != 0) {
+        transforms.push(`rotateY(${angleY}deg)`);
+      }
+      if (angleZ != 0) {
+        transforms.push(`rotateZ(${angleZ}deg)`);
+      }
     }
 
     return [transforms, transforms];
@@ -193,15 +213,15 @@ export class Matrix {
 
     const properRotationMatrix: MLMatrix = mlMatrix.mmul(reflectionMatrix);
 
-    const [cssTransforms, outTransforms]: string[][] =
+    let [cssTransforms, outTransforms]: string[][] =
       this.properRotationTransforms(properRotationMatrix);
 
     if (dimension === 2) {
-      cssTransforms.push(`scaleY(-1)`);
-      outTransforms.push(`reflect(X-axis)`);
+      cssTransforms = [`scaleY(-1)`, ...cssTransforms];
+      outTransforms = [`reflect(X-axis)`, ...outTransforms];
     } else {
-      cssTransforms.push(`scaleZ(-1)`);
-      outTransforms.push(`reflect(XY-plane)`);
+      cssTransforms = [`scaleZ(-1)`, ...cssTransforms];
+      outTransforms = [`reflect(XY-plane)`, ...outTransforms];
     }
 
     return [cssTransforms, outTransforms];
