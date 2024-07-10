@@ -48,12 +48,12 @@ export class Matrix {
     const outTransforms: string[] = [];
 
     for (let i = 0; i < diag.length; i++) {
-      const axis: string = i == 0 ? "X" : i == 1 ? "Y" : "Z";
+      const axis: string = i === 0 ? "X" : i === 1 ? "Y" : "Z";
 
       if (diag[i] != 1) {
         cssTransforms[i] = `scale${axis}(${diag[i]})`;
         outTransforms[i] =
-          diag[i] == 0 ? `project(${axis}-axis)` : `scale${axis}(${diag[i]})`;
+          diag[i] === 0 ? `project(${axis}-axis)` : `scale${axis}(${diag[i]})`;
       }
     }
 
@@ -65,6 +65,10 @@ export class Matrix {
       this.isDiagonal(mlMatrix) &&
       mlMatrix.diag().every((element) => element === 1)
     );
+  }
+
+  private radToDeg(angle: number): number {
+    return angle * (180 / Math.PI);
   }
 
   private isXShear(mlMatrix: MLMatrix): boolean {
@@ -111,18 +115,18 @@ export class Matrix {
     let outTransforms: string[] = [];
 
     const matrix: number[][] = mlMatrix.to2DArray();
-    const angleX: number = +Math.atan(matrix[0][1]).toFixed(2);
-    const angleY: number = +Math.atan(matrix[1][0]).toFixed(2);
+    const angleX: number = this.radToDeg(+Math.atan(matrix[0][1]).toFixed(2));
+    const angleY: number = this.radToDeg(+Math.atan(matrix[1][0]).toFixed(2));
 
     if (this.isXShear(mlMatrix)) {
-      cssTransforms[0] = `skewX(${angleX}rad)`;
-      outTransforms[0] = `shearX(${angleX}rad)`;
+      cssTransforms[0] = `skewX(${angleX}deg)`;
+      outTransforms[0] = `shearX(${angleX}deg)`;
     } else if (this.isYShear(mlMatrix)) {
-      cssTransforms[0] = `skewY(${angleY}rad)`;
-      outTransforms[0] = `shearY(${angleY}rad)`;
+      cssTransforms[0] = `skewY(${angleY}deg)`;
+      outTransforms[0] = `shearY(${angleY}deg)`;
     } else if (this.isXYShear(mlMatrix)) {
-      cssTransforms = [`skewX(${angleX}rad)`, `skewY(${angleY}rad)`];
-      outTransforms = [`shearX(${angleX}rad)`, `shearY(${angleY}rad)`];
+      cssTransforms = [`skewX(${angleX}deg)`, `skewY(${angleY}deg)`];
+      outTransforms = [`shearX(${angleX}deg)`, `shearY(${angleY}deg)`];
     }
 
     return [cssTransforms, outTransforms];
@@ -130,5 +134,76 @@ export class Matrix {
 
   private isDetOne(mlMatrix: MLMatrix): boolean {
     return determinant(mlMatrix) === 1;
+  }
+
+  private properRotationTransforms(mlMatrix: MLMatrix): string[][] {
+    const matrix: number[][] = mlMatrix.to2DArray();
+
+    let angleX: number;
+    let angleY: number;
+    let angleZ: number;
+
+    if (matrix[2][0] === 1 || matrix[2][0] === -1) {
+      const multiplier: number = -1 * matrix[2][0];
+      angleZ = 0;
+      angleX = Math.atan2(multiplier * matrix[0][1], multiplier * matrix[0][2]);
+      angleY = multiplier * (Math.PI / 2);
+    } else {
+      angleY = -1 * Math.asin(matrix[2][0]);
+      const divider: number = Math.cos(angleY);
+      angleX = Math.atan2(matrix[2][1] / divider, matrix[2][2] / divider);
+      angleZ = Math.atan2(matrix[1][0] / divider, matrix[0][0] / divider);
+    }
+
+    angleX = this.radToDeg(angleX);
+    angleY = this.radToDeg(angleY);
+    angleZ = this.radToDeg(angleZ);
+
+    let transforms: string[];
+
+    if (matrix.length === 2) {
+      transforms = [`rotate(${this.radToDeg(Math.acos(matrix[0][0]))}deg)`];
+    } else {
+      transforms = [
+        `rotateX(${angleX}deg)`,
+        `rotateY(${angleY}deg)`,
+        `rotateZ(${angleZ}deg)`
+      ];
+    }
+
+    return [transforms, transforms];
+  }
+
+  private improperRotationTransforms(mlMatrix: MLMatrix): string[][] {
+    const dimension: number = mlMatrix.rows;
+    let reflectionMatrix: MLMatrix;
+
+    if (dimension === 2) {
+      reflectionMatrix = new MLMatrix([
+        [1, 0],
+        [0, -1]
+      ]);
+    } else {
+      reflectionMatrix = new MLMatrix([
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, -1]
+      ]);
+    }
+
+    const properRotationMatrix: MLMatrix = mlMatrix.mmul(reflectionMatrix);
+
+    const [cssTransforms, outTransforms]: string[][] =
+      this.properRotationTransforms(properRotationMatrix);
+
+    if (dimension === 2) {
+      cssTransforms.push(`scaleY(-1)`);
+      outTransforms.push(`reflect(X-axis)`);
+    } else {
+      cssTransforms.push(`scaleZ(-1)`);
+      outTransforms.push(`reflect(XY-plane)`);
+    }
+
+    return [cssTransforms, outTransforms];
   }
 }
