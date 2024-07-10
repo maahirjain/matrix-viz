@@ -1,12 +1,13 @@
 import { Matrix } from "./src/common/ts/matrix";
+import { Matrix as MLMatrix } from "ml-matrix";
 
 const arr = [
-  ["sin(45 deg)", "sqrt(2)", "5 / 2"],
-  ["5", "8.35", "cos(20 deg)"],
-  ["2", "-0.1", "-3^2"]
+  ["12", "0", "0"],
+  ["0", "5", "0"],
+  ["-5", "0", "8"]
 ];
 
 const matrix = new Matrix(arr);
+const mlMatrix = new MLMatrix(matrix.matrix);
 
-console.log(matrix.matrix);
-console.log(matrix.dimension);
+console.log(matrix.isDiagonal(mlMatrix));

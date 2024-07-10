@@ -26,4 +26,18 @@ export class Matrix {
   public get dimension() {
     return this._dimension;
   }
+
+  private isDiagonal(mlMatrix: MLMatrix): boolean {
+    const matrix = mlMatrix.to2DArray();
+
+    for (let i = 0; i < matrix.length; i++) {
+      for (let j = 0; j < matrix.length; j++) {
+        if (i != j && matrix[i][j] != 0) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
 }
