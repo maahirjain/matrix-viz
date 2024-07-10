@@ -9,7 +9,7 @@ const arr2D = [
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const arr3D = [
-  ["12", "0", "0"],
+  ["sin(45deg)", "0", "0"],
   ["0", "5", "0"],
   ["-5", "0", "8"]
 ];
