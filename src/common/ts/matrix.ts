@@ -66,9 +66,13 @@ export class Matrix {
     );
   }
 
+  private isScale(mlMatrix: MLMatrix): boolean {
+    return this.isDiagonal(mlMatrix) && !this.isIdentity(mlMatrix);
+  }
+
   private isXShear(mlMatrix: MLMatrix): boolean {
     const matrix: number[][] = mlMatrix.to2DArray();
-    const checkNonZero = matrix[0][1] != 0;
+    const checkNonZero: boolean = matrix[0][1] != 0;
 
     matrix[0][1] = 0;
     mlMatrix = new MLMatrix(matrix);
@@ -78,7 +82,7 @@ export class Matrix {
 
   private isYShear(mlMatrix: MLMatrix): boolean {
     const matrix: number[][] = mlMatrix.to2DArray();
-    const checkNonZero = matrix[1][0] != 0;
+    const checkNonZero: boolean = matrix[1][0] != 0;
 
     matrix[1][0] = 0;
     mlMatrix = new MLMatrix(matrix);
@@ -88,7 +92,7 @@ export class Matrix {
 
   private isXYShear(mlMatrix: MLMatrix): boolean {
     const matrix: number[][] = mlMatrix.to2DArray();
-    const checkNonZero = matrix[0][1] != 0 && matrix[1][0] != 0;
+    const checkNonZero: boolean = matrix[0][1] != 0 && matrix[1][0] != 0;
 
     matrix[0][1] = 0;
     matrix[1][0] = 0;
