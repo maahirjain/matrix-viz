@@ -2,20 +2,20 @@ import { Matrix as MLMatrix } from "ml-matrix";
 import { evaluate } from "mathjs";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-class Matrix {
+export class Matrix {
   private _matrix: number[][];
   private _dimension: number;
   private _mlMatrix: MLMatrix;
 
-  constructor(matrix: number[][]) {
+  constructor(matrix: string[][]) {
     this._matrix = this.evaluateMatrix(matrix);
     this._dimension = matrix.length;
     this._mlMatrix = new MLMatrix(this._matrix);
   }
 
-  public evaluateMatrix(matrix: number[][]): number[][] {
+  public evaluateMatrix(matrix: string[][]): number[][] {
     return matrix.map((row) => {
-      return row.map((cell) => +evaluate(cell.toString()));
+      return row.map((cell) => +evaluate(cell));
     });
   }
 

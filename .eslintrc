@@ -11,5 +11,9 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
+  "env": {
+    "browser": true,
+    "node": true,
+  },
   "rules": { "prettier/prettier": 2 }
 }
