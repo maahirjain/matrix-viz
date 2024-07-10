@@ -47,7 +47,13 @@ export class Matrix {
     let cssTransforms: string[];
     let outTransforms: string[];
 
-    if (this.isDiagonal(mlMatrix)) {
+    if (this.isZero(mlMatrix)) {
+      if (mlMatrix.rows === 2) {
+        return [["scale(0, 0)"], ["scale(0, 0)"]];
+      } else {
+        return [["scale3d(0, 0, 0)"], ["scale(0, 0, 0)"]];
+      }
+    } else if (this.isDiagonal(mlMatrix)) {
       return this.diagTransforms(mlMatrix);
     } else if (this.isShear(mlMatrix)) {
       return this.shearTransforms(mlMatrix);
@@ -57,7 +63,7 @@ export class Matrix {
       const D: MLMatrix = SVD.D;
       const V: MLMatrix = SVD.V;
 
-      if (this.isDetOne(V)) {
+      if (this.isDetPositive(V)) {
         [cssTransforms, outTransforms] = this.properRotationTransforms(V);
       } else {
         [cssTransforms, outTransforms] = this.improperRotationTransforms(V);
@@ -71,7 +77,7 @@ export class Matrix {
 
       let cssTransformsU: string[];
       let outTransformsU: string[];
-      if (this.isDetOne(U)) {
+      if (this.isDetPositive(U)) {
         [cssTransformsU, outTransformsU] = this.properRotationTransforms(U);
       } else {
         [cssTransformsU, outTransformsU] = this.improperRotationTransforms(U);
@@ -91,7 +97,7 @@ export class Matrix {
     return {
       U: SVD.leftSingularVectors,
       D: SVD.diagonalMatrix,
-      V: SVD.rightSingularVectors
+      V: SVD.rightSingularVectors.transpose()
     };
   }
 
@@ -129,16 +135,18 @@ export class Matrix {
         diag.length === 2 ? `${projectionAxis}-axis` : `${plane}-plane`;
 
       if (diag[i] != 1) {
+        const roundedDiag = +diag[i].toFixed(2);
         if (diag[i] >= 0) {
-          cssTransforms[i] = `scale${axis}(${diag[i]})`;
-          outTransforms[i] =
+          cssTransforms.push(`scale${axis}(${roundedDiag})`);
+          outTransforms.push(
             diag[i] === 0
               ? `project(${projectionStr})`
-              : `scale${axis}(${diag[i]})`;
+              : `scale${axis}(${roundedDiag})`
+          );
         } else {
-          if (diag[i] !== -1) {
-            cssTransforms.push(`scale${axis}(${-1 * diag[i]})`);
-            outTransforms.push(`scale${axis}(${-1 * diag[i]})`);
+          if (diag[i] != -1) {
+            cssTransforms.push(`scale${axis}(${-1 * roundedDiag})`);
+            outTransforms.push(`scale${axis}(${-1 * roundedDiag})`);
           }
 
           cssTransforms.push(`scale${axis}(-1)`);
@@ -159,6 +167,23 @@ export class Matrix {
 
   private radToDeg(angle: number): number {
     return angle * (180 / Math.PI);
+  }
+
+  private isZero(mlMatrix: MLMatrix): boolean {
+    let arr: number[][];
+    if (mlMatrix.rows === 2) {
+      arr = [
+        [0, 0],
+        [0, 0]
+      ];
+    } else {
+      arr = [
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0]
+      ];
+    }
+    return JSON.stringify(mlMatrix.to2DArray()) === JSON.stringify(arr);
   }
 
   private isXShear(mlMatrix: MLMatrix): boolean {
@@ -205,8 +230,8 @@ export class Matrix {
     let outTransforms: string[] = [];
 
     const matrix: number[][] = mlMatrix.to2DArray();
-    const angleX: number = this.radToDeg(+Math.atan(matrix[0][1]).toFixed(2));
-    const angleY: number = this.radToDeg(+Math.atan(matrix[1][0]).toFixed(2));
+    const angleX: number = +this.radToDeg(Math.atan(matrix[0][1])).toFixed(2);
+    const angleY: number = +this.radToDeg(Math.atan(matrix[1][0])).toFixed(2);
 
     if (this.isXShear(mlMatrix)) {
       cssTransforms[0] = `skewX(${angleX}deg)`;
@@ -215,15 +240,15 @@ export class Matrix {
       cssTransforms[0] = `skewY(${angleY}deg)`;
       outTransforms[0] = `shearY(${angleY}deg)`;
     } else if (this.isXYShear(mlMatrix)) {
-      cssTransforms = [`skewX(${angleX}deg)`, `skewY(${angleY}deg)`];
-      outTransforms = [`shearX(${angleX}deg)`, `shearY(${angleY}deg)`];
+      cssTransforms = [`skew(${angleX}deg, ${angleY}deg)`];
+      outTransforms = [`shear(${angleX}deg, ${angleY}deg)`];
     }
 
     return [cssTransforms, outTransforms];
   }
 
-  private isDetOne(mlMatrix: MLMatrix): boolean {
-    return determinant(mlMatrix) === 1;
+  private isDetPositive(mlMatrix: MLMatrix): boolean {
+    return determinant(mlMatrix) > 0;
   }
 
   private properRotationTransforms(mlMatrix: MLMatrix): string[][] {
@@ -235,7 +260,9 @@ export class Matrix {
     const transforms: string[] = [];
 
     if (matrix.length === 2) {
-      const angle = +this.radToDeg(Math.acos(matrix[0][0])).toFixed(2);
+      const sign: number = matrix[1][0] < 0 ? -1 : 1;
+      const bareAngle: number = sign * Math.abs(Math.acos(matrix[0][0]));
+      const angle = +this.radToDeg(bareAngle).toFixed(2);
       if (angle != 0) {
         transforms.push(`rotate(${angle}deg)`);
       }
