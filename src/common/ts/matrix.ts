@@ -1,4 +1,4 @@
-import { Matrix as MLMatrix } from "ml-matrix";
+import { determinant, Matrix as MLMatrix } from "ml-matrix";
 import { evaluate } from "mathjs";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -126,5 +126,9 @@ export class Matrix {
     }
 
     return [cssTransforms, outTransforms];
+  }
+
+  private isDetOne(mlMatrix: MLMatrix): boolean {
+    return determinant(mlMatrix) === 1;
   }
 }
