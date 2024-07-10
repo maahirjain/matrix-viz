@@ -62,7 +62,8 @@ export class Matrix {
 
   private isIdentity(mlMatrix: MLMatrix): boolean {
     return (
-      this.isDiagonal(mlMatrix) && JSON.stringify(mlMatrix.diag()) === "[1,1,1]"
+      this.isDiagonal(mlMatrix) &&
+      mlMatrix.diag().every((element) => element === 1)
     );
   }
 
