@@ -7,13 +7,13 @@ export class Matrix {
   private _dimension: number;
   private _mlMatrix: MLMatrix;
 
-  constructor(matrix: string[][]) {
+  public constructor(matrix: string[][]) {
     this._matrix = this.evaluateMatrix(matrix);
     this._dimension = matrix.length;
     this._mlMatrix = new MLMatrix(this._matrix);
   }
 
-  public evaluateMatrix(matrix: string[][]): number[][] {
+  private evaluateMatrix(matrix: string[][]): number[][] {
     return matrix.map((row) => {
       return row.map((cell) => +evaluate(cell));
     });
@@ -28,7 +28,7 @@ export class Matrix {
   }
 
   private isDiagonal(mlMatrix: MLMatrix): boolean {
-    const matrix = mlMatrix.to2DArray();
+    const matrix: number[][] = mlMatrix.to2DArray();
 
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix.length; j++) {
@@ -39,5 +39,21 @@ export class Matrix {
     }
 
     return true;
+  }
+
+  private diagTransforms(mlMatrix: MLMatrix): string[][] {
+    const diag: number[] = mlMatrix.diag();
+
+    const cssTransforms: string[] = [];
+    const outTransforms: string[] = [];
+
+    for (let i = 0; i < diag.length; i++) {
+      const axis: string = i == 0 ? "X" : i == 1 ? "Y" : "Z";
+      cssTransforms[i] = `scale${axis}(${diag[i]})`;
+      outTransforms[i] =
+        diag[i] == 0 ? `project(${axis}-axis)` : `scale${axis}(${diag[i]})`;
+    }
+
+    return [cssTransforms, outTransforms];
   }
 }
