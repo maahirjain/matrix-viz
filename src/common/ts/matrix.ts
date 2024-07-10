@@ -66,10 +66,6 @@ export class Matrix {
     );
   }
 
-  private isScale(mlMatrix: MLMatrix): boolean {
-    return this.isDiagonal(mlMatrix) && !this.isIdentity(mlMatrix);
-  }
-
   private isXShear(mlMatrix: MLMatrix): boolean {
     const matrix: number[][] = mlMatrix.to2DArray();
     const checkNonZero: boolean = matrix[0][1] != 0;
