@@ -1,5 +1,4 @@
 import { Matrix } from "./src/common/ts/matrix";
-import { Matrix as MLMatrix } from "ml-matrix";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const arr2D = [
@@ -15,10 +14,9 @@ const arr3D = [
 ];
 
 const matrix = new Matrix(arr3D);
-const mlMatrix = new MLMatrix(matrix.matrix);
 
-// console.log(matrix);
-// const [cssTransforms, outTransforms] =
-//   matrix.improperRotationTransforms(mlMatrix);
-// console.log(cssTransforms);
-// console.log(outTransforms);
+console.log(matrix);
+const cssTransforms: string[] = matrix.computeCSSTransforms();
+const outTransforms: string[] = matrix.computeTransforms();
+console.log(cssTransforms);
+console.log(outTransforms);

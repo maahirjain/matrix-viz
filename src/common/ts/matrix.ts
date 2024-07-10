@@ -28,10 +28,19 @@ export class Matrix {
   /**
    * Computes an ordered array of linear transformations associated with this Matrix.
    *
-   * @returns a permutation of rotations, scaling, reflections, projections, and shears.
+   * @returns a permutation of rotations, scaling, reflections, projections, and shears
    */
   public computeTransforms(): string[] {
     return this.computeTransformsArr(this._mlMatrix)[1];
+  }
+
+  /**
+   * Computes an ordered array of CSS transforms associated with this Matrix.
+   *
+   * @returns a permutation of CSS transforms
+   */
+  public computeCSSTransforms(): string[] {
+    return this.computeTransformsArr(this._mlMatrix)[0];
   }
 
   private computeTransformsArr(mlMatrix: MLMatrix): string[][] {
