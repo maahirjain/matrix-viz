@@ -1,17 +1,19 @@
 $themes: (
   light: (
-    primary: rgb(93, 138, 168),
-    secondary: rgb(38, 67, 72),
+    primary: rgb(189, 215, 231),
+    secondary: rgb(12, 93, 86),
     tertiary: rgb(105, 105, 105),
-    bg: white,
+    quarternary: rgb(135, 115, 55),
+    bg: rgb(250, 249, 246),
     text: black,
     contrast: white
   ),
   dark: (
-    primary: rgb(189, 147, 249),
+    primary: rgb(172, 131, 229),
     secondary: rgb(139, 233, 253),
     tertiary: rgb(80, 250, 123),
-    bg: rgb(40, 42, 54),
+    quarternary: rgb(232, 232, 0),
+    bg: rgb(33, 34, 44),
     text: white,
     contrast: black
   ),
