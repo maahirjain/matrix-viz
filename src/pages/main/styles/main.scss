@@ -1,11 +1,43 @@
 @import "./themes";
 
+@include themify($themes) {
+    * {
+        color: themed(text);
+        font-family: inherit;
+    }
+
+    body {
+        background-color: themed(bg);
+    }
+
+    #theme-options * {
+        background-color: themed(primary);
+        border: 1px solid themed(text);
+    }
+}
+
 body {
-    margin: 0;
     height: 100vh;
+    margin: 0;
+}
+
+body:not(.mathjax) {
+    font-family: Avenir, Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;
+}
+
+#theme-options {
+    display: flex;
+    justify-content: center;
+
+}
+
+#theme-options * {
+    border: none;
+    border-radius: 0px 0px 10px 10px;
 }
 
 #main {
-    height: 95%;
+    height: 90%;
 }
+
 

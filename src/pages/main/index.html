@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +7,10 @@
     <script id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
-<body class="dark-theme">
+<body>
     <div id="theme-options">
-        <button id="dark-theme"></button>
-        <button id="light-theme"></button>
+        <button id="dark-theme">Dark</button>
+        <button id="light-theme">Light</button>
     </div>
 
     <div id="main">
@@ -23,8 +23,14 @@
             </div>
 
             <div id="facts">
-                <p><strong>Determinant:</strong> \(1\)</p>
-                <div><strong>Eigenvalues and Eigenvectors:</strong> $$\displaylines{\lambda_1 = 1, \quad \mathbf{v_1} = \begin{bmatrix}1\\0\\0\end{bmatrix}\\\lambda_2 = 1, \quad \mathbf{v_2} = \begin{bmatrix}0\\1\\0\end{bmatrix}\\\lambda_3 = 1, \quad \mathbf{v_3} = \begin{bmatrix}0\\0\\1\end{bmatrix}}$$</div>
+                <p><strong>Determinant:</strong>
+                    <span class="mathjax">\(1\)</span>
+                </p>
+                <p><strong>Eigenvalues and Eigenvectors:</strong> 
+                    <div class="mathjax">
+                        $$\displaylines{\lambda_1 = 1, \quad \mathbf{v_1} = \begin{bmatrix}1\\0\\0\end{bmatrix}\\\lambda_2 = 1, \quad \mathbf{v_2} = \begin{bmatrix}0\\1\\0\end{bmatrix}\\\lambda_3 = 1, \quad \mathbf{v_3} = \begin{bmatrix}0\\0\\1\end{bmatrix}}$$
+                    </div>
+                </p>
             </div>
         </div>
 
