@@ -3,7 +3,7 @@ import {
   determinant,
   SingularValueDecomposition
 } from "ml-matrix";
-import { evaluate } from "mathjs";
+import { BigNumber, eigs, evaluate, MathCollection } from "mathjs";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class Matrix {
@@ -28,7 +28,7 @@ export class Matrix {
   /**
    * Computes an ordered array of linear transformations associated with this Matrix.
    *
-   * @returns a permutation of rotations, scaling, reflections, projections, and shears
+   * @returns an ordered array of rotations, scaling, reflections, projections, and/or shears
    */
   public computeTransforms(): string[] {
     return this.computeTransformsArr(this._mlMatrix)[1];
@@ -37,10 +37,122 @@ export class Matrix {
   /**
    * Computes an ordered array of CSS transforms associated with this Matrix.
    *
-   * @returns a permutation of CSS transforms
+   * @returns an ordered array of CSS transforms
    */
   public computeCSSTransforms(): string[] {
     return this.computeTransformsArr(this._mlMatrix)[0];
+  }
+
+  /**
+   * Returns the determinant of this Matrix.
+   *
+   * @returns the determinant of this Matrix
+   */
+  public det(): number {
+    return determinant(this._mlMatrix);
+  }
+
+  private eigenvalues(matrix: number[][]): string[] {
+    const values: MathCollection = eigs(matrix).values;
+    const valuesArr: string[] = values.toString().split(",");
+
+    return valuesArr.map((str) => this.roundComplexStr(str, 2, 1));
+  }
+
+  private eigenvectors2D(matrix: number[][]): string[][] {
+    const [a1, a2]: {
+      value: number | BigNumber;
+      vector: MathCollection;
+    }[] = eigs(matrix).eigenvectors;
+
+    const [u1, u2]: MathCollection[] = [a1.vector, a2.vector];
+
+    const [v1, v2]: string[][] = [
+      u1.toString().split(","),
+      u2.toString().split(",")
+    ];
+
+    const [scale1, scale2]: number[] = [
+      1 / Math.abs(+v1[0].split(" ")[0]),
+      1 / Math.abs(+v2[0].split(" ")[0])
+    ];
+
+    return [
+      v1.map((str) => this.roundComplexStr(str, 2, scale1)),
+      v2.map((str) => this.roundComplexStr(str, 2, scale2))
+    ];
+  }
+
+  private eigenvectors3D(matrix: number[][]): string[][] {
+    const [a1, a2, a3]: {
+      value: number | BigNumber;
+      vector: MathCollection;
+    }[] = eigs(matrix).eigenvectors;
+
+    const [u1, u2, u3]: MathCollection[] = [a1.vector, a2.vector, a3.vector];
+
+    const [v1, v2, v3]: string[][] = [
+      u1.toString().split(","),
+      u2.toString().split(","),
+      u3.toString().split(",")
+    ];
+
+    const [scale1, scale2, scale3]: number[] = [
+      1 / Math.abs(+v1[2].split(" ")[0]),
+      1 / Math.abs(+v2[2].split(" ")[0]),
+      1 / Math.abs(+v3[2].split(" ")[0])
+    ];
+
+    return [
+      v1.map((str) => this.roundComplexStr(str, 2, scale1)),
+      v2.map((str) => this.roundComplexStr(str, 2, scale2)),
+      v3.map((str) => this.roundComplexStr(str, 2, scale3))
+    ];
+  }
+
+  private roundComplexStr(
+    str: string,
+    decimalPlaces: number,
+    scale: number
+  ): string {
+    if (scale === 0 || scale === Infinity || isNaN(scale)) {
+      return str;
+    }
+
+    const splitStr: string[] = str.split(" ");
+
+    if (
+      splitStr.length === 3 ||
+      (splitStr.length === 1 && splitStr[0].includes("i"))
+    ) {
+      const roundedImaginary: number =
+        splitStr[splitStr.length - 1] === "i"
+          ? 1
+          : splitStr[splitStr.length - 1] === "-i"
+            ? -1
+            : +splitStr[splitStr.length - 1].slice(0, -1);
+
+      let roundedReal: number = 0;
+      let roundedRealStr: string = "";
+      if (splitStr.length === 3) {
+        roundedReal = +splitStr[0];
+        roundedRealStr = (roundedReal * scale).toFixed(decimalPlaces);
+      }
+
+      const roundedImaginaryStr: string = (roundedImaginary * scale).toFixed(
+        decimalPlaces
+      );
+
+      if (isNaN(roundedReal) || isNaN(roundedImaginary)) {
+        return str;
+      } else if (splitStr.length === 1) {
+        return `${roundedImaginaryStr}i`;
+      } else {
+        return `${roundedRealStr} ${splitStr[1]} ${roundedImaginaryStr}i`;
+      }
+    } else {
+      return (+str * scale).toFixed(decimalPlaces);
+    }
   }
 
   private computeTransformsArr(mlMatrix: MLMatrix): string[][] {
