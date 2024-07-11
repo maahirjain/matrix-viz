@@ -187,6 +187,17 @@ export class Matrix {
     }
   }
 
+  private extractOperatorValue(str: string): string[] {
+    const pattern: RegExp = /^([a-zA-Z]+)\((-?\d*\.?\d+)(deg)?\)$/;
+    const match: RegExpMatchArray | null = str.match(pattern);
+
+    if (!match) {
+      return ["scale", "0"];
+    }
+
+    return [match[1], match[2]];
+  }
+
   private computeTransformsArr(mlMatrix: MLMatrix): string[][] {
     let cssTransforms: string[];
     let outTransforms: string[];

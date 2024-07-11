@@ -88,3 +88,4 @@ const matrix3D = new Matrix(arr3D);
 // console.log(matrix2D.eigenMathJax());
 // console.log("--------");
 // console.log(matrix3D.eigenMathJax());
+
