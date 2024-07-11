@@ -13,6 +13,8 @@
 // sky3 = @(y) [1 0 0; tand(y) 1 0; 0 0 1];
 // skxy2 = @(x, y) [1 tand(x); tand(y) 1];
 // skxy3 = @(x, y) [1 tand(x) 0; tand(y) 1 0; 0 0 1];
+// s02 = @() [0 0; 0 0];
+// s03 = @() [0 0 0; 0 0 0; 0 0 0]
 
 import { Matrix } from "./src/common/ts/matrix";
 

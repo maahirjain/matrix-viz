@@ -84,6 +84,24 @@ export class Matrix {
     return str.slice(0, -2) + "\\end{bmatrix}";
   }
 
+  private matrixToMathJax(matrix: number[][]): string {
+    let str: string = "\\begin{bmatrix}";
+    for (const row of matrix) {
+      str += this.rowToMathJax(row) + "\\\\";
+    }
+
+    return str.slice(0, -2) + "\\end{bmatrix}";
+  }
+
+  private rowToMathJax(row: number[]): string {
+    let str: string = "";
+    for (const element of row) {
+      str += element + "&";
+    }
+
+    return str.slice(0, -1);
+  }
+
   private eigenvalues(matrix: number[][]): string[] {
     const values: MathCollection = eigs(matrix).values;
     const valuesArr: string[] = values.toString().split(",");
@@ -187,7 +205,132 @@ export class Matrix {
     }
   }
 
+  private transformToMatrix3D(transform: string): number[][] {
+    const [operator, value]: string[] = this.extractOperatorValue(transform);
+    const num: number = +value;
+
+    switch (operator) {
+      case "rotateX":
+        return [
+          [1, 0, 0],
+          [0, +Math.cos(num).toFixed(2), -Math.sin(num).toFixed(2)],
+          [0, +Math.sin(num).toFixed(2), +Math.cos(num).toFixed(2)]
+        ];
+      case "rotateY":
+        return [
+          [+Math.cos(num).toFixed(2), 0, +Math.sin(num).toFixed(2)],
+          [0, 1, 0],
+          [-Math.sin(num).toFixed(2), 0, +Math.cos(num).toFixed(2)]
+        ];
+      case "rotateZ":
+        return [
+          [+Math.cos(num).toFixed(2), -Math.sin(num).toFixed(2), 0],
+          [+Math.sin(num).toFixed(2), +Math.cos(num).toFixed(2), 0],
+          [0, 0, 1]
+        ];
+      case "scaleX":
+        return [
+          [num, 0, 0],
+          [0, 1, 0],
+          [0, 0, 1]
+        ];
+      case "scaleY":
+        return [
+          [1, 0, 0],
+          [0, num, 0],
+          [0, 0, 1]
+        ];
+      case "scaleZ":
+        return [
+          [1, 0, 0],
+          [0, 1, 0],
+          [0, 0, num]
+        ];
+      case "skewX":
+        return [
+          [1, +Math.tan(num).toFixed(2), 0],
+          [0, 1, 0],
+          [0, 0, 1]
+        ];
+      case "skewY":
+        return [
+          [1, 0, 0],
+          [+Math.tan(num).toFixed(2), 1, 0],
+          [0, 0, 1]
+        ];
+      case "skew":
+        // eslint-disable-next-line no-case-declarations
+        const [tanX, tanY]: number[] = value.split(",").map(Number);
+        return [
+          [1, +Math.tan(tanX).toFixed(2), 0],
+          [+Math.tan(tanY).toFixed(2), 1, 0],
+          [0, 0, 1]
+        ];
+      default:
+        return [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0]
+        ];
+    }
+  }
+
+  private transformToMatrix2D(transform: string): number[][] {
+    const [operator, value]: string[] = this.extractOperatorValue(transform);
+    const num: number = +value;
+
+    switch (operator) {
+      case "rotate":
+        return [
+          [+Math.cos(num).toFixed(2), -Math.sin(num).toFixed(2)],
+          [+Math.sin(num).toFixed(2), +Math.cos(num).toFixed(2)]
+        ];
+      case "scaleX":
+        return [
+          [num, 0],
+          [0, 1]
+        ];
+      case "scaleY":
+        return [
+          [1, 0],
+          [0, num]
+        ];
+      case "skewX":
+        return [
+          [1, +Math.tan(num).toFixed(2)],
+          [0, 1]
+        ];
+      case "skewY":
+        return [
+          [1, 0],
+          [+Math.tan(num).toFixed(2), 1]
+        ];
+      case "skew":
+        // eslint-disable-next-line no-case-declarations
+        const [tanX, tanY]: number[] = value.split(",").map(Number);
+        return [
+          [1, +Math.tan(tanX).toFixed(2)],
+          [+Math.tan(tanY).toFixed(2), 1]
+        ];
+      default:
+        return [
+          [0, 0],
+          [0, 0]
+        ];
+    }
+  }
+
   private extractOperatorValue(str: string): string[] {
+    if (str.includes("skew(")) {
+      const pattern: RegExp =
+        /skew\(([-+]?[0-9]*\.?[0-9]+)deg,\s*([-+]?[0-9]*\.?[0-9]+)deg\)/;
+      const match: RegExpMatchArray | null = str.match(pattern);
+
+      if (match) {
+        return ["skew", match[1] + "," + match[2]];
+      }
+    }
+
     const pattern: RegExp = /^([a-zA-Z]+)\((-?\d*\.?\d+)(deg)?\)$/;
     const match: RegExpMatchArray | null = str.match(pattern);
 
