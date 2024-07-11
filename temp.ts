@@ -16,7 +16,7 @@
 // s02 = @() [0 0; 0 0];
 // s03 = @() [0 0 0; 0 0 0; 0 0 0];
 
-import { Matrix } from "./src/common/ts/matrix";
+import { Matrix } from "./src/pages/main/ts/model/matrix";
 
 const arr2D = [
   ["sqrt(4.1)", "-1.1"],

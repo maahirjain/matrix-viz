@@ -7,18 +7,8 @@ import { BundleAnalyzerPlugin } from "webpack-bundle-analyzer";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-let htmlPageNames = ["facts"];
-let multipleHtmlPlugins = htmlPageNames.map((name) => {
-  return new HtmlWebpackPlugin({
-    template: `./src/pages/${name}/${name}.html`, // relative path to the HTML files
-    filename: `${name}.html`, // output HTML files
-    chunks: [`${name}`] // respective TS files
-  });
-});
-
 export const entry = {
-  main: "./src/pages/main/ts/index.ts",
-  secondary: "./src/pages/facts/ts/facts.ts"
+  main: "./src/pages/main/ts/index.ts"
 };
 export const output = {
   filename: "[name].[contenthash].js",
@@ -68,4 +58,4 @@ export const plugins = [
   new BundleAnalyzerPlugin({
     openAnalyzer: false
   })
-].concat(multipleHtmlPlugins);
+];
