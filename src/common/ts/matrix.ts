@@ -75,6 +75,29 @@ export class Matrix {
     return str.slice(0, -2);
   }
 
+  /**
+   * Computes matrix representations in MathJax for the linear transformations associated with this Matrix.
+   *
+   * @returns an ordered array of matrix representations in MathJax for rotations, scaling, reflections, projections, and/or shears
+   */
+  public computeTransformMatricesMathJax(): string[] {
+    const dimension: number = this._dimension;
+    const cssTransforms: string[] = this.computeCSSTransforms();
+    const matricesArr: string[] = [];
+
+    for (const transform of cssTransforms) {
+      const matrix: number[][] =
+        dimension === 2
+          ? this.transformToMatrix2D(transform)
+          : this.transformToMatrix3D(transform);
+
+      const matrixMathJax: string = this.matrixToMathJax(matrix);
+      matricesArr.push(matrixMathJax);
+    }
+
+    return matricesArr;
+  }
+
   private vectorToMathJax(vector: string[]): string {
     let str: string = "\\begin{bmatrix}";
     for (const element of vector) {
