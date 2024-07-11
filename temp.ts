@@ -14,7 +14,7 @@
 // skxy2 = @(x, y) [1 tand(x); tand(y) 1];
 // skxy3 = @(x, y) [1 tand(x) 0; tand(y) 1 0; 0 0 1];
 // s02 = @() [0 0; 0 0];
-// s03 = @() [0 0 0; 0 0 0; 0 0 0]
+// s03 = @() [0 0 0; 0 0 0; 0 0 0];
 
 import { Matrix } from "./src/common/ts/matrix";
 
@@ -80,11 +80,11 @@ str3D = str3D.substring(3);
 console.log(matrix2D);
 console.log(cssTransforms2D);
 console.log(outTransforms2D);
-console.log(matrix2D.computeTransformMatricesMathJax());
+matrix2D.computeTransformMatricesMathJax().forEach((str) => console.log(str));
 console.log(str2D);
 console.log("----------------------------------------------------");
 console.log(matrix3D);
 console.log(cssTransforms3D);
 console.log(outTransforms3D);
-console.log(matrix3D.computeTransformMatricesMathJax());
+matrix3D.computeTransformMatricesMathJax().forEach((str) => console.log(str));
 console.log(str3D);

@@ -4,6 +4,18 @@ import {
   SingularValueDecomposition
 } from "ml-matrix";
 import { BigNumber, eigs, evaluate, MathCollection } from "mathjs";
+import {
+  cos,
+  sind,
+  cosd,
+  tand,
+  asin,
+  acos,
+  atan,
+  atan2,
+  abs,
+  PI
+} from "./math-utils";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export class Matrix {
@@ -146,8 +158,8 @@ export class Matrix {
     ];
 
     const [scale1, scale2]: number[] = [
-      1 / Math.abs(+v1[0].split(" ")[0]),
-      1 / Math.abs(+v2[0].split(" ")[0])
+      1 / abs(+v1[0].split(" ")[0]),
+      1 / abs(+v2[0].split(" ")[0])
     ];
 
     return [
@@ -171,9 +183,9 @@ export class Matrix {
     ];
 
     const [scale1, scale2, scale3]: number[] = [
-      1 / Math.abs(+v1[2].split(" ")[0]),
-      1 / Math.abs(+v2[2].split(" ")[0]),
-      1 / Math.abs(+v3[2].split(" ")[0])
+      1 / abs(+v1[2].split(" ")[0]),
+      1 / abs(+v2[2].split(" ")[0]),
+      1 / abs(+v3[2].split(" ")[0])
     ];
 
     return [
@@ -236,19 +248,19 @@ export class Matrix {
       case "rotateX":
         return [
           [1, 0, 0],
-          [0, +Math.cos(num).toFixed(2), -Math.sin(num).toFixed(2)],
-          [0, +Math.sin(num).toFixed(2), +Math.cos(num).toFixed(2)]
+          [0, +cosd(num).toFixed(2), -sind(num).toFixed(2)],
+          [0, +sind(num).toFixed(2), +cosd(num).toFixed(2)]
         ];
       case "rotateY":
         return [
-          [+Math.cos(num).toFixed(2), 0, +Math.sin(num).toFixed(2)],
+          [+cosd(num).toFixed(2), 0, +sind(num).toFixed(2)],
           [0, 1, 0],
-          [-Math.sin(num).toFixed(2), 0, +Math.cos(num).toFixed(2)]
+          [-sind(num).toFixed(2), 0, +cosd(num).toFixed(2)]
         ];
       case "rotateZ":
         return [
-          [+Math.cos(num).toFixed(2), -Math.sin(num).toFixed(2), 0],
-          [+Math.sin(num).toFixed(2), +Math.cos(num).toFixed(2), 0],
+          [+cosd(num).toFixed(2), -sind(num).toFixed(2), 0],
+          [+sind(num).toFixed(2), +cosd(num).toFixed(2), 0],
           [0, 0, 1]
         ];
       case "scaleX":
@@ -271,22 +283,22 @@ export class Matrix {
         ];
       case "skewX":
         return [
-          [1, +Math.tan(num).toFixed(2), 0],
+          [1, +tand(num).toFixed(2), 0],
           [0, 1, 0],
           [0, 0, 1]
         ];
       case "skewY":
         return [
           [1, 0, 0],
-          [+Math.tan(num).toFixed(2), 1, 0],
+          [+tand(num).toFixed(2), 1, 0],
           [0, 0, 1]
         ];
       case "skew":
         // eslint-disable-next-line no-case-declarations
-        const [tanX, tanY]: number[] = value.split(",").map(Number);
+        const [tanX, tanY]: number[] = value.split(",").map((str) => +str);
         return [
-          [1, +Math.tan(tanX).toFixed(2), 0],
-          [+Math.tan(tanY).toFixed(2), 1, 0],
+          [1, +tand(tanX).toFixed(2), 0],
+          [+tand(tanY).toFixed(2), 1, 0],
           [0, 0, 1]
         ];
       default:
@@ -305,8 +317,8 @@ export class Matrix {
     switch (operator) {
       case "rotate":
         return [
-          [+Math.cos(num).toFixed(2), -Math.sin(num).toFixed(2)],
-          [+Math.sin(num).toFixed(2), +Math.cos(num).toFixed(2)]
+          [+cosd(num).toFixed(2), -sind(num).toFixed(2)],
+          [+sind(num).toFixed(2), +cosd(num).toFixed(2)]
         ];
       case "scaleX":
         return [
@@ -320,20 +332,20 @@ export class Matrix {
         ];
       case "skewX":
         return [
-          [1, +Math.tan(num).toFixed(2)],
+          [1, +tand(num).toFixed(2)],
           [0, 1]
         ];
       case "skewY":
         return [
           [1, 0],
-          [+Math.tan(num).toFixed(2), 1]
+          [+tand(num).toFixed(2), 1]
         ];
       case "skew":
         // eslint-disable-next-line no-case-declarations
-        const [tanX, tanY]: number[] = value.split(",").map(Number);
+        const [tanX, tanY]: number[] = value.split(",").map((str) => +str);
         return [
-          [1, +Math.tan(tanX).toFixed(2)],
-          [+Math.tan(tanY).toFixed(2), 1]
+          [1, +tand(tanX).toFixed(2)],
+          [+tand(tanY).toFixed(2), 1]
         ];
       default:
         return [
@@ -487,7 +499,7 @@ export class Matrix {
   }
 
   private radToDeg(angle: number): number {
-    return angle * (180 / Math.PI);
+    return angle * (180 / PI);
   }
 
   private isZero(mlMatrix: MLMatrix): boolean {
@@ -551,8 +563,8 @@ export class Matrix {
     let outTransforms: string[] = [];
 
     const matrix: number[][] = mlMatrix.to2DArray();
-    const angleX: number = +this.radToDeg(Math.atan(matrix[0][1])).toFixed(2);
-    const angleY: number = +this.radToDeg(Math.atan(matrix[1][0])).toFixed(2);
+    const angleX: number = +this.radToDeg(atan(matrix[0][1])).toFixed(2);
+    const angleY: number = +this.radToDeg(atan(matrix[1][0])).toFixed(2);
 
     if (this.isXShear(mlMatrix)) {
       cssTransforms[0] = `skewX(${angleX}deg)`;
@@ -582,7 +594,7 @@ export class Matrix {
 
     if (matrix.length === 2) {
       const sign: number = matrix[1][0] < 0 ? -1 : 1;
-      const bareAngle: number = sign * Math.abs(Math.acos(matrix[0][0]));
+      const bareAngle: number = sign * abs(acos(matrix[0][0]));
       const angle = +this.radToDeg(bareAngle).toFixed(2);
       if (angle != 0) {
         transforms.push(`rotate(${angle}deg)`);
@@ -591,16 +603,13 @@ export class Matrix {
       if (matrix[2][0] === 1 || matrix[2][0] === -1) {
         const multiplier: number = -1 * matrix[2][0];
         angleZ = 0;
-        angleX = Math.atan2(
-          multiplier * matrix[0][1],
-          multiplier * matrix[0][2]
-        );
-        angleY = multiplier * (Math.PI / 2);
+        angleX = atan2(multiplier * matrix[0][1], multiplier * matrix[0][2]);
+        angleY = multiplier * (PI / 2);
       } else {
-        angleY = -1 * Math.asin(matrix[2][0]);
-        const divider: number = Math.cos(angleY);
-        angleX = Math.atan2(matrix[2][1] / divider, matrix[2][2] / divider);
-        angleZ = Math.atan2(matrix[1][0] / divider, matrix[0][0] / divider);
+        angleY = -1 * asin(matrix[2][0]);
+        const divider: number = cos(angleY);
+        angleX = atan2(matrix[2][1] / divider, matrix[2][2] / divider);
+        angleZ = atan2(matrix[1][0] / divider, matrix[0][0] / divider);
       }
 
       angleX = +this.radToDeg(angleX).toFixed(2);
