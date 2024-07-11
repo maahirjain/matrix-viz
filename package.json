@@ -24,6 +24,7 @@
   "author": "Maahir Jain",
   "license": "ISC",
   "description": "A tool to visually interpret and animate matrices in terms of rotations, scaling, reflections, shears, and projections",
+  "type": "module",
   "devDependencies": {
     "@babel/core": "^7.24.7",
     "@babel/preset-env": "^7.24.7",

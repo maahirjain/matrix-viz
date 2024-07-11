@@ -8,6 +8,40 @@
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 </head>
 <body>
-    
+    <div id="main">
+        <div id="matrix-facts">
+            <div id="matrix-input">
+                <button id="two-d-btn" type="button">2 x 2</button>
+                <button id="three-d-btn" type="button">3 x 3</button>
+                <form id="matrix-grid"></form>
+                <button id="enter-btn" type="submit">Enter</button>
+            </div>
+
+            <div id="facts">
+                <p><strong>Determinant:</strong> \(1\)</p>
+                <div><strong>Eigenvalues and Eigenvectors:</strong> $$\displaylines{\lambda_1 = 1, \quad \mathbf{v_1} = \begin{bmatrix}1\\0\\0\end{bmatrix}\\\lambda_2 = 1, \quad \mathbf{v_2} = \begin{bmatrix}0\\1\\0\end{bmatrix}\\\lambda_3 = 1, \quad \mathbf{v_3} = \begin{bmatrix}0\\0\\1\end{bmatrix}}$$</div>
+            </div>
+        </div>
+
+        <div id="viz">
+            <div id="options">
+                <div id="shape-options">
+                    <button id="cube-btn">Cube</button>
+                    <button id="pyramid-btn">Pyramid</button>
+                    <button id="sphere-btn">Sphere</button>
+                </div>
+            </div>
+            <div id="graph"></div>
+        </div>
+        
+        <div id="transforms">
+            <div id="matrix-mathjax"></div>
+            <div id="transforms-direction"></div>
+            <div id="transform-stack"></div>
+            <div id="mmul-direction"></div>
+        </div>
+    </div>
+
+    <div id="footer">Created by Maahir Jain</div>
 </body>
 </html>

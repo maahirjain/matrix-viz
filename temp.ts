@@ -19,14 +19,14 @@
 import { Matrix } from "./src/pages/main/ts/model/matrix";
 
 const arr2D = [
-  ["sqrt(4.1)", "-1.1"],
-  ["3.3", "2.2"]
+  ["1", "0"],
+  ["0", "1"]
 ];
 
 const arr3D = [
-  ["5.5", "6.6", "-8.8"],
-  ["4.4", "7.7", "1.1"],
-  ["3.3", "-9.9", "2.2"]
+  ["1", "0", "0"],
+  ["0", "1", "0"],
+  ["0", "0", "1"]
 ];
 
 const matrix2D = new Matrix(arr2D);
@@ -81,10 +81,14 @@ console.log(matrix2D);
 console.log(cssTransforms2D);
 console.log(outTransforms2D);
 matrix2D.computeTransformMatricesMathJax().forEach((str) => console.log(str));
+console.log(matrix2D.det());
+console.log(matrix2D.eigenMathJax());
 console.log(str2D);
 console.log("----------------------------------------------------");
 console.log(matrix3D);
 console.log(cssTransforms3D);
 console.log(outTransforms3D);
 matrix3D.computeTransformMatricesMathJax().forEach((str) => console.log(str));
+console.log(matrix3D.det());
+console.log(matrix3D.eigenMathJax());
 console.log(str3D);
