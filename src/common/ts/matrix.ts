@@ -52,6 +52,38 @@ export class Matrix {
     return determinant(this._mlMatrix);
   }
 
+  /**
+   * Returns a MathJax expression that includes the eigenvalues and corresponding eigenvectors of this Matrix.
+   *
+   * @returns a MathJax expression that includes the eigenvalues and corresponding eigenvectors of this Matrix
+   */
+  public eigenMathJax(): string {
+    const eigenvalues: string[] = this.eigenvalues(this._matrix);
+    let eigenvectors: string[][];
+
+    if (this._matrix.length === 2) {
+      eigenvectors = this.eigenvectors2D(this._matrix);
+    } else {
+      eigenvectors = this.eigenvectors3D(this._matrix);
+    }
+
+    let str: string = "";
+    for (let i = 1; i <= eigenvalues.length; i++) {
+      str += `\\lambda_${i} = ${eigenvalues[i - 1]}, \\quad \\mathbf{v_${i}} = ${this.vectorToMathJax(eigenvectors[i - 1])}\\\\`;
+    }
+
+    return str.slice(0, -2);
+  }
+
+  private vectorToMathJax(vector: string[]): string {
+    let str: string = "\\begin{bmatrix}";
+    for (const element of vector) {
+      str += element + "\\\\";
+    }
+
+    return str.slice(0, -2) + "\\end{bmatrix}";
+  }
+
   private eigenvalues(matrix: number[][]): string[] {
     const values: MathCollection = eigs(matrix).values;
     const valuesArr: string[] = values.toString().split(",");
