@@ -17,6 +17,9 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     height: 100vh;
     margin: 0;
 }
@@ -37,7 +40,30 @@ body:not(.mathjax) {
 }
 
 #main {
+    display: flex;
     height: 90%;
+}
+
+#matrix-facts {
+    width: 20%;
+    outline: 2px solid red;
+}
+
+#viz {
+    width: 60%;
+    outline: 2px solid red;
+}
+
+#transforms {
+    width: 20%;
+    outline: 2px solid red;
+}
+
+#footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
 }
 
 
