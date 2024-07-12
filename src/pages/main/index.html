@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light-theme">
+<html lang="en" class="dark-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -89,7 +89,10 @@
         </div>
         
         <div id="transforms">
-            <div id="matrix-mathjax" class="mathjax"></div>
+            <div id="matrix-mathjax" class="mathjax">
+                $$\begin{bmatrix}1&0&0\\0&1&0\\0&0&1\end{bmatrix}$$
+                <div><div>Hover over a transformation below to see its associated matrix</div></div>
+            </div>
 
             <div id="transforms-direction">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 120">
@@ -99,7 +102,7 @@
             </div>
 
             <div id="transform-stack">
-
+                <button id="identity-btn">identity</button>
             </div>
 
             <div id="mmul-direction">
