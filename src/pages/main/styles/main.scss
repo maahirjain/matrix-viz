@@ -14,6 +14,15 @@
         background-color: themed(primary);
     }
 
+    button:hover {
+        background-color: themed(secondary);
+        color: themed(contrast);
+    }
+
+    .option:hover {
+        background-color: themed(tertiary);
+    }
+
     h1, #footer {
         color: themed(quarternary);
     }
@@ -29,6 +38,10 @@
     
     strong {
         color: themed(secondary);
+    }
+
+    #graph {
+        border: 2px solid themed(text);
     }
 }
 
@@ -141,7 +154,20 @@ button {
 }
 
 #viz {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     width: 60%;
+}
+
+#options {
+    display: flex;
+    justify-content: space-between;
+}
+
+#graph {
+    flex-grow: 1;
+    border-radius: 10px;
 }
 
 #transforms {
@@ -151,9 +177,8 @@ button {
 #footer {
     display: flex;
     justify-content: center;
-    align-items: start;
+    align-items: center;
     flex-grow: 1;
-    margin-top: 8px;
 }
 
 
