@@ -45,6 +45,10 @@
         color: themed(secondary);
     }
 
+    #options path {
+        fill: themed(quinary);
+    }
+
     #graph {
         border: 2px solid themed(text);
     }
@@ -186,6 +190,21 @@ button {
 #options {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+#options div {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#options svg {
+    width: 40px;
+}
+
+#options div:last-child {
+    display: none;
 }
 
 #graph {
