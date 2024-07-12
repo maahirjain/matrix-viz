@@ -51,7 +51,6 @@
 
     #cube * {
         background-color: themed(text);
-        border: 2px solid themed(text);
     }
 }
 
@@ -182,11 +181,12 @@ button {
     align-items: center;
     border-radius: 10px;
     perspective-origin: center;
+    overflow: hidden;
 }
 
 #cube {
-    width: 200px;
-    height: 200px;
+    width: 70px;
+    height: 70px;
     position: relative;
     transform: rotateX(25deg) rotateY(25deg);
     transform-style: preserve-3d;
@@ -195,24 +195,23 @@ button {
 
 #cube * {
     position: absolute;
-    width: 200px;
-    height: 200px;
+    width: 70px;
+    height: 70px;
     opacity: 30%;
     color: white;
 }
 
-#cube-face-front  { transform: translateZ(100px); }
-#cube-face-back   { transform: rotateY(180deg) translateZ(100px); }
-#cube-face-left   { transform: rotateY(-90deg) translateZ(100px); }
-#cube-face-right  { transform: rotateY(90deg) translateZ(100px); }
-#cube-face-top    { transform: rotateX(90deg) translateZ(100px); }
-#cube-face-bottom { transform: rotateX(-90deg) translateZ(100px); }
+#cube-face-front { transform: translateZ(35px); }
+#cube-face-back   { transform: rotateY(180deg) translateZ(35px); }
+#cube-face-left   { transform: rotateY(-90deg) translateZ(35px); }
+#cube-face-right  { transform: rotateY(90deg) translateZ(35px); }
+#cube-face-top    { transform: rotateX(90deg) translateZ(35px); }
+#cube-face-bottom { transform: rotateX(-90deg) translateZ(35px); }
 
 #axes {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50%;
     position: absolute;
     transform: rotateX(25deg) rotateY(25deg);
     transform-style: preserve-3d;
@@ -221,7 +220,7 @@ button {
 
 #x-axis {
     position: absolute;
-    width: 100%;
+    width: 690px;
     height: 2px;
     background-color: red;
     transform: rotateX(90deg);
@@ -229,18 +228,18 @@ button {
 
 #y-axis {
     position: absolute;
-    width: 100%;
+    width: 690px;
     height: 2px;
     background-color: green;
-    transform: rotateY(90deg)
+    transform: rotateZ(90deg);
 }
 
 #z-axis {
     position: absolute;
-    width: 100%;
+    width: 690px;
     height: 2px;
     background-color: blue;
-    transform: rotateZ(90deg);
+    transform: rotateY(90deg)
 }
 
 #transforms {
