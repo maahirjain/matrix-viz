@@ -23,6 +23,11 @@
         background-color: themed(tertiary);
     }
 
+    #three-d-btn, #cube-btn {
+        background-color: themed(tertiary);
+        color: themed(contrast);
+    }
+
     h1, #footer {
         color: themed(quarternary);
     }
@@ -41,6 +46,11 @@
     }
 
     #graph {
+        border: 2px solid themed(text);
+    }
+
+    #cube * {
+        background-color: themed(text);
         border: 2px solid themed(text);
     }
 }
@@ -167,7 +177,63 @@ button {
 
 #graph {
     flex-grow: 1;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
+    perspective-origin: center;
+}
+
+#cube {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transform: rotateX(25deg) rotateY(25deg) translateY(-50%);
+    transform-style: preserve-3d;
+}
+
+
+#cube * {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    opacity: 30%;
+    color: white;
+}
+
+#cube-face-front  { transform: translateZ(100px); }
+#cube-face-back   { transform: rotateY(180deg) translateZ(100px); }
+#cube-face-left   { transform: rotateY(-90deg) translateZ(100px); }
+#cube-face-right  { transform: rotateY(90deg) translateZ(100px); }
+#cube-face-top    { transform: rotateX(90deg) translateZ(100px); }
+#cube-face-bottom { transform: rotateX(-90deg) translateZ(100px); }
+
+#axes {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transform: rotateX(25deg) rotateY(25deg);
+    transform-style: preserve-3d;
+}
+
+#x-axis {
+    width: 300px;
+    height: 2px;
+    background-color: red;
+    transform: rotateX(90deg);
+}
+
+#y-axis {
+    width: 300px;
+    height: 2px;
+    background-color: green;
+    transform: rotateY(90deg)
+}
+
+#z-axis {
+    width: 300px;
+    height: 2px;
+    background-color: blue;
+    transform: rotateZ(90deg);
 }
 
 #transforms {
