@@ -52,6 +52,20 @@
     #cube * {
         border: 1px solid themed(text);
     }
+
+    #matrix-mathjax, #transform-stack {
+        border: 2px solid themed(text);
+    }
+
+    #transforms-direction, #mmul-direction {
+        path{
+            fill: themed(secondary);
+        }
+
+        div {
+            color: themed(secondary);
+        }
+    }
 }
 
 body {
@@ -194,21 +208,13 @@ button {
     transform-style: preserve-3d;
 }
 
-#cube { 
-    z-index: 1; 
-}
+#cube { z-index: 1; }
 
-#transform-cube { 
-    z-index: 2; 
-}
+#transform-cube { z-index: 2; }
 
-#cube * {
-    box-sizing: border-box;
-}
+#cube * { box-sizing: border-box; }
 
-#transform-cube * {
-    opacity: 60%;
-}
+#transform-cube * { opacity: 60%; }
 
 #cube *, #transform-cube * {
     position: absolute;
@@ -217,12 +223,10 @@ button {
     color: white;
 }
 
-#cube-face-front, #transform-cube-face-front { 
-    transform: translateZ(35px); 
-}
+#cube-face-front, #transform-cube-face-front { transform: translateZ(35px); }
 
 #cube-face-back, #transform-cube-face-back  { 
-    transform: rotateY(180deg) translateZ(35px); 
+transform: rotateY(180deg) translateZ(35px); 
 }
 
 #cube-face-left, #transform-cube-face-left  { 
@@ -241,29 +245,17 @@ button {
     transform: rotateX(-90deg) translateZ(35px); 
 }
 
-#transform-cube-face-front { 
-    background-color: #0046ad;    
-}
+#transform-cube-face-front { background-color: #0046ad; }
 
-#transform-cube-face-back   { 
-    background-color: #009b48;
-}
+#transform-cube-face-back   { background-color: #009b48; }
 
-#transform-cube-face-left   { 
-    background-color: #ff5800;
-}
+#transform-cube-face-left   { background-color: #ff5800; }
 
-#transform-cube-face-right  { 
-    background-color: #b71234; 
-}
+#transform-cube-face-right  { background-color: #b71234; }
 
-#transform-cube-face-top    { 
-    background-color: #ffd500;
-}
+#transform-cube-face-top    { background-color: #ffd500; }
 
-#transform-cube-face-bottom { 
-    background-color: #ffffff;
-}
+#transform-cube-face-bottom { background-color: #ffffff; }
 
 #axes {
     display: flex;
@@ -300,7 +292,33 @@ button {
 }
 
 #transforms {
-    width: 20%;
+    display: grid;
+    grid-template-rows: 3fr 7fr;
+    grid-template-columns: 1fr 8fr 1fr;
+    row-gap: 16px;
+    flex-grow: 1;
+}
+
+#matrix-mathjax, #transform-stack {
+    border-radius: 10px;
+}
+
+#matrix-mathjax {
+    grid-column: 1 / 4;
+}
+
+#transforms-direction, #mmul-direction {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+}
+
+#transforms svg {
+    height: 100px;
 }
 
 #footer {

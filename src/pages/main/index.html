@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="light-theme">
+<html lang="en" class="dark-theme">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -86,10 +86,25 @@
         </div>
         
         <div id="transforms">
-            <div id="matrix-mathjax"></div>
-            <div id="transforms-direction"></div>
-            <div id="transform-stack"></div>
-            <div id="mmul-direction"></div>
+            <div id="matrix-mathjax" class="mathjax"></div>
+
+            <div id="transforms-direction">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 120">
+                    <path d="M13,100H11V20L5.5,25.5L4.08,24.08L12,16.16L19.92,24.08L18.5,25.5L13,20V100Z" />
+                </svg>    
+                <div>TRANSFORMATIONS</div>                     
+            </div>
+
+            <div id="transform-stack">
+
+            </div>
+
+            <div id="mmul-direction">
+                <div>MATRIX MULT.</div>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 120">
+                    <path d="M13,20H11V100L5.5,94.5L4.08,95.92L12,103.84L19.92,95.92L18.5,94.5L13,100V20Z" />
+                </svg>                  
+            </div>
         </div>
     </div>
 
