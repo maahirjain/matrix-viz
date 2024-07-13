@@ -35,7 +35,7 @@ class Validator {
     for (let i = 0; i < matrix.length; i++) {
       for (let j = 0; j < matrix.length; j++) {
         if (!this.isCellValid(matrix[i][j])) {
-          arr.push(i + j);
+          arr.push(matrix.length * i + j);
         }
       }
     }
