@@ -19,8 +19,12 @@
         color: themed(contrast);
     }
 
-    .option:hover {
+    .option:hover, .valid-matrix:hover {
         background-color: themed(tertiary);
+    }
+
+    .invalid-matrix:hover {
+        background-color: themed(error);
     }
 
     #three-d-btn, #cube-btn {
