@@ -172,7 +172,16 @@ input {
     color: black !important;
     font-size: medium;
     text-align: center;
+    box-sizing: border-box;
     border-radius: 10px;
+}
+
+.invalid {
+    border: 2px solid themed(error);
+}
+
+.valid {
+    border: 2px solid themed(tertiary);
 }
 
 button {
