@@ -12,6 +12,7 @@ class Validator {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const evaluatedInput: any = evaluate(input);
     return (
+      input != "" &&
       typeof evaluatedInput === "number" &&
       !isNaN(+evaluatedInput) &&
       evaluatedInput < 1000 &&

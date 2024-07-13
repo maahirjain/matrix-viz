@@ -36,6 +36,10 @@
         border: 1px solid themed(text);
     }
 
+    #invalid-msg {
+        background-color: themed(error);
+    }
+
     #matrix-input, #facts {
         border: 2px solid themed(text);
         border-radius: 10px;
@@ -126,6 +130,14 @@ h1 {
     flex-direction: column;
     gap: 16px;
     width: 20%;
+}
+
+#invalid-msg {
+    color: white;
+    font-size: small;
+    border-radius: 10px;
+    text-align: center;
+    padding: 8px;
 }
 
 #matrix-input {
