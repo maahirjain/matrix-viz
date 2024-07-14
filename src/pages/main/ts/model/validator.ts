@@ -33,4 +33,13 @@ export class Validator {
   public static isMatrixValid(matrix: string[][]): boolean {
     return matrix.every((row) => row.every((cell) => this.isCellValid(cell)));
   }
+
+  /**
+   * Returns whether the animation is ongoing.
+   *
+   * @returns whether the animation is ongoing
+   */
+  public static isClickable(): boolean {
+    return document.documentElement.classList.contains("animate");
+  }
 }
