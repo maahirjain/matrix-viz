@@ -121,6 +121,14 @@ svg {
     width: 30px;
 }
 
+.light-theme svg:hover {
+    animation: spin 4s linear infinite;
+}
+
+.dark-theme svg:hover{
+    animation: swing 4s ease-in-out infinite;
+}
+
 h1 {
     margin: 0;
 }
@@ -418,6 +426,27 @@ transform: rotateY(180deg) translateZ(35px);
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+}
+
+@keyframes spin { 
+    100% { 
+        transform:rotate(360deg); 
+    } 
+}
+
+
+@keyframes swing { 
+    0% {
+        transform:rotate(25deg); 
+    }
+
+    50% { 
+        transform:rotate(-25deg); 
+    } 
+
+    100% { 
+        transform:rotate(25deg); 
+    } 
 }
 
 
