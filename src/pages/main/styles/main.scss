@@ -27,7 +27,7 @@
         background-color: themed(error);
     }
 
-    #three-d-btn, #cube-btn {
+    .selected {
         background-color: themed(tertiary);
         color: themed(contrast);
     }
@@ -69,7 +69,7 @@
         border: 2px solid themed(text);
     }
 
-    #cube * {
+    #cube *, #square {
         border: 1px solid themed(text);
     }
 
@@ -256,6 +256,8 @@ button {
     flex-grow: 1;
     justify-content: center;
     align-content: center;
+    align-items: center;
+    justify-items: center;
     border-radius: 10px;
     perspective: none;
     perspective-origin: center;
@@ -271,25 +273,27 @@ button {
     transform-style: preserve-3d;
 }
 
-#cube { z-index: 1; }
+#cube, #square { z-index: 1; }
 
-#transform-cube { z-index: 2; }
+#transform-cube, #transform-square { z-index: 2; }
 
 #cube * { box-sizing: border-box; }
 
 #transform-cube * { opacity: 60%; }
 
-#cube *, #transform-cube * {
+#cube *, #transform-cube *, #square, #transform-square {
     position: absolute;
     width: 70px;
     height: 70px;
     color: white;
 }
 
-#cube-face-front, #transform-cube-face-front { transform: translateZ(35px); }
+#cube-face-front, #transform-cube-face-front { 
+    transform: translateZ(35px); 
+}
 
 #cube-face-back, #transform-cube-face-back  { 
-transform: rotateY(180deg) translateZ(35px); 
+    transform: rotateY(180deg) translateZ(35px); 
 }
 
 #cube-face-left, #transform-cube-face-left  { 
@@ -308,7 +312,9 @@ transform: rotateY(180deg) translateZ(35px);
     transform: rotateX(-90deg) translateZ(35px); 
 }
 
-#transform-cube-face-front { background-color: #0046ad; }
+#transform-cube-face-front, #transform-square { 
+    background-color: #0046ad; 
+}
 
 #transform-cube-face-back   { background-color: #009b48; }
 
@@ -320,6 +326,10 @@ transform: rotateY(180deg) translateZ(35px);
 
 #transform-cube-face-bottom { background-color: #ffffff; }
 
+#transform-square {
+    opacity: 60%;
+}
+
 #axes {
     display: flex;
     justify-content: center;
@@ -328,6 +338,16 @@ transform: rotateY(180deg) translateZ(35px);
     grid-column-start: 1;
     transform-style: preserve-3d;
     transform: rotateX(-25deg) rotateY(-25deg);
+    z-index: 0;
+}
+
+#two-d-axes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-row-start: 1;
+    grid-column-start: 1;
+    transform-style: preserve-3d;
     z-index: 0;
 }
 

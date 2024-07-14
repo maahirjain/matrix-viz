@@ -4,3 +4,4 @@ import { DisplayController } from "./display/display-controller";
 
 ValidatorMediator.addEventListeners();
 DisplayController.toggleTheme();
+DisplayController.addTwoDBtnListener();

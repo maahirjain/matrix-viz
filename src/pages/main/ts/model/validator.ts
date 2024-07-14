@@ -35,11 +35,11 @@ export class Validator {
   }
 
   /**
-   * Returns whether the animation is ongoing.
+   * Returns whether the animation is not ongoing.
    *
-   * @returns whether the animation is ongoing
+   * @returns true if the animation is not ongoing
    */
-  public static isClickable(): boolean {
-    return document.documentElement.classList.contains("animate");
+  public static areBtnsClickable(): boolean {
+    return !document.documentElement.classList.contains("animate");
   }
 }
