@@ -36,6 +36,9 @@ export class DisplayController {
         matrixGrid!.style.gridTemplateColumns = "repeat(2, 30%)";
         matrixGrid!.innerHTML = `<input type="text" class="valid" value="1"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="1"><p>Supports expressions like sin(45deg), sqrt(2)/2</p>`;
 
+        const p: HTMLElement | null = document.querySelector("#matrix-input p");
+        p!.style.gridColumn = "1 / 3";
+
         document.getElementById("graph")!.innerHTML =
           `<div id="square"></div><div id="transform-square"></div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
 
@@ -50,11 +53,15 @@ export class DisplayController {
         pyramidBtn!.textContent = "Triangle";
         sphereBtn!.textContent = "Circle";
 
-        document.querySelector("#facts div")!.textContent =
-          "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\end{bmatrix}\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\end{bmatrix}}$$";
+        document.querySelector("#facts div")!.innerHTML =
+          "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\end{bmatrix}}$$";
 
         document.getElementById("matrix-mathjax")!.innerHTML =
           "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$<div><div>Hover over a transformation below to see its associated matrix</div></div>";
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const mathjax: any = MathJax;
+        mathjax.typeset();
       }
     });
   }

@@ -53,6 +53,7 @@
     "webpack-merge": "^6.0.1"
   },
   "dependencies": {
+    "@types/mathjax": "^0.0.40",
     "mathjs": "^13.0.2",
     "ml-matrix": "^6.11.1"
   }
