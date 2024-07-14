@@ -30,6 +30,7 @@ export class DisplayController {
   public static addEventListeners(): void {
     this.addTwoDBtnListener();
     this.addThreeDBtnListener();
+    this.addCubeSquareBtnListener();
   }
 
   private static addTwoDBtnListener(): void {
@@ -48,19 +49,12 @@ export class DisplayController {
         const p: HTMLElement | null = document.querySelector("#matrix-input p");
         p!.style.gridColumn = "1 / 3";
 
-        document.getElementById("graph")!.innerHTML =
-          `<div id="square"></div><div id="transform-square"></div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
+        document.getElementById("cube-btn")!.textContent = "Square";
+        document.getElementById("pyramid-btn")!.textContent = "Triangle";
+        document.getElementById("sphere-btn")!.textContent = "Circle";
 
-        const cubeBtn: HTMLElement | null = document.getElementById("cube-btn");
-        const pyramidBtn: HTMLElement | null =
-          document.getElementById("pyramid-btn");
-        const sphereBtn: HTMLElement | null =
-          document.getElementById("sphere-btn");
-
-        cubeBtn!.classList.add("selected");
-        cubeBtn!.textContent = "Square";
-        pyramidBtn!.textContent = "Triangle";
-        sphereBtn!.textContent = "Circle";
+        this.addSquareContent();
+        this.selectCubeSquare();
 
         document.querySelector("#facts div")!.innerHTML =
           "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\end{bmatrix}}$$";
@@ -98,19 +92,12 @@ export class DisplayController {
         const p: HTMLElement | null = document.querySelector("#matrix-input p");
         p!.style.gridColumn = "1 / 4";
 
-        document.getElementById("graph")!.innerHTML =
-          `<div id="cube"><div id="cube-face-front"></div><div id="cube-face-back"></div><div id="cube-face-right"></div><div id="cube-face-left"></div><div id="cube-face-top"></div><div id="cube-face-bottom"></div></div><div id="transform-cube"><div id="transform-cube-face-front"></div><div id="transform-cube-face-back"></div><div id="transform-cube-face-right"></div><div id="transform-cube-face-left"></div><div id="transform-cube-face-top"></div><div id="transform-cube-face-bottom"></div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
+        document.getElementById("cube-btn")!.textContent = "Cube";
+        document.getElementById("pyramid-btn")!.textContent = "Pyramid";
+        document.getElementById("sphere-btn")!.textContent = "Sphere";
 
-        const cubeBtn: HTMLElement | null = document.getElementById("cube-btn");
-        const pyramidBtn: HTMLElement | null =
-          document.getElementById("pyramid-btn");
-        const sphereBtn: HTMLElement | null =
-          document.getElementById("sphere-btn");
-
-        cubeBtn!.classList.add("selected");
-        cubeBtn!.textContent = "Square";
-        pyramidBtn!.textContent = "Triangle";
-        sphereBtn!.textContent = "Circle";
+        this.addCubeContent();
+        this.selectCubeSquare();
 
         document.querySelector("#facts div")!.innerHTML =
           "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\\\0\\end{bmatrix}\\\\\\lambda_3 = 1, \\quad \\mathbf{v_3} = \\begin{bmatrix}0\\\\0\\\\1\\end{bmatrix}}$$";
@@ -131,5 +118,40 @@ export class DisplayController {
         mathjax.typeset();
       }
     });
+  }
+
+  private static addCubeSquareBtnListener() {
+    const btn: HTMLElement | null = document.getElementById("cube-btn");
+    btn!.addEventListener("click", () => {
+      if (Validator.areBtnsClickable()) {
+        this.selectCubeSquare();
+        if (btn!.textContent === "Cube") {
+          this.addCubeContent();
+        } else {
+          this.addSquareContent();
+        }
+      }
+    });
+  }
+
+  private static selectCubeSquare(): void {
+    const cubeBtn: HTMLElement | null = document.getElementById("cube-btn");
+    const pyramidBtn: HTMLElement | null =
+      document.getElementById("pyramid-btn");
+    const sphereBtn: HTMLElement | null = document.getElementById("sphere-btn");
+
+    cubeBtn!.classList.add("selected");
+    pyramidBtn!.classList.remove("selected");
+    sphereBtn!.classList.remove("selected");
+  }
+
+  private static addCubeContent(): void {
+    document.getElementById("graph")!.innerHTML =
+      `<div id="cube"><div id="cube-face-front"></div><div id="cube-face-back"></div><div id="cube-face-right"></div><div id="cube-face-left"></div><div id="cube-face-top"></div><div id="cube-face-bottom"></div></div><div id="transform-cube"><div id="transform-cube-face-front"></div><div id="transform-cube-face-back"></div><div id="transform-cube-face-right"></div><div id="transform-cube-face-left"></div><div id="transform-cube-face-top"></div><div id="transform-cube-face-bottom"></div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
+  }
+
+  private static addSquareContent(): void {
+    document.getElementById("graph")!.innerHTML =
+      `<div id="square"></div><div id="transform-square"></div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
   }
 }
