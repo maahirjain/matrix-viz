@@ -73,6 +73,10 @@
         border: 1px solid themed(text);
     }
 
+    #triangle, .pyramid-side {
+        -webkit-text-stroke: 1px themed(text);
+    }
+
     #matrix-mathjax, #transform-stack {
         border: 2px solid themed(text);
     }
@@ -264,7 +268,7 @@ button {
     overflow: hidden;
 }
 
-#cube, #transform-cube {
+#cube, #transform-cube, #pyramid, #transform-pyramid {
     grid-row-start: 1;
     grid-column-start: 1;
     width: 70px;
@@ -273,19 +277,40 @@ button {
     transform-style: preserve-3d;
 }
 
-#cube, #square { z-index: 1; }
+#pyramid, #transform-pyramid {
+    transform: translateY(-30px) rotateX(-25deg) rotateY(-25deg);
+}
 
-#transform-cube, #transform-square { z-index: 2; }
+#cube, #square, #pyramid, #triangle { z-index: 1; }
+
+#triangle, .pyramid-side {
+    opacity: 100%;
+    color: transparent;
+}
+
+#triangle, #transform-triangle {
+    transform: translateY(-5px);
+}
+
+#transform-cube, #transform-square, #transform-pyramid, #transform-triangle {       
+    z-index: 2; 
+}
 
 #cube * { box-sizing: border-box; }
 
-#transform-cube * { opacity: 60%; }
+#transform-cube *, #transform-pyramid * { opacity: 60%; }
 
 #cube *, #transform-cube *, #square, #transform-square {
     position: absolute;
     width: 70px;
     height: 70px;
     color: white;
+}
+
+#triangle, #transform-triangle, .pyramid-side, .transform-pyramid-side {
+    position: absolute;
+    font-size: 70px;
+    text-align: center;
 }
 
 #cube-face-front, #transform-cube-face-front { 
@@ -316,6 +341,26 @@ button {
     background-color: #0046ad; 
 }
 
+#transform-triangle {
+    color: #0046ad;
+}
+
+#pyramid-side-one, #transform-pyramid-side-one {
+    transform: rotateY(0deg) translateZ(15px) rotateX(35deg);
+}
+
+#pyramid-side-two, #transform-pyramid-side-two {
+    transform: rotateY(90deg) translateZ(15px) rotateX(35deg); 
+}
+
+#pyramid-side-three, #transform-pyramid-side-three {
+    transform: rotateY(180deg) translateZ(15px) rotateX(35deg);
+}
+
+#pyramid-side-four, #transform-pyramid-side-four {
+    transform: rotateY(270deg) translateZ(15px) rotateX(35deg);
+}
+  
 #transform-cube-face-back   { background-color: #009b48; }
 
 #transform-cube-face-left   { background-color: #ff5800; }
@@ -326,7 +371,15 @@ button {
 
 #transform-cube-face-bottom { background-color: #ffffff; }
 
-#transform-square {
+#transform-pyramid-side-one   { color: #009b48; }
+
+#transform-pyramid-side-two  { color: #ff5800; }
+
+#transform-pyramid-side-three { color: #b71234; }
+
+#transform-pyramid-side-four   { color: #ffd500; }
+
+#transform-square, #transform-triangle {
     opacity: 60%;
 }
 
@@ -468,5 +521,3 @@ button {
         transform:rotate(25deg); 
     } 
 }
-
-

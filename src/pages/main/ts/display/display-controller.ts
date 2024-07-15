@@ -31,6 +31,7 @@ export class DisplayController {
     this.addTwoDBtnListener();
     this.addThreeDBtnListener();
     this.addCubeSquareBtnListener();
+    this.addPyramidTriangleBtnListener();
   }
 
   private static addTwoDBtnListener(): void {
@@ -134,6 +135,20 @@ export class DisplayController {
     });
   }
 
+  private static addPyramidTriangleBtnListener() {
+    const btn: HTMLElement | null = document.getElementById("pyramid-btn");
+    btn!.addEventListener("click", () => {
+      if (Validator.areBtnsClickable()) {
+        this.selectPyramidTriangle();
+        if (btn!.textContent === "Pyramid") {
+          this.addPyramidContent();
+        } else {
+          this.addTriangleContent();
+        }
+      }
+    });
+  }
+
   private static selectCubeSquare(): void {
     const cubeBtn: HTMLElement | null = document.getElementById("cube-btn");
     const pyramidBtn: HTMLElement | null =
@@ -145,13 +160,34 @@ export class DisplayController {
     sphereBtn!.classList.remove("selected");
   }
 
+  private static selectPyramidTriangle(): void {
+    const cubeBtn: HTMLElement | null = document.getElementById("cube-btn");
+    const pyramidBtn: HTMLElement | null =
+      document.getElementById("pyramid-btn");
+    const sphereBtn: HTMLElement | null = document.getElementById("sphere-btn");
+
+    pyramidBtn!.classList.add("selected");
+    cubeBtn!.classList.remove("selected");
+    sphereBtn!.classList.remove("selected");
+  }
+
   private static addCubeContent(): void {
     document.getElementById("graph")!.innerHTML =
       `<div id="cube"><div id="cube-face-front"></div><div id="cube-face-back"></div><div id="cube-face-right"></div><div id="cube-face-left"></div><div id="cube-face-top"></div><div id="cube-face-bottom"></div></div><div id="transform-cube"><div id="transform-cube-face-front"></div><div id="transform-cube-face-back"></div><div id="transform-cube-face-right"></div><div id="transform-cube-face-left"></div><div id="transform-cube-face-top"></div><div id="transform-cube-face-bottom"></div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
   }
 
+  private static addPyramidContent(): void {
+    document.getElementById("graph")!.innerHTML =
+      `<div id="pyramid"><div id = "pyramid-side-one" class="pyramid-side">&#9650;</div><div id = "pyramid-side-two" class="pyramid-side">&#9650;</div><div id = "pyramid-side-three" class="pyramid-side">&#9650;</div><div id = "pyramid-side-four" class="pyramid-side">&#9650;</div></div><div id="transform-pyramid"><div id="transform-pyramid-side-one" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-two" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-three" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-four" class="transform-pyramid-side">&#9650;</div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
+  }
+
   private static addSquareContent(): void {
     document.getElementById("graph")!.innerHTML =
       `<div id="square"></div><div id="transform-square"></div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
+  }
+
+  private static addTriangleContent(): void {
+    document.getElementById("graph")!.innerHTML =
+      `<div id="triangle">&#9650;</div><div id="transform-triangle">&#9650;</div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
   }
 }
