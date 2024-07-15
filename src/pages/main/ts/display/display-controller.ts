@@ -52,7 +52,6 @@ export class DisplayController {
 
         document.getElementById("cube-btn")!.textContent = "Square";
         document.getElementById("pyramid-btn")!.textContent = "Triangle";
-        document.getElementById("sphere-btn")!.textContent = "Circle";
 
         this.addSquareContent();
         this.selectCubeSquare();
@@ -95,7 +94,6 @@ export class DisplayController {
 
         document.getElementById("cube-btn")!.textContent = "Cube";
         document.getElementById("pyramid-btn")!.textContent = "Pyramid";
-        document.getElementById("sphere-btn")!.textContent = "Sphere";
 
         this.addCubeContent();
         this.selectCubeSquare();
@@ -153,22 +151,18 @@ export class DisplayController {
     const cubeBtn: HTMLElement | null = document.getElementById("cube-btn");
     const pyramidBtn: HTMLElement | null =
       document.getElementById("pyramid-btn");
-    const sphereBtn: HTMLElement | null = document.getElementById("sphere-btn");
 
     cubeBtn!.classList.add("selected");
     pyramidBtn!.classList.remove("selected");
-    sphereBtn!.classList.remove("selected");
   }
 
   private static selectPyramidTriangle(): void {
     const cubeBtn: HTMLElement | null = document.getElementById("cube-btn");
     const pyramidBtn: HTMLElement | null =
       document.getElementById("pyramid-btn");
-    const sphereBtn: HTMLElement | null = document.getElementById("sphere-btn");
 
     pyramidBtn!.classList.add("selected");
     cubeBtn!.classList.remove("selected");
-    sphereBtn!.classList.remove("selected");
   }
 
   private static addCubeContent(): void {

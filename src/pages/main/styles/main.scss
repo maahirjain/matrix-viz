@@ -278,7 +278,11 @@ button {
 }
 
 #pyramid, #transform-pyramid {
-    transform: translateY(-30px) rotateX(-25deg) rotateY(-25deg);
+    transform: rotateX(-25deg) rotateY(-25deg);
+}
+
+#transform-pyramid {
+    transform: rotateX(-25deg) rotateY(-25deg);
 }
 
 #cube, #square, #pyramid, #triangle { z-index: 1; }
@@ -286,10 +290,6 @@ button {
 #triangle, .pyramid-side {
     opacity: 100%;
     color: transparent;
-}
-
-#triangle, #transform-triangle {
-    transform: translateY(-5px);
 }
 
 #transform-cube, #transform-square, #transform-pyramid, #transform-triangle {       
