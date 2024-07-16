@@ -2,6 +2,12 @@ import { Validator } from "../model/validator";
 import { ValidatorMediator } from "../mediator/validator-mediator";
 
 export class DisplayController {
+  private static axesTransform = `rotateX(-25deg) rotateY(-25deg)`;
+  private static cubeTransform = `rotateX(-25deg) rotateY(-25deg)`;
+  private static transformCubeTransform = `rotateX(-25deg) rotateY(-25deg)`;
+  private static pyramidTransform = `rotateX(-25deg) rotateY(-25deg)`;
+  private static transformPyramidTransform = `rotateX(-25deg) rotateY(-25deg)`;
+
   /**
    * Toggles between light and dark modes.
    */
@@ -66,42 +72,24 @@ export class DisplayController {
         currentX = e.clientX - startX;
         currentY = e.clientY - startY;
 
-        const axesTransform: string = document
-          .getElementById("axes")!
-          .style.getPropertyValue("transform");
-
         if (document.getElementById("cube") != null) {
-          const cubeTransform: string = document
-            .getElementById("cube")!
-            .style.getPropertyValue("transform");
-          const transformCubeTransform: string = document
-            .getElementById("transform-cube")!
-            .style.getPropertyValue("transform");
-
           cube!.style.transform =
             `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
-            cubeTransform.split(" ").slice(2).join(" ");
+            this.cubeTransform;
           transformCube!.style.transform =
             `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
-            transformCubeTransform.split(" ").slice(2).join(" ");
+            this.transformCubeTransform;
         } else {
-          const pyramidTransform: string = document
-            .getElementById("pyramid")!
-            .style.getPropertyValue("transform");
-          const transformPyramidTransform: string = document
-            .getElementById("transform-pyramid")!
-            .style.getPropertyValue("transform");
-
           pyramid!.style.transform =
             `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
-            pyramidTransform.split(" ").slice(2).join(" ");
+            this.pyramidTransform;
           transformPyramid!.style.transform =
             `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
-            transformPyramidTransform.split(" ").slice(2).join(" ");
+            this.transformPyramidTransform;
         }
         axes!.style.transform =
           `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
-          axesTransform.split(" ").slice(2).join(" ");
+          this.axesTransform;
       }
     });
 
