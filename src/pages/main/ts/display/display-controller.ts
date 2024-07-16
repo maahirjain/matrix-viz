@@ -41,6 +41,9 @@ export class DisplayController {
     this.pauseOrPlay();
   }
 
+  /**
+   * Adds interactivity to the main graph.
+   */
   public static addInteractivity(): void {
     const graph: HTMLElement | null = document.getElementById("graph");
 
@@ -51,15 +54,15 @@ export class DisplayController {
     let currentY: number = 0;
 
     graph!.addEventListener("mousedown", (e) => {
-      isDragging = true;
-      startX = e.clientX - currentX;
-      startY = e.clientY - currentY;
+      if (this.is3DSelected() && this.is3DPaused()) {
+        isDragging = true;
+        startX = e.clientX - currentX;
+        startY = e.clientY - currentY;
+      }
     });
 
     graph!.addEventListener("mousemove", (e) => {
-      if (
-        document.getElementById("three-d-btn")!.classList.contains("selected")
-      ) {
+      if (this.is3DSelected() && this.is3DPaused()) {
         const cube: HTMLElement | null = document.getElementById("cube");
         const transformCube: HTMLElement | null =
           document.getElementById("transform-cube");
@@ -72,7 +75,7 @@ export class DisplayController {
         currentX = e.clientX - startX;
         currentY = e.clientY - startY;
 
-        if (document.getElementById("cube") != null) {
+        if (this.isCubeSelected()) {
           cube!.style.transform =
             `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
             this.cubeTransform;
@@ -94,11 +97,15 @@ export class DisplayController {
     });
 
     graph!.addEventListener("mouseup", () => {
-      isDragging = false;
+      if (this.is3DSelected() && this.is3DPaused()) {
+        isDragging = false;
+      }
     });
 
     graph!.addEventListener("mouseleave", () => {
-      isDragging = false;
+      if (this.is3DSelected() && this.is3DPaused()) {
+        isDragging = false;
+      }
     });
   }
 
@@ -123,6 +130,23 @@ export class DisplayController {
         transforms.forEach((transform) => transform.classList.add("paused"));
         transformSquare!.classList.add("paused");
         transformTriangle!.classList.add("paused");
+
+        this.cubeTransform = window
+          .getComputedStyle(document.getElementById("cube")!)
+          .getPropertyValue("transform");
+        this.transformCubeTransform = window
+          .getComputedStyle(document.getElementById("transform-cube")!)
+          .getPropertyValue("transform");
+        this.pyramidTransform = window
+          .getComputedStyle(document.getElementById("pyramid")!)
+          .getPropertyValue("transform");
+        this.transformPyramidTransform = window
+          .getComputedStyle(document.getElementById("pyramid-transform")!)
+          .getPropertyValue("transform");
+        this.axesTransform = window
+          .getComputedStyle(document.getElementById("axes")!)
+          .getPropertyValue("transform");
+
         btn!.textContent = "Resume";
       } else {
         transformCube!.classList.remove("paused");
@@ -302,5 +326,33 @@ export class DisplayController {
   private static addTriangleContent(): void {
     document.getElementById("graph")!.innerHTML =
       `<div id="triangle">&#9650;</div><div id="transform-triangle" class="paused">&#9650;</div><div id="two-d-axes"><div id="two-d-x-axis"></div><div id="two-d-y-axis"></div></div>`;
+  }
+
+  private static isCubeSelected(): boolean {
+    return document.getElementById("cube") != null;
+  }
+
+  private static isPyramidSelected(): boolean {
+    return document.getElementById("pyramid") != null;
+  }
+
+  private static is3DSelected(): boolean {
+    return document
+      .getElementById("three-d-btn")!
+      .classList.contains("selected");
+  }
+
+  private static is3DPaused(): boolean {
+    if (this.isCubeSelected()) {
+      return document
+        .getElementById("transform-cube")!
+        .classList.contains("paused");
+    } else if (this.isPyramidSelected()) {
+      return document
+        .getElementById("transform-pyramid")!
+        .classList.contains("paused");
+    } else {
+      return false;
+    }
   }
 }
