@@ -39,6 +39,7 @@ export class DisplayController {
     this.addCubeSquareBtnListener();
     this.addPyramidTriangleBtnListener();
     this.pauseOrPlay();
+    this.identityHover();
   }
 
   /**
@@ -106,6 +107,72 @@ export class DisplayController {
       if (this.is3DSelected() && this.is3DPaused()) {
         isDragging = false;
       }
+    });
+  }
+
+  /**
+   * Reveals the transform's associated matrix on hover.
+   *
+   * @param btn the transform element
+   * @param matrixStr a MathJax representation of the associated matrix
+   */
+  public static revealMatrix(btn: HTMLElement, matrixStr: string): void {
+    btn.addEventListener("mouseover", () => {
+      document.getElementById("matrix-mathjax")!.innerHTML = matrixStr;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const mathjax: any = MathJax;
+      mathjax.typeset();
+    });
+
+    btn.addEventListener("mouseout", () => {
+      let identityStr: string;
+      if (this.is3DSelected()) {
+        identityStr =
+          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$";
+      } else {
+        identityStr = "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$";
+      }
+
+      document.getElementById("matrix-mathjax")!.innerHTML =
+        `${identityStr}<div><div>Hover over a transformation below to see its associated matrix</div></div>`;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const mathjax: any = MathJax;
+      mathjax.typeset();
+    });
+  }
+
+  private static identityHover(): void {
+    const btn: HTMLElement | null = document.getElementById("identity-btn");
+
+    btn!.addEventListener("mouseover", () => {
+      let identityStr: string;
+
+      if (this.is3DSelected()) {
+        identityStr =
+          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$";
+      } else {
+        identityStr = "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$";
+      }
+      document.getElementById("matrix-mathjax")!.innerHTML = identityStr;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const mathjax: any = MathJax;
+      mathjax.typeset();
+    });
+
+    btn!.addEventListener("mouseout", () => {
+      let identityStr: string;
+      if (this.is3DSelected()) {
+        identityStr =
+          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$";
+      } else {
+        identityStr = "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$";
+      }
+
+      document.getElementById("matrix-mathjax")!.innerHTML =
+        `${identityStr}<div><div>Hover over a transformation below to see its associated matrix</div></div>`;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const mathjax: any = MathJax;
+      mathjax.typeset();
     });
   }
 
