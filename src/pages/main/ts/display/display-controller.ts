@@ -32,6 +32,32 @@ export class DisplayController {
     this.addThreeDBtnListener();
     this.addCubeSquareBtnListener();
     this.addPyramidTriangleBtnListener();
+    this.pauseOrPlay();
+  }
+
+  private static pauseOrPlay(): void {
+    const btn: HTMLElement | null = document.getElementById("pause-play-btn");
+    btn!.addEventListener("click", () => {
+      const transformCube: HTMLElement | null =
+        document.getElementById("transform-cube");
+      const transformPyramid: HTMLElement | null =
+        document.getElementById("transform-pyramid");
+      const transforms: HTMLElement[] = Array.from(
+        document.querySelectorAll("transform-stack *")
+      );
+
+      if (btn!.textContent === "Pause") {
+        transformCube!.classList.add("paused");
+        transformPyramid!.classList.add("paused");
+        transforms.forEach((transform) => transform.classList.add("paused"));
+        btn!.textContent = "Resume";
+      } else {
+        transformCube!.classList.remove("paused");
+        transformPyramid!.classList.remove("paused");
+        transforms.forEach((transform) => transform.classList.remove("paused"));
+        btn!.textContent = "Pause";
+      }
+    });
   }
 
   private static addTwoDBtnListener(): void {

@@ -281,6 +281,10 @@ button {
     transform: rotateX(-25deg) rotateY(-25deg);
 }
 
+#transform-cube {
+    transform: rotateX(-25deg) rotateY(-25deg);
+}
+
 #transform-pyramid {
     transform: rotateX(-25deg) rotateY(-25deg);
 }
@@ -500,6 +504,13 @@ button {
     align-items: center;
     flex-grow: 1;
 }
+
+.paused {
+    -webkit-animation-play-state: paused !important; 
+    -moz-animation-play-state: paused !important; 
+    -o-animation-play-state: paused !important;
+     animation-play-state: paused !important;
+ }
 
 @keyframes spin { 
     100% { 
