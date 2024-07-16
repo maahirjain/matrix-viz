@@ -219,7 +219,10 @@ export class DisplayController {
     });
   }
 
-  private static identityHover(): void {
+  /**
+   * Reveal the identity matrix when hovering over the identity element.
+   */
+  public static identityHover(): void {
     const btn: HTMLElement | null = document.getElementById("identity-btn");
 
     btn!.addEventListener("mouseover", () => {
@@ -251,6 +254,60 @@ export class DisplayController {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mathjax: any = MathJax;
       mathjax.typeset();
+    });
+  }
+
+  /**
+   * Adds event listener for cube/square button.
+   */
+  public static addCubeSquareBtnListener() {
+    const btn: HTMLElement | null = document.getElementById("cube-btn");
+    btn!.addEventListener("click", () => {
+      if (Validator.areBtnsClickable()) {
+        this.selectCubeSquare();
+        if (btn!.textContent === "Cube") {
+          this.addCubeContent();
+
+          document.getElementById("axes")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("cube")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("transform-cube")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+
+          this.addInteractivity();
+        } else {
+          this.addSquareContent();
+          document.getElementById("transform-square")!.style.transform = "";
+        }
+      }
+    });
+  }
+
+  /**
+   * Adds event listener for pyramid/triangle button.
+   */
+  public static addPyramidTriangleBtnListener() {
+    const btn: HTMLElement | null = document.getElementById("pyramid-btn");
+    btn!.addEventListener("click", () => {
+      if (Validator.areBtnsClickable()) {
+        this.selectPyramidTriangle();
+        if (btn!.textContent === "Pyramid") {
+          this.addPyramidContent();
+
+          document.getElementById("axes")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("pyramid")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("transform-pyramid")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+
+          this.addInteractivity();
+        } else {
+          this.addTriangleContent();
+          document.getElementById("transform-triangle")!.style.transform = "";
+        }
+      }
     });
   }
 
@@ -335,52 +392,6 @@ export class DisplayController {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const mathjax: any = MathJax;
         mathjax.typeset();
-      }
-    });
-  }
-
-  private static addCubeSquareBtnListener() {
-    const btn: HTMLElement | null = document.getElementById("cube-btn");
-    btn!.addEventListener("click", () => {
-      if (Validator.areBtnsClickable()) {
-        this.selectCubeSquare();
-        if (btn!.textContent === "Cube") {
-          this.addCubeContent();
-
-          document.getElementById("axes")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-          document.getElementById("cube")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-          document.getElementById("transform-cube")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-
-          this.addInteractivity();
-        } else {
-          this.addSquareContent();
-        }
-      }
-    });
-  }
-
-  private static addPyramidTriangleBtnListener() {
-    const btn: HTMLElement | null = document.getElementById("pyramid-btn");
-    btn!.addEventListener("click", () => {
-      if (Validator.areBtnsClickable()) {
-        this.selectPyramidTriangle();
-        if (btn!.textContent === "Pyramid") {
-          this.addPyramidContent();
-
-          document.getElementById("axes")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-          document.getElementById("pyramid")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-          document.getElementById("transform-pyramid")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-
-          this.addInteractivity();
-        } else {
-          this.addTriangleContent();
-        }
       }
     });
   }
