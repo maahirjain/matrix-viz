@@ -36,13 +36,6 @@ export class DisplayController {
   }
 
   public static addInteractivity(): void {
-    const cube: HTMLElement | null = document.getElementById("cube");
-    const transformCube: HTMLElement | null =
-      document.getElementById("transform-cube");
-    const pyramid: HTMLElement | null = document.getElementById("pyramid");
-    const transformPyramid: HTMLElement | null =
-      document.getElementById("transform-pyramid");
-    const axes: HTMLElement | null = document.getElementById("axes");
     const graph: HTMLElement | null = document.getElementById("graph");
 
     let isDragging: boolean = false;
@@ -58,18 +51,58 @@ export class DisplayController {
     });
 
     graph!.addEventListener("mousemove", (e) => {
-      if (!isDragging) return;
-      currentX = e.clientX - startX;
-      currentY = e.clientY - startY;
+      if (
+        document.getElementById("three-d-btn")!.classList.contains("selected")
+      ) {
+        const cube: HTMLElement | null = document.getElementById("cube");
+        const transformCube: HTMLElement | null =
+          document.getElementById("transform-cube");
+        const pyramid: HTMLElement | null = document.getElementById("pyramid");
+        const transformPyramid: HTMLElement | null =
+          document.getElementById("transform-pyramid");
+        const axes: HTMLElement | null = document.getElementById("axes");
 
-      if (cube != null) {
-        cube!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
-        transformCube!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
-      } else {
-        pyramid!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
-        transformPyramid!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+        if (!isDragging) return;
+        currentX = e.clientX - startX;
+        currentY = e.clientY - startY;
+
+        const axesTransform: string = document
+          .getElementById("axes")!
+          .style.getPropertyValue("transform");
+
+        if (document.getElementById("cube") != null) {
+          const cubeTransform: string = document
+            .getElementById("cube")!
+            .style.getPropertyValue("transform");
+          const transformCubeTransform: string = document
+            .getElementById("transform-cube")!
+            .style.getPropertyValue("transform");
+
+          cube!.style.transform =
+            `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+            cubeTransform.split(" ").slice(2).join(" ");
+          transformCube!.style.transform =
+            `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+            transformCubeTransform.split(" ").slice(2).join(" ");
+        } else {
+          const pyramidTransform: string = document
+            .getElementById("pyramid")!
+            .style.getPropertyValue("transform");
+          const transformPyramidTransform: string = document
+            .getElementById("transform-pyramid")!
+            .style.getPropertyValue("transform");
+
+          pyramid!.style.transform =
+            `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+            pyramidTransform.split(" ").slice(2).join(" ");
+          transformPyramid!.style.transform =
+            `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+            transformPyramidTransform.split(" ").slice(2).join(" ");
+        }
+        axes!.style.transform =
+          `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+          axesTransform.split(" ").slice(2).join(" ");
       }
-      axes!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
     });
 
     graph!.addEventListener("mouseup", () => {
@@ -205,22 +238,14 @@ export class DisplayController {
       if (Validator.areBtnsClickable()) {
         this.selectCubeSquare();
         if (btn!.textContent === "Cube") {
-          const axesTransform: string = document
-            .getElementById("axes")!
-            .style.getPropertyValue("transform");
-          const cubeTransform: string = document
-            .getElementById("cube")!
-            .style.getPropertyValue("transform");
-          const transformCubeTransform: string = document
-            .getElementById("transform-cube")!
-            .style.getPropertyValue("transform");
-
           this.addCubeContent();
 
-          document.getElementById("axes")!.style.transform = axesTransform;
-          document.getElementById("cube")!.style.transform = cubeTransform;
+          document.getElementById("axes")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("cube")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
           document.getElementById("transform-cube")!.style.transform =
-            transformCubeTransform;
+            `rotateX(-25deg) rotateY(-25deg)`;
 
           this.addInteractivity();
         } else {
@@ -236,23 +261,14 @@ export class DisplayController {
       if (Validator.areBtnsClickable()) {
         this.selectPyramidTriangle();
         if (btn!.textContent === "Pyramid") {
-          const axesTransform: string = document
-            .getElementById("axes")!
-            .style.getPropertyValue("transform");
-          const pyramidTransform: string = document
-            .getElementById("pyramid")!
-            .style.getPropertyValue("transform");
-          const transformPyramidTransform: string = document
-            .getElementById("transform-pyramid")!
-            .style.getPropertyValue("transform");
-
           this.addPyramidContent();
 
-          document.getElementById("axes")!.style.transform = axesTransform;
+          document.getElementById("axes")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
           document.getElementById("pyramid")!.style.transform =
-            pyramidTransform;
+            `rotateX(-25deg) rotateY(-25deg)`;
           document.getElementById("transform-pyramid")!.style.transform =
-            transformPyramidTransform;
+            `rotateX(-25deg) rotateY(-25deg)`;
 
           this.addInteractivity();
         } else {
