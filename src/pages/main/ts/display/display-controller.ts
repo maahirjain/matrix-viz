@@ -20,7 +20,7 @@ export class DisplayController {
         htmlElement!.classList.remove("light-theme");
         htmlElement!.classList.add("dark-theme");
 
-        svg!.innerHTML = `<path fill="white" d="M17.75,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5" />`;
+        svg!.innerHTML = `<path fill="white" d="M17.75,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.2,9.5"/>`;
       } else {
         htmlElement!.classList.remove("dark-theme");
         htmlElement!.classList.add("light-theme");
@@ -258,57 +258,61 @@ export class DisplayController {
   }
 
   /**
-   * Adds event listener for cube/square button.
+   * Resets the cube/square in the main graph.
    */
-  public static addCubeSquareBtnListener() {
-    const btn: HTMLElement | null = document.getElementById("cube-btn");
-    btn!.addEventListener("click", () => {
-      if (Validator.areBtnsClickable()) {
-        this.selectCubeSquare();
-        if (btn!.textContent === "Cube") {
-          this.addCubeContent();
+  public static cubeSquareReset() {
+    if (Validator.areBtnsClickable()) {
+      this.selectCubeSquare();
+      if (document.getElementById("cube-btn")!.textContent === "Cube") {
+        this.addCubeContent();
 
-          document.getElementById("axes")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-          document.getElementById("cube")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-          document.getElementById("transform-cube")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
+        document.getElementById("axes")!.style.transform =
+          `rotateX(-25deg) rotateY(-25deg)`;
+        document.getElementById("cube")!.style.transform =
+          `rotateX(-25deg) rotateY(-25deg)`;
+        document.getElementById("transform-cube")!.style.transform =
+          `rotateX(-25deg) rotateY(-25deg)`;
 
-          this.addInteractivity();
-        } else {
-          this.addSquareContent();
-          document.getElementById("transform-square")!.style.transform = "";
-        }
+        this.addInteractivity();
+      } else {
+        this.addSquareContent();
+        document.getElementById("transform-square")!.style.transform = "";
       }
-    });
+    }
   }
 
   /**
-   * Adds event listener for pyramid/triangle button.
+   * Resets the pyramid/triangle in the main graph.
    */
-  public static addPyramidTriangleBtnListener() {
-    const btn: HTMLElement | null = document.getElementById("pyramid-btn");
-    btn!.addEventListener("click", () => {
-      if (Validator.areBtnsClickable()) {
-        this.selectPyramidTriangle();
-        if (btn!.textContent === "Pyramid") {
-          this.addPyramidContent();
+  public static pyramidTriangleReset() {
+    if (Validator.areBtnsClickable()) {
+      this.selectPyramidTriangle();
+      if (document.getElementById("pyramid-btn")!.textContent === "Pyramid") {
+        this.addPyramidContent();
 
-          document.getElementById("axes")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-          document.getElementById("pyramid")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-          document.getElementById("transform-pyramid")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
+        document.getElementById("axes")!.style.transform =
+          `rotateX(-25deg) rotateY(-25deg)`;
+        document.getElementById("pyramid")!.style.transform =
+          `rotateX(-25deg) rotateY(-25deg)`;
+        document.getElementById("transform-pyramid")!.style.transform =
+          `rotateX(-25deg) rotateY(-25deg)`;
 
-          this.addInteractivity();
-        } else {
-          this.addTriangleContent();
-          document.getElementById("transform-triangle")!.style.transform = "";
-        }
+        this.addInteractivity();
+      } else {
+        this.addTriangleContent();
+        document.getElementById("transform-triangle")!.style.transform = "";
       }
-    });
+    }
+  }
+
+  private static addCubeSquareBtnListener() {
+    const btn: HTMLElement | null = document.getElementById("cube-btn");
+    btn!.addEventListener("click", this.cubeSquareReset.bind(this));
+  }
+
+  private static addPyramidTriangleBtnListener() {
+    const btn: HTMLElement | null = document.getElementById("pyramid-btn");
+    btn!.addEventListener("click", this.pyramidTriangleReset.bind(this));
   }
 
   private static addTwoDBtnListener(): void {

@@ -24,9 +24,9 @@ export class Animator {
 
   private static reset(): void {
     if (document.getElementById("cube-btn")!.classList.contains("selected")) {
-      DisplayController.addCubeSquareBtnListener();
+      DisplayController.cubeSquareReset();
     } else {
-      DisplayController.addPyramidTriangleBtnListener();
+      DisplayController.pyramidTriangleReset();
     }
 
     document.getElementById("transform-stack")!.innerHTML =

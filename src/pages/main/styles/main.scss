@@ -129,11 +129,11 @@ svg {
     width: 30px;
 }
 
-.light-theme svg:hover {
+.light-theme #header svg:hover {
     animation: spin 4s linear infinite;
 }
 
-.dark-theme svg:hover{
+.dark-theme #header svg:hover{
     animation: swing 4s ease-in-out infinite;
 }
 

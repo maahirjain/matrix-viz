@@ -9,12 +9,13 @@ export class ValidatorMediator {
    */
   public static processInputMatrix(): string[][] {
     const inputArr: string[] = Array.from(
-      document.querySelectorAll("input")
-    ).map((input) => "" + input.value);
+      document.querySelectorAll('input[type="text"]')
+    ).map((input) => "" + (<HTMLInputElement>input).value);
+    const length: number = inputArr.length;
 
     const matrix: string[][] = [];
     while (inputArr.length) {
-      matrix.push(inputArr.splice(0, Math.sqrt(inputArr.length)));
+      matrix.push(inputArr.splice(0, Math.sqrt(length)));
     }
 
     return matrix;
