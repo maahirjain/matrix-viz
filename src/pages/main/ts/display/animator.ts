@@ -20,6 +20,7 @@ export class Animator {
     this.reset();
     const shape: HTMLElement = this.getCurrentShape();
     document.documentElement.classList.add("animate");
+    shape.classList.remove("paused");
   }
 
   private static reset(): void {
