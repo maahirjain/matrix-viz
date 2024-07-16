@@ -141,42 +141,10 @@ export class DisplayController {
     });
   }
 
-  private static identityHover(): void {
-    const btn: HTMLElement | null = document.getElementById("identity-btn");
-
-    btn!.addEventListener("mouseover", () => {
-      let identityStr: string;
-
-      if (this.is3DSelected()) {
-        identityStr =
-          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$";
-      } else {
-        identityStr = "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$";
-      }
-      document.getElementById("matrix-mathjax")!.innerHTML = identityStr;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mathjax: any = MathJax;
-      mathjax.typeset();
-    });
-
-    btn!.addEventListener("mouseout", () => {
-      let identityStr: string;
-      if (this.is3DSelected()) {
-        identityStr =
-          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$";
-      } else {
-        identityStr = "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$";
-      }
-
-      document.getElementById("matrix-mathjax")!.innerHTML =
-        `${identityStr}<div><div>Hover over a transformation below to see its associated matrix</div></div>`;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mathjax: any = MathJax;
-      mathjax.typeset();
-    });
-  }
-
-  private static pauseOrPlay(): void {
+  /**
+   * Pauses or plays/resumes the ongoing animation based on the current state of the pause/play button.
+   */
+  public static pauseOrPlay(): void {
     const btn: HTMLElement | null = document.getElementById("pause-play-btn");
     btn!.addEventListener("click", () => {
       const transformCube: HTMLElement | null =
@@ -223,6 +191,41 @@ export class DisplayController {
         transformTriangle!.classList.remove("paused");
         btn!.textContent = "Pause";
       }
+    });
+  }
+
+  private static identityHover(): void {
+    const btn: HTMLElement | null = document.getElementById("identity-btn");
+
+    btn!.addEventListener("mouseover", () => {
+      let identityStr: string;
+
+      if (this.is3DSelected()) {
+        identityStr =
+          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$";
+      } else {
+        identityStr = "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$";
+      }
+      document.getElementById("matrix-mathjax")!.innerHTML = identityStr;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const mathjax: any = MathJax;
+      mathjax.typeset();
+    });
+
+    btn!.addEventListener("mouseout", () => {
+      let identityStr: string;
+      if (this.is3DSelected()) {
+        identityStr =
+          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$";
+      } else {
+        identityStr = "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$";
+      }
+
+      document.getElementById("matrix-mathjax")!.innerHTML =
+        `${identityStr}<div><div>Hover over a transformation below to see its associated matrix</div></div>`;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const mathjax: any = MathJax;
+      mathjax.typeset();
     });
   }
 

@@ -20,6 +20,14 @@ export class ValidatorMediator {
     return matrix;
   }
 
+  /**
+   * Adds validation event listeners to input elements and the enter button.
+   */
+  public static addEventListeners(): void {
+    this.addInputEventListeners();
+    this.addEnterBtnEventListener();
+  }
+
   private static addEnterBtnEventListener(): void {
     const enterBtn: HTMLElement | null = document.getElementById("enter-btn");
     enterBtn!.addEventListener("mouseover", () => {
@@ -44,13 +52,5 @@ export class ValidatorMediator {
         }
       });
     });
-  }
-
-  /**
-   * Adds validation event listeners to input elements and the enter button.
-   */
-  public static addEventListeners(): void {
-    this.addInputEventListeners();
-    this.addEnterBtnEventListener();
   }
 }
