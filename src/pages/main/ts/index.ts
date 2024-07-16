@@ -4,4 +4,5 @@ import { DisplayController } from "./display/display-controller";
 
 DisplayController.toggleTheme();
 DisplayController.addEventListeners();
+DisplayController.addInteractivity();
 ValidatorMediator.addEventListeners();

@@ -35,6 +35,52 @@ export class DisplayController {
     this.pauseOrPlay();
   }
 
+  public static addInteractivity(): void {
+    const cube: HTMLElement | null = document.getElementById("cube");
+    const transformCube: HTMLElement | null =
+      document.getElementById("transform-cube");
+    const pyramid: HTMLElement | null = document.getElementById("pyramid");
+    const transformPyramid: HTMLElement | null =
+      document.getElementById("transform-pyramid");
+    const axes: HTMLElement | null = document.getElementById("axes");
+    const graph: HTMLElement | null = document.getElementById("graph");
+
+    let isDragging: boolean = false;
+    let startX: number;
+    let startY: number;
+    let currentX: number = 0;
+    let currentY: number = 0;
+
+    graph!.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.clientX - currentX;
+      startY = e.clientY - currentY;
+    });
+
+    graph!.addEventListener("mousemove", (e) => {
+      if (!isDragging) return;
+      currentX = e.clientX - startX;
+      currentY = e.clientY - startY;
+
+      if (cube != null) {
+        cube!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+        transformCube!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+      } else {
+        pyramid!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+        transformPyramid!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+      }
+      axes!.style.transform = `rotateX(${-currentY}deg) rotateY(${currentX}deg)`;
+    });
+
+    graph!.addEventListener("mouseup", () => {
+      isDragging = false;
+    });
+
+    graph!.addEventListener("mouseleave", () => {
+      isDragging = false;
+    });
+  }
+
   private static pauseOrPlay(): void {
     const btn: HTMLElement | null = document.getElementById("pause-play-btn");
     btn!.addEventListener("click", () => {
@@ -159,7 +205,24 @@ export class DisplayController {
       if (Validator.areBtnsClickable()) {
         this.selectCubeSquare();
         if (btn!.textContent === "Cube") {
+          const axesTransform: string = document
+            .getElementById("axes")!
+            .style.getPropertyValue("transform");
+          const cubeTransform: string = document
+            .getElementById("cube")!
+            .style.getPropertyValue("transform");
+          const transformCubeTransform: string = document
+            .getElementById("transform-cube")!
+            .style.getPropertyValue("transform");
+
           this.addCubeContent();
+
+          document.getElementById("axes")!.style.transform = axesTransform;
+          document.getElementById("cube")!.style.transform = cubeTransform;
+          document.getElementById("transform-cube")!.style.transform =
+            transformCubeTransform;
+
+          this.addInteractivity();
         } else {
           this.addSquareContent();
         }
@@ -173,7 +236,25 @@ export class DisplayController {
       if (Validator.areBtnsClickable()) {
         this.selectPyramidTriangle();
         if (btn!.textContent === "Pyramid") {
+          const axesTransform: string = document
+            .getElementById("axes")!
+            .style.getPropertyValue("transform");
+          const pyramidTransform: string = document
+            .getElementById("pyramid")!
+            .style.getPropertyValue("transform");
+          const transformPyramidTransform: string = document
+            .getElementById("transform-pyramid")!
+            .style.getPropertyValue("transform");
+
           this.addPyramidContent();
+
+          document.getElementById("axes")!.style.transform = axesTransform;
+          document.getElementById("pyramid")!.style.transform =
+            pyramidTransform;
+          document.getElementById("transform-pyramid")!.style.transform =
+            transformPyramidTransform;
+
+          this.addInteractivity();
         } else {
           this.addTriangleContent();
         }
@@ -201,21 +282,21 @@ export class DisplayController {
 
   private static addCubeContent(): void {
     document.getElementById("graph")!.innerHTML =
-      `<div id="cube"><div id="cube-face-front"></div><div id="cube-face-back"></div><div id="cube-face-right"></div><div id="cube-face-left"></div><div id="cube-face-top"></div><div id="cube-face-bottom"></div></div><div id="transform-cube" class="paused"><div id="transform-cube-face-front"></div><div id="transform-cube-face-back"></div><div id="transform-cube-face-right"></div><div id="transform-cube-face-left"></div><div id="transform-cube-face-top"></div><div id="transform-cube-face-bottom"></div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
+      `<div id="cube"><div id="cube-face-front"></div><div id="cube-face-back"></div><div id="cube-face-right"></div><div id="cube-face-left"></div><div id="cube-face-top"></div><div id="cube-face-bottom"></div></div><div id="transform-cube" class="paused"><div id="transform-cube-face-front"></div><div id="transform-cube-face-back"></div><div id="transform-cube-face-right"></div><div id="transform-cube-face-left"></div><div id="transform-cube-face-top"></div><div id="transform-cube-face-bottom"></div></div><div id="axes"><div id="x-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div><div id="y-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div><div id="z-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div></div>`;
   }
 
   private static addPyramidContent(): void {
     document.getElementById("graph")!.innerHTML =
-      `<div id="pyramid"><div id = "pyramid-side-one" class="pyramid-side">&#9650;</div><div id = "pyramid-side-two" class="pyramid-side">&#9650;</div><div id = "pyramid-side-three" class="pyramid-side">&#9650;</div><div id = "pyramid-side-four" class="pyramid-side">&#9650;</div></div><div id="transform-pyramid" class="paused"><div id="transform-pyramid-side-one" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-two" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-three" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-four" class="transform-pyramid-side">&#9650;</div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
+      `<div id="pyramid"><div id = "pyramid-side-one" class="pyramid-side">&#9650;</div><div id = "pyramid-side-two" class="pyramid-side">&#9650;</div><div id = "pyramid-side-three" class="pyramid-side">&#9650;</div><div id = "pyramid-side-four" class="pyramid-side">&#9650;</div></div><div id="transform-pyramid" class="paused"><div id="transform-pyramid-side-one" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-two" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-three" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-four" class="transform-pyramid-side">&#9650;</div></div><div id="axes"><div id="x-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div><div id="y-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div><div id="z-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div></div>`;
   }
 
   private static addSquareContent(): void {
     document.getElementById("graph")!.innerHTML =
-      `<div id="square"></div><div id="transform-square" class="paused"></div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
+      `<div id="square"></div><div id="transform-square" class="paused"></div><div id="two-d-axes"><div id="two-d-x-axis"></div><div id="two-d-y-axis"></div></div>`;
   }
 
   private static addTriangleContent(): void {
     document.getElementById("graph")!.innerHTML =
-      `<div id="triangle">&#9650;</div><div id="transform-triangle" class="paused">&#9650;</div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
+      `<div id="triangle">&#9650;</div><div id="transform-triangle" class="paused">&#9650;</div><div id="two-d-axes"><div id="two-d-x-axis"></div><div id="two-d-y-axis"></div></div>`;
   }
 }

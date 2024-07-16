@@ -263,7 +263,6 @@ button {
     align-items: center;
     justify-items: center;
     border-radius: 10px;
-    perspective: none;
     perspective-origin: center;
     overflow: hidden;
 }
@@ -395,8 +394,59 @@ button {
     grid-column-start: 1;
     transform-style: preserve-3d;
     transform: rotateX(-25deg) rotateY(-25deg);
+    width: 500px;
+    height: 500px;
     z-index: 0;
 }
+
+.axis {
+    position: absolute;
+    transform-style: preserve-3d;
+    width: 2px;
+    height: 2px;
+}
+
+.face {
+    position: absolute;
+    width: 500px;  
+    height: 2px;  
+}
+
+#x-axis .face { background-color: red; }
+#y-axis .face { background-color: green; }
+#z-axis .face { background-color: blue; }
+
+
+.face-front { transform: translateZ(1px); }
+.face-back { transform: rotateY(180deg) translateZ(1px); }
+
+.face-left { 
+    transform: rotateY(-90deg) translateZ(1px); 
+    width: 2px; 
+    height: 2px; 
+}
+
+.face-right { 
+    transform: rotateY(90deg) translateZ(1px); 
+    width: 2px; 
+    height: 2px; 
+}
+
+.face-top { 
+    transform: rotateX(90deg) translateZ(1px); 
+    width: 500px; 
+    height: 2px; 
+}
+
+.face-bottom { 
+    transform: rotateX(-90deg) translateZ(1px); 
+    width: 500px; 
+    height: 2px; 
+}
+
+#x-axis { transform: translateX(-250px); }
+#y-axis { transform: translateY(-250px) rotateZ(90deg); }
+#z-axis { transform: translateZ(250px) rotateY(90deg); }
 
 #two-d-axes {
     display: flex;
@@ -408,27 +458,19 @@ button {
     z-index: 0;
 }
 
-#x-axis {
+#two-d-x-axis {
     position: absolute;
     width: 5000px;
     height: 2px;
     background-color: red;
 }
 
-#y-axis {
+#two-d-y-axis {
     position: absolute;
     width: 5000px;
     height: 2px;
     background-color: green;
     transform: rotateZ(90deg);
-}
-
-#z-axis {
-    position: absolute;
-    width: 5000px;
-    height: 2px;
-    background-color: blue;
-    transform: rotateY(90deg);
 }
 
 #transforms {
