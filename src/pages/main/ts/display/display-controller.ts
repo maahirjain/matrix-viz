@@ -160,35 +160,60 @@ export class DisplayController {
         document.getElementById("transform-triangle");
 
       if (btn!.textContent === "Pause") {
-        transformCube!.classList.add("paused");
-        transformPyramid!.classList.add("paused");
-        transforms.forEach((transform) => transform.classList.add("paused"));
-        transformSquare!.classList.add("paused");
-        transformTriangle!.classList.add("paused");
+        if (transformCube != null) {
+          transformCube.classList.add("paused");
+          this.cubeTransform = window
+            .getComputedStyle(document.getElementById("cube")!)
+            .getPropertyValue("transform");
+          this.transformCubeTransform = window
+            .getComputedStyle(document.getElementById("transform-cube")!)
+            .getPropertyValue("transform");
+        }
 
-        this.cubeTransform = window
-          .getComputedStyle(document.getElementById("cube")!)
-          .getPropertyValue("transform");
-        this.transformCubeTransform = window
-          .getComputedStyle(document.getElementById("transform-cube")!)
-          .getPropertyValue("transform");
-        this.pyramidTransform = window
-          .getComputedStyle(document.getElementById("pyramid")!)
-          .getPropertyValue("transform");
-        this.transformPyramidTransform = window
-          .getComputedStyle(document.getElementById("pyramid-transform")!)
-          .getPropertyValue("transform");
+        if (transformPyramid != null) {
+          transformPyramid.classList.add("paused");
+          this.pyramidTransform = window
+            .getComputedStyle(document.getElementById("pyramid")!)
+            .getPropertyValue("transform");
+          this.transformPyramidTransform = window
+            .getComputedStyle(document.getElementById("pyramid-transform")!)
+            .getPropertyValue("transform");
+        }
+
+        transforms.forEach((transform) => transform.classList.add("paused"));
+
+        if (transformSquare != null) {
+          transformSquare.classList.add("paused");
+        }
+
+        if (transformTriangle != null) {
+          transformTriangle.classList.add("paused");
+        }
+
         this.axesTransform = window
           .getComputedStyle(document.getElementById("axes")!)
           .getPropertyValue("transform");
 
         btn!.textContent = "Resume";
       } else {
-        transformCube!.classList.remove("paused");
-        transformPyramid!.classList.remove("paused");
+        if (transformCube != null) {
+          transformCube.classList.remove("paused");
+        }
+
+        if (transformPyramid != null) {
+          transformPyramid!.classList.remove("paused");
+        }
+
         transforms.forEach((transform) => transform.classList.remove("paused"));
-        transformSquare!.classList.remove("paused");
-        transformTriangle!.classList.remove("paused");
+
+        if (transformSquare != null) {
+          transformSquare!.classList.remove("paused");
+        }
+
+        if (transformTriangle != null) {
+          transformTriangle!.classList.remove("paused");
+        }
+
         btn!.textContent = "Pause";
       }
     });
