@@ -394,8 +394,8 @@ button {
     grid-column-start: 1;
     transform-style: preserve-3d;
     transform: rotateX(-25deg) rotateY(-25deg);
-    width: 500px;
-    height: 500px;
+    width: 680px;
+    height: 680px;
     z-index: 0;
 }
 
@@ -408,7 +408,7 @@ button {
 
 .face {
     position: absolute;
-    width: 500px;  
+    width: 680px;  
     height: 2px;  
 }
 
@@ -434,19 +434,19 @@ button {
 
 .face-top { 
     transform: rotateX(90deg) translateZ(1px); 
-    width: 500px; 
+    width: 680px; 
     height: 2px; 
 }
 
 .face-bottom { 
     transform: rotateX(-90deg) translateZ(1px); 
-    width: 500px; 
+    width: 680px; 
     height: 2px; 
 }
 
-#x-axis { transform: translateX(-250px); }
-#y-axis { transform: translateY(-250px) rotateZ(90deg); }
-#z-axis { transform: translateZ(250px) rotateY(90deg); }
+#x-axis { transform: translateX(-340px); }
+#y-axis { transform: translateY(-340px) rotateZ(90deg); }
+#z-axis { transform: translateZ(340px) rotateY(90deg); }
 
 #two-d-axes {
     display: flex;
