@@ -61,8 +61,12 @@
         color: themed(secondary);
     }
 
-    #options path {
-        fill: themed(quinary);
+    label {
+        color: themed(text);
+    }
+
+    #options input {
+        accent-color: themed(secondary);
     }
 
     #graph {
@@ -192,7 +196,7 @@ h1 {
     align-content: center;
 }
 
-input {
+input[type="text"] {
     color: black !important;
     font-size: medium;
     text-align: center;
@@ -245,10 +249,6 @@ button {
     display: flex;
     align-items: center;
     gap: 8px;
-}
-
-#options svg {
-    width: 40px;
 }
 
 #options div:last-child {
