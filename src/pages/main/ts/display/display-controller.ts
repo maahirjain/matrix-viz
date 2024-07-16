@@ -45,16 +45,24 @@ export class DisplayController {
       const transforms: HTMLElement[] = Array.from(
         document.querySelectorAll("transform-stack *")
       );
+      const transformSquare: HTMLElement | null =
+        document.getElementById("transform-square");
+      const transformTriangle: HTMLElement | null =
+        document.getElementById("transform-triangle");
 
       if (btn!.textContent === "Pause") {
         transformCube!.classList.add("paused");
         transformPyramid!.classList.add("paused");
         transforms.forEach((transform) => transform.classList.add("paused"));
+        transformSquare!.classList.add("paused");
+        transformTriangle!.classList.add("paused");
         btn!.textContent = "Resume";
       } else {
         transformCube!.classList.remove("paused");
         transformPyramid!.classList.remove("paused");
         transforms.forEach((transform) => transform.classList.remove("paused"));
+        transformSquare!.classList.remove("paused");
+        transformTriangle!.classList.remove("paused");
         btn!.textContent = "Pause";
       }
     });
@@ -193,21 +201,21 @@ export class DisplayController {
 
   private static addCubeContent(): void {
     document.getElementById("graph")!.innerHTML =
-      `<div id="cube"><div id="cube-face-front"></div><div id="cube-face-back"></div><div id="cube-face-right"></div><div id="cube-face-left"></div><div id="cube-face-top"></div><div id="cube-face-bottom"></div></div><div id="transform-cube"><div id="transform-cube-face-front"></div><div id="transform-cube-face-back"></div><div id="transform-cube-face-right"></div><div id="transform-cube-face-left"></div><div id="transform-cube-face-top"></div><div id="transform-cube-face-bottom"></div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
+      `<div id="cube"><div id="cube-face-front"></div><div id="cube-face-back"></div><div id="cube-face-right"></div><div id="cube-face-left"></div><div id="cube-face-top"></div><div id="cube-face-bottom"></div></div><div id="transform-cube" class="paused"><div id="transform-cube-face-front"></div><div id="transform-cube-face-back"></div><div id="transform-cube-face-right"></div><div id="transform-cube-face-left"></div><div id="transform-cube-face-top"></div><div id="transform-cube-face-bottom"></div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
   }
 
   private static addPyramidContent(): void {
     document.getElementById("graph")!.innerHTML =
-      `<div id="pyramid"><div id = "pyramid-side-one" class="pyramid-side">&#9650;</div><div id = "pyramid-side-two" class="pyramid-side">&#9650;</div><div id = "pyramid-side-three" class="pyramid-side">&#9650;</div><div id = "pyramid-side-four" class="pyramid-side">&#9650;</div></div><div id="transform-pyramid"><div id="transform-pyramid-side-one" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-two" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-three" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-four" class="transform-pyramid-side">&#9650;</div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
+      `<div id="pyramid"><div id = "pyramid-side-one" class="pyramid-side">&#9650;</div><div id = "pyramid-side-two" class="pyramid-side">&#9650;</div><div id = "pyramid-side-three" class="pyramid-side">&#9650;</div><div id = "pyramid-side-four" class="pyramid-side">&#9650;</div></div><div id="transform-pyramid" class="paused"><div id="transform-pyramid-side-one" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-two" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-three" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-four" class="transform-pyramid-side">&#9650;</div></div><div id="axes"><div id="x-axis"></div><div id="y-axis"></div><div id="z-axis"></div></div>`;
   }
 
   private static addSquareContent(): void {
     document.getElementById("graph")!.innerHTML =
-      `<div id="square"></div><div id="transform-square"></div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
+      `<div id="square"></div><div id="transform-square" class="paused"></div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
   }
 
   private static addTriangleContent(): void {
     document.getElementById("graph")!.innerHTML =
-      `<div id="triangle">&#9650;</div><div id="transform-triangle">&#9650;</div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
+      `<div id="triangle">&#9650;</div><div id="transform-triangle" class="paused">&#9650;</div><div id="two-d-axes"><div id="x-axis"></div><div id="y-axis"></div></div>`;
   }
 }
