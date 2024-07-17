@@ -1,6 +1,8 @@
 import { DisplayController } from "./display-controller";
 
 export class Animator {
+  private static speed: number = 30;
+
   /**
    * Animates the graph and its associated linear transformations.
    *
@@ -21,6 +23,11 @@ export class Animator {
     const shape: HTMLElement = this.getCurrentShape();
     document.documentElement.classList.add("animate");
     shape.classList.remove("paused");
+    const div: HTMLElement | null = document.querySelector(
+      "#options div:last-child"
+    );
+    div!.style.display = "flex";
+    this.addSpeedBarListener();
   }
 
   private static reset(): void {
@@ -49,5 +56,12 @@ export class Animator {
         return document.getElementById("transform-triangle")!;
       }
     }
+  }
+
+  private static addSpeedBarListener() {
+    const speedBar: HTMLElement = document.getElementById("speed")!;
+    speedBar!.addEventListener("input", () => {
+      this.speed = +(<HTMLInputElement>speedBar).value;
+    });
   }
 }
