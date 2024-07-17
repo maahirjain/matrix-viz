@@ -39,7 +39,7 @@ export class DisplayController {
     this.addThreeDBtnListener();
     this.addCubeSquareBtnListener();
     this.addPyramidTriangleBtnListener();
-    this.pauseOrPlay();
+    this.pauseOrPlayListener();
     this.identityHover();
   }
 
@@ -156,77 +156,75 @@ export class DisplayController {
    */
   public static pauseOrPlay(pause: boolean = false): void {
     const btn: HTMLElement | null = document.getElementById("pause-play-btn");
-    btn!.addEventListener("click", () => {
-      const transformCube: HTMLElement | null =
-        document.getElementById("transform-cube");
-      const transformPyramid: HTMLElement | null =
-        document.getElementById("transform-pyramid");
-      const transforms: HTMLElement[] = Array.from(
-        document.querySelectorAll("transform-stack *")
-      );
-      const transformSquare: HTMLElement | null =
-        document.getElementById("transform-square");
-      const transformTriangle: HTMLElement | null =
-        document.getElementById("transform-triangle");
+    const transformCube: HTMLElement | null =
+      document.getElementById("transform-cube");
+    const transformPyramid: HTMLElement | null =
+      document.getElementById("transform-pyramid");
+    const transforms: HTMLElement[] = Array.from(
+      document.querySelectorAll("transform-stack *")
+    );
+    const transformSquare: HTMLElement | null =
+      document.getElementById("transform-square");
+    const transformTriangle: HTMLElement | null =
+      document.getElementById("transform-triangle");
 
-      if (btn!.textContent === "Pause" || pause) {
-        if (transformCube != null) {
-          transformCube.classList.add("paused");
-          this.cubeTransform = window
-            .getComputedStyle(document.getElementById("cube")!)
-            .getPropertyValue("transform");
-          this.transformCubeTransform = window
-            .getComputedStyle(document.getElementById("transform-cube")!)
-            .getPropertyValue("transform");
-        }
-
-        if (transformPyramid != null) {
-          transformPyramid.classList.add("paused");
-          this.pyramidTransform = window
-            .getComputedStyle(document.getElementById("pyramid")!)
-            .getPropertyValue("transform");
-          this.transformPyramidTransform = window
-            .getComputedStyle(document.getElementById("pyramid-transform")!)
-            .getPropertyValue("transform");
-        }
-
-        transforms.forEach((transform) => transform.classList.add("paused"));
-
-        if (transformSquare != null) {
-          transformSquare.classList.add("paused");
-        }
-
-        if (transformTriangle != null) {
-          transformTriangle.classList.add("paused");
-        }
-
-        this.axesTransform = window
-          .getComputedStyle(document.getElementById("axes")!)
+    if (btn!.textContent === "Pause" || pause) {
+      if (transformCube != null) {
+        transformCube.classList.add("paused");
+        this.cubeTransform = window
+          .getComputedStyle(document.getElementById("cube")!)
           .getPropertyValue("transform");
-
-        btn!.textContent = "Resume";
-      } else {
-        if (transformCube != null) {
-          transformCube.classList.remove("paused");
-        }
-
-        if (transformPyramid != null) {
-          transformPyramid!.classList.remove("paused");
-        }
-
-        transforms.forEach((transform) => transform.classList.remove("paused"));
-
-        if (transformSquare != null) {
-          transformSquare!.classList.remove("paused");
-        }
-
-        if (transformTriangle != null) {
-          transformTriangle!.classList.remove("paused");
-        }
-
-        btn!.textContent = "Pause";
+        this.transformCubeTransform = window
+          .getComputedStyle(document.getElementById("transform-cube")!)
+          .getPropertyValue("transform");
       }
-    });
+
+      if (transformPyramid != null) {
+        transformPyramid.classList.add("paused");
+        this.pyramidTransform = window
+          .getComputedStyle(document.getElementById("pyramid")!)
+          .getPropertyValue("transform");
+        this.transformPyramidTransform = window
+          .getComputedStyle(document.getElementById("pyramid-transform")!)
+          .getPropertyValue("transform");
+      }
+
+      transforms.forEach((transform) => transform.classList.add("paused"));
+
+      if (transformSquare != null) {
+        transformSquare.classList.add("paused");
+      }
+
+      if (transformTriangle != null) {
+        transformTriangle.classList.add("paused");
+      }
+
+      this.axesTransform = window
+        .getComputedStyle(document.getElementById("axes")!)
+        .getPropertyValue("transform");
+
+      btn!.textContent = "Resume";
+    } else {
+      if (transformCube != null) {
+        transformCube.classList.remove("paused");
+      }
+
+      if (transformPyramid != null) {
+        transformPyramid!.classList.remove("paused");
+      }
+
+      transforms.forEach((transform) => transform.classList.remove("paused"));
+
+      if (transformSquare != null) {
+        transformSquare!.classList.remove("paused");
+      }
+
+      if (transformTriangle != null) {
+        transformTriangle!.classList.remove("paused");
+      }
+
+      btn!.textContent = "Pause";
+    }
   }
 
   /**
@@ -301,6 +299,12 @@ export class DisplayController {
 
   public static get transform() {
     return this.currTransform;
+  }
+
+  private static pauseOrPlayListener() {
+    document.getElementById("pause-play-btn")!.addEventListener("click", () => {
+      this.pauseOrPlay();
+    });
   }
 
   private static addCubeSquareBtnListener() {

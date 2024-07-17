@@ -69,12 +69,15 @@ export class Animator {
       const time: number = 60 / self.speed;
 
       self.styleSheet!.innerHTML = `${keyframes1} ${keyframes2}`;
-      shape.style.animationPlayState = "paused";
 
       shape.style.animation = `graphTransform${i} ${time}s 1`;
       element.style.animation = `fadeIn ${time}s 1`;
 
       await this.timeout(time * 1000);
+
+      if (shape.classList.contains("paused")) {
+        await this.pauseClick();
+      }
 
       shape.style.transform =
         initialString + " " + cssTransform + " " + transformString;
@@ -86,6 +89,13 @@ export class Animator {
     DisplayController.pauseOrPlay(true);
     div!.style.display = "none";
     document.documentElement.classList.remove("animate");
+  }
+
+  private static async pauseClick() {
+    return new Promise<void>(
+      (resolve) =>
+        (document.getElementById("pause-play-btn")!.onclick = () => resolve())
+    );
   }
 
   private static getInitialTransform(str: string) {
