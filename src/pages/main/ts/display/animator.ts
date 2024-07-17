@@ -98,6 +98,7 @@ export class Animator {
         .getComputedStyle(shape)
         .getPropertyValue("transform");
       DisplayController.rawTransforms = addedTransforms;
+      DisplayController.stack = stack.innerHTML;
     }
 
     div!.style.display = "none";

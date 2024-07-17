@@ -9,6 +9,7 @@ export class DisplayController {
   private static transformPyramidTransform = `rotateX(-25deg) rotateY(-25deg)`;
   private static currTransform = `rotateX(-25deg) rotateY(-25deg)`;
   private static addedTransforms = "";
+  private static transformStack = `<button id="identity-btn">identity</button>`;
 
   /**
    * Toggles between light and dark modes.
@@ -304,6 +305,10 @@ export class DisplayController {
     this.addedTransforms = str;
   }
 
+  public static set stack(str: string) {
+    this.transformStack = str;
+  }
+
   private static pauseOrPlayListener() {
     document.getElementById("pause-play-btn")!.addEventListener("click", () => {
       this.pauseOrPlay();
@@ -377,6 +382,10 @@ export class DisplayController {
         this.addSquareContent();
         this.selectCubeSquare();
 
+        document.getElementById("transform-stack")!.innerHTML =
+          `<button id="identity-btn">identity</button>`;
+        this.identityHover();
+
         document.querySelector("#facts span")!.textContent = "\\(1\\)";
 
         document.querySelector("#facts div")!.innerHTML =
@@ -420,6 +429,9 @@ export class DisplayController {
 
         this.addCubeContent();
         this.selectCubeSquare();
+
+        document.getElementById("transform-stack")!.innerHTML =
+          this.transformStack;
 
         document.getElementById("axes")!.style.transform = this.currTransform;
         document.getElementById("cube")!.style.transform = this.currTransform;

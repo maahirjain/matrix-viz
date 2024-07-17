@@ -2,6 +2,7 @@ import { Matrix } from "../model/matrix";
 import { Validator } from "../model/validator";
 import { ValidatorMediator } from "./validator-mediator";
 import { Animator } from "../display/animator";
+import { DisplayController } from "../display/display-controller";
 
 export class MatrixMediator {
   /**
@@ -24,6 +25,12 @@ export class MatrixMediator {
             matrix.computeCSSTransforms()
           );
 
+          const identityMatrix3D = [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]
+          ];
+
           Animator.animate(
             computedTransforms,
             cssTransforms,
@@ -31,6 +38,19 @@ export class MatrixMediator {
             eigenMathJax,
             matricesMathJax
           );
+
+          if (
+            JSON.stringify(matrix.matrix) === JSON.stringify(identityMatrix3D)
+          ) {
+            if (document.getElementById("transform-cube") != null) {
+              document.getElementById("transform-cube")!.style.transform =
+                DisplayController.transform;
+            } else {
+              document.getElementById("transform-pyramid")!.style.transform =
+                DisplayController.transform;
+            }
+            DisplayController.shapeTransforms = DisplayController.transform;
+          }
         }
       }
     });
