@@ -28,6 +28,7 @@ export class Animator {
     );
     div!.style.display = "flex";
     this.addSpeedBarListener();
+    this.fillTeX(det, eigenMathJax);
   }
 
   private static reset(): void {
@@ -63,5 +64,13 @@ export class Animator {
     speedBar!.addEventListener("input", () => {
       this.speed = +(<HTMLInputElement>speedBar).value;
     });
+  }
+
+  private static fillTeX(det: number, eigenMathJax: string): void {
+    document.getElementById("facts")!.innerHTML = `<p><strong>Determinant: </strong><span class="mathjax">\\(${det}\\)</span></p><p><strong>Eigenvalues and Eigenvectors:</strong><div class="mathjax">$$\\displaylines{${eigenMathJax}}$$</div></p>`;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const mathjax: any = MathJax;
+    mathjax.typeset();
   }
 }
