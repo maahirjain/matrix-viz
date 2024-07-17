@@ -10,6 +10,7 @@ export class DisplayController {
   private static currTransform = `rotateX(-25deg) rotateY(-25deg)`;
   private static addedTransforms = "";
   private static transformStack = `<button id="identity-btn">identity</button>`;
+  private static matricesStr: string[];
 
   /**
    * Toggles between light and dark modes.
@@ -309,6 +310,10 @@ export class DisplayController {
     this.transformStack = str;
   }
 
+  public static set matricesMathJax(arr: string[]) {
+    this.matricesStr = arr;
+  }
+
   private static pauseOrPlayListener() {
     document.getElementById("pause-play-btn")!.addEventListener("click", () => {
       this.pauseOrPlay();
@@ -331,6 +336,11 @@ export class DisplayController {
           this.addInteractivity();
         } else {
           this.addSquareContent();
+
+          document.getElementById("transform-stack")!.innerHTML =
+            `<button id="identity-btn">identity</button>`;
+          this.identityHover();
+
           btn!.style.transform = "";
         }
       }
@@ -354,6 +364,11 @@ export class DisplayController {
           this.addInteractivity();
         } else {
           this.addTriangleContent();
+
+          document.getElementById("transform-stack")!.innerHTML =
+            `<button id="identity-btn">identity</button>`;
+          this.identityHover();
+
           btn!.style.transform = "";
         }
       }
@@ -432,6 +447,14 @@ export class DisplayController {
 
         document.getElementById("transform-stack")!.innerHTML =
           this.transformStack;
+
+        const stackChildren: HTMLElement[] = Array.from(
+          document.querySelectorAll("#transform-stack *")!
+        );
+        stackChildren.forEach((btn) => {
+          this.revealMatrix(btn, this.matricesStr[+btn.dataset.index!]);
+        });
+        this.identityHover();
 
         document.getElementById("axes")!.style.transform = this.currTransform;
         document.getElementById("cube")!.style.transform = this.currTransform;

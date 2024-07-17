@@ -67,6 +67,7 @@ export class Animator {
 
       const element: HTMLElement = document.createElement("button");
       element.textContent = transform;
+      element.dataset.index = "" + i;
 
       DisplayController.revealMatrix(element, matrixMathJax);
       stack.insertBefore(element, stack.firstChild);
@@ -98,6 +99,7 @@ export class Animator {
         .getComputedStyle(shape)
         .getPropertyValue("transform");
       DisplayController.rawTransforms = addedTransforms;
+      DisplayController.matricesMathJax = matricesMathJax;
       DisplayController.stack = stack.innerHTML;
     }
 
