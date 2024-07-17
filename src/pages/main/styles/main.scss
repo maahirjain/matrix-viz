@@ -255,6 +255,18 @@ button {
     display: none;
 }
 
+#options div:last-child > div {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 0;
+}
+
+#options div:last-child > div p {
+    margin: 0;
+    font-size: x-small;
+}
+
 #graph {
     display: grid;
     flex-grow: 1;
