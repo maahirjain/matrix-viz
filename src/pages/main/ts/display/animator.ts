@@ -2,6 +2,7 @@ import { DisplayController } from "./display-controller";
 
 export class Animator {
   private static speed: number = 30;
+  private static styleSheet = document.getElementById("keyframes");
 
   /**
    * Animates the graph and its associated linear transformations.
@@ -21,6 +22,7 @@ export class Animator {
   ): void {
     this.reset();
     const shape: HTMLElement = this.getCurrentShape();
+    const stack: HTMLElement = document.getElementById("transform-stack")!;
     document.documentElement.classList.add("animate");
     shape.classList.remove("paused");
     const div: HTMLElement | null = document.querySelector(
@@ -29,6 +31,48 @@ export class Animator {
     div!.style.display = "flex";
     this.addSpeedBarListener();
     this.fillTeX(det, eigenMathJax);
+
+    let initialString: string = "";
+    if (
+      document.getElementById("three-d-btn")!.classList.contains("selected")
+    ) {
+      initialString = `rotateX(-25deg) rotateY(-25deg)`;
+    }
+
+    let transformString: string = "";
+
+    for (let i = 0; i < cssTransforms.length; i++) {
+      const cssTransform: string = cssTransforms[i];
+      const transform: string = computedTransforms[i];
+      const matrixMathJax: string = matricesMathJax[i];
+
+      const keyframes1: string = `@keyframes graphTransform {
+          0% { transform: ${initialString + " " + transformString} }
+          100% { transform: ${initialString + " " + cssTransform + " " + transformString} }
+      }`;
+
+      const keyframes2: string = `@keyframes fadeIn {
+          0% { opacity: 0 }
+          100% { opacity: 1 }
+      }`;
+
+      const element: HTMLElement = document.createElement("button");
+      element.textContent = transform;
+      DisplayController.revealMatrix(element, matrixMathJax);
+      stack.insertBefore(element, stack.firstChild);
+
+      const time: number = 60 / this.speed;
+
+      this.styleSheet!.innerHTML = `${keyframes1} ${keyframes2}`;
+      shape.style.animation = `graphTransform ${time}s 1`;
+      element.style.animation = `fadeIn ${time}s 1`;
+
+      transformString = transformString + " " + cssTransform;
+    }
+
+    DisplayController.pauseOrPlay(true);
+    div!.style.display = "none";
+    document.documentElement.classList.remove("animate");
   }
 
   private static reset(): void {
@@ -67,7 +111,8 @@ export class Animator {
   }
 
   private static fillTeX(det: number, eigenMathJax: string): void {
-    document.getElementById("facts")!.innerHTML = `<p><strong>Determinant: </strong><span class="mathjax">\\(${det}\\)</span></p><p><strong>Eigenvalues and Eigenvectors:</strong><div class="mathjax">$$\\displaylines{${eigenMathJax}}$$</div></p>`;
+    document.getElementById("facts")!.innerHTML =
+      `<p><strong>Determinant: </strong><span class="mathjax">\\(${det}\\)</span></p><p><strong>Eigenvalues and Eigenvectors:</strong><div class="mathjax">$$\\displaylines{${eigenMathJax}}$$</div></p>`;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const mathjax: any = MathJax;

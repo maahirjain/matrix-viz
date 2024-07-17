@@ -144,7 +144,7 @@ export class DisplayController {
   /**
    * Pauses or plays/resumes the ongoing animation based on the current state of the pause/play button.
    */
-  public static pauseOrPlay(): void {
+  public static pauseOrPlay(pause: boolean = false): void {
     const btn: HTMLElement | null = document.getElementById("pause-play-btn");
     btn!.addEventListener("click", () => {
       const transformCube: HTMLElement | null =
@@ -159,7 +159,7 @@ export class DisplayController {
       const transformTriangle: HTMLElement | null =
         document.getElementById("transform-triangle");
 
-      if (btn!.textContent === "Pause") {
+      if (btn!.textContent === "Pause" || pause) {
         if (transformCube != null) {
           transformCube.classList.add("paused");
           this.cubeTransform = window
