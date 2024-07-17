@@ -377,6 +377,8 @@ export class DisplayController {
         this.addSquareContent();
         this.selectCubeSquare();
 
+        document.querySelector("#facts span")!.textContent = "\\(1\\)";
+
         document.querySelector("#facts div")!.innerHTML =
           "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\end{bmatrix}}$$";
 
@@ -423,6 +425,8 @@ export class DisplayController {
         document.getElementById("cube")!.style.transform = this.currTransform;
         document.getElementById("transform-cube")!.style.transform =
           this.currTransform + " " + this.addedTransforms;
+
+        document.querySelector("#facts span")!.textContent = "\\(1\\)";
 
         document.querySelector("#facts div")!.innerHTML =
           "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\\\0\\end{bmatrix}\\\\\\lambda_3 = 1, \\quad \\mathbf{v_3} = \\begin{bmatrix}0\\\\0\\\\1\\end{bmatrix}}$$";

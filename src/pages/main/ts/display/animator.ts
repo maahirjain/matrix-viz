@@ -44,7 +44,10 @@ export class Animator {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
-    document.getElementById("axes")!.style.transform = initialString;
+    const axes: HTMLElement | null = document.getElementById("axes");
+    if (axes != null) {
+      axes.style.transform = initialString;
+    }
     this.getInitialShape().style.transform = initialString;
 
     for (let i = 0; i < cssTransforms.length; i++) {
@@ -88,10 +91,15 @@ export class Animator {
       self.styleSheet!.innerHTML = "";
     }
 
-    DisplayController.shapeTransforms = window
-      .getComputedStyle(shape)
-      .getPropertyValue("transform");
-    DisplayController.rawTransforms = addedTransforms;
+    if (
+      document.getElementById("three-d-btn")!.classList.contains("selected")
+    ) {
+      DisplayController.shapeTransforms = window
+        .getComputedStyle(shape)
+        .getPropertyValue("transform");
+      DisplayController.rawTransforms = addedTransforms;
+    }
+
     div!.style.display = "none";
     document.documentElement.classList.remove("animate");
   }
