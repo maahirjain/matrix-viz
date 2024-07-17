@@ -25,6 +25,11 @@ export const module = {
     },
 
     {
+      test: /\.css$/,
+      use: ["style-loader", "css-loader"]
+    },
+
+    {
       test: /\.ts$/,
       exclude: /node_modules/,
       use: { loader: "ts-loader" }
