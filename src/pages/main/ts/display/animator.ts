@@ -23,6 +23,7 @@ export class Animator {
     this.reset();
     const shape: HTMLElement = this.getCurrentShape();
     const stack: HTMLElement = document.getElementById("transform-stack")!;
+    let addedTransforms: string = "";
     document.documentElement.classList.add("animate");
     shape.classList.remove("paused");
     const div: HTMLElement | null = document.querySelector(
@@ -50,6 +51,7 @@ export class Animator {
       const cssTransform: string = cssTransforms[i];
       const transform: string = computedTransforms[i];
       const matrixMathJax: string = matricesMathJax[i];
+      addedTransforms = addedTransforms + " " + cssTransform;
 
       const keyframes1: string = `@keyframes graphTransform${i} {
           0% { transform: ${initialString + " " + this.getInitialTransform(cssTransform) + " " + transformString} }
@@ -89,6 +91,7 @@ export class Animator {
     DisplayController.shapeTransforms = window
       .getComputedStyle(shape)
       .getPropertyValue("transform");
+    DisplayController.rawTransforms = addedTransforms;
     div!.style.display = "none";
     document.documentElement.classList.remove("animate");
   }

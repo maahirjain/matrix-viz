@@ -8,6 +8,7 @@ export class DisplayController {
   private static pyramidTransform = `rotateX(-25deg) rotateY(-25deg)`;
   private static transformPyramidTransform = `rotateX(-25deg) rotateY(-25deg)`;
   private static currTransform = `rotateX(-25deg) rotateY(-25deg)`;
+  private static addedTransforms = "";
 
   /**
    * Toggles between light and dark modes.
@@ -299,6 +300,10 @@ export class DisplayController {
     this.axesTransform = this.currTransform;
   }
 
+  public static set rawTransforms(str: string) {
+    this.addedTransforms = str;
+  }
+
   private static pauseOrPlayListener() {
     document.getElementById("pause-play-btn")!.addEventListener("click", () => {
       this.pauseOrPlay();
@@ -313,12 +318,10 @@ export class DisplayController {
         if (document.getElementById("cube-btn")!.textContent === "Cube") {
           this.addCubeContent();
 
-          document.getElementById("axes")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
-          document.getElementById("cube")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("axes")!.style.transform = this.currTransform;
+          document.getElementById("cube")!.style.transform = this.currTransform;
           document.getElementById("transform-cube")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
+            this.currTransform + " " + this.addedTransforms;
 
           this.addInteractivity();
         } else {
@@ -337,12 +340,11 @@ export class DisplayController {
         if (document.getElementById("pyramid-btn")!.textContent === "Pyramid") {
           this.addPyramidContent();
 
-          document.getElementById("axes")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("axes")!.style.transform = this.currTransform;
           document.getElementById("pyramid")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
+            this.currTransform;
           document.getElementById("transform-pyramid")!.style.transform =
-            `rotateX(-25deg) rotateY(-25deg)`;
+            this.currTransform + " " + this.addedTransforms;
 
           this.addInteractivity();
         } else {
@@ -416,6 +418,11 @@ export class DisplayController {
 
         this.addCubeContent();
         this.selectCubeSquare();
+
+        document.getElementById("axes")!.style.transform = this.currTransform;
+        document.getElementById("cube")!.style.transform = this.currTransform;
+        document.getElementById("transform-cube")!.style.transform =
+          this.currTransform + " " + this.addedTransforms;
 
         document.querySelector("#facts div")!.innerHTML =
           "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\\\0\\end{bmatrix}\\\\\\lambda_3 = 1, \\quad \\mathbf{v_3} = \\begin{bmatrix}0\\\\0\\\\1\\end{bmatrix}}$$";
