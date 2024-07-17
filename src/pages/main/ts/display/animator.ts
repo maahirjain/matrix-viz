@@ -13,18 +13,17 @@ export class Animator {
    * @param eigenMathJax a MathJax expression that includes the eigenvalues and corresponding eigenvectors of the input Matrix
    * @param matricesMathJax an ordered array of matrix representations in MathJax for rotations, scaling, reflections, projections, and/or shears
    */
-  public static animate(
+  public static async animate(
     computedTransforms: string[],
     cssTransforms: string[],
     det: number,
     eigenMathJax: string,
     matricesMathJax: string[]
-  ): void {
+  ): Promise<void> {
     this.reset();
-    const shape: HTMLElement = this.getCurrentShape();
     const stack: HTMLElement = document.getElementById("transform-stack")!;
     document.documentElement.classList.add("animate");
-    shape.classList.remove("paused");
+    this.getCurrentShape().classList.remove("paused");
     const div: HTMLElement | null = document.querySelector(
       "#options div:last-child"
     );
@@ -40,39 +39,69 @@ export class Animator {
     }
 
     let transformString: string = "";
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this;
 
     for (let i = 0; i < cssTransforms.length; i++) {
+      const shape: HTMLElement = this.getCurrentShape();
       const cssTransform: string = cssTransforms[i];
       const transform: string = computedTransforms[i];
       const matrixMathJax: string = matricesMathJax[i];
 
-      const keyframes1: string = `@keyframes graphTransform {
-          0% { transform: ${initialString + " " + transformString} }
+      const keyframes1: string = `@keyframes graphTransform${i} {
+          0% { transform: ${initialString + this.getInitialTransform(cssTransform) + " " + transformString} }
           100% { transform: ${initialString + " " + cssTransform + " " + transformString} }
       }`;
 
       const keyframes2: string = `@keyframes fadeIn {
-          0% { opacity: 0 }
-          100% { opacity: 1 }
+          to { opacity: 1 }
       }`;
+
+      console.log(keyframes1);
 
       const element: HTMLElement = document.createElement("button");
       element.textContent = transform;
       DisplayController.revealMatrix(element, matrixMathJax);
       stack.insertBefore(element, stack.firstChild);
 
-      const time: number = 60 / this.speed;
+      const time: number = 180 / self.speed;
 
-      this.styleSheet!.innerHTML = `${keyframes1} ${keyframes2}`;
-      shape.style.animation = `graphTransform ${time}s 1`;
+      self.styleSheet!.innerHTML = `${keyframes1} ${keyframes2}`;
+
+      shape.style.animation = `graphTransform${i} ${time}s 1`;
       element.style.animation = `fadeIn ${time}s 1`;
 
+      await this.timeout(time * 1000);
+
+      shape.style.transform =
+        initialString + " " + cssTransform + " " + transformString;
+
       transformString = transformString + " " + cssTransform;
+      self.styleSheet!.innerHTML = "";
     }
 
     DisplayController.pauseOrPlay(true);
     div!.style.display = "none";
     document.documentElement.classList.remove("animate");
+  }
+
+  private static getInitialTransform(str: string) {
+    let replacement: string = "1";
+
+    if (str.includes("deg")) {
+      replacement = "0";
+    }
+    const newStr: string = str.replace(/-?\d+(\.\d+)?/g, replacement);
+
+    if (newStr.includes("1d")) {
+      return newStr.replace("1d", "3d");
+    }
+
+    return newStr;
+  }
+
+  private static timeout(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   private static reset(): void {
