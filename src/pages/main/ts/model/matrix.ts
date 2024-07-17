@@ -145,10 +145,15 @@ export class Matrix {
   }
 
   private eigenvectors2D(matrix: number[][]): string[][] {
-    const [a1, a2]: {
+    // eslint-disable-next-line prefer-const
+    let [a1, a2]: {
       value: number | BigNumber;
       vector: MathCollection;
     }[] = eigs(matrix).eigenvectors;
+
+    if (a2 === undefined) {
+      a2 = a1;
+    }
 
     const [u1, u2]: MathCollection[] = [a1.vector, a2.vector];
 
@@ -169,10 +174,23 @@ export class Matrix {
   }
 
   private eigenvectors3D(matrix: number[][]): string[][] {
-    const [a1, a2, a3]: {
+    // eslint-disable-next-line prefer-const
+    let [a1, a2, a3]: {
       value: number | BigNumber;
       vector: MathCollection;
     }[] = eigs(matrix).eigenvectors;
+
+    if (a2 === undefined) {
+      a2 = a1;
+    }
+
+    if (a3 === undefined) {
+      if (a2 != undefined) {
+        a3 = a2;
+      } else {
+        a3 = a1;
+      }
+    }
 
     const [u1, u2, u3]: MathCollection[] = [a1.vector, a2.vector, a3.vector];
 
