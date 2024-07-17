@@ -265,6 +265,7 @@ button {
     border-radius: 10px;
     perspective-origin: center;
     overflow: hidden;
+    position: relative;
 }
 
 #cube, #transform-cube, #pyramid, #transform-pyramid {
