@@ -49,15 +49,13 @@ export class Animator {
       const matrixMathJax: string = matricesMathJax[i];
 
       const keyframes1: string = `@keyframes graphTransform${i} {
-          0% { transform: ${initialString + this.getInitialTransform(cssTransform) + " " + transformString} }
+          0% { transform: ${initialString + " " + this.getInitialTransform(cssTransform) + " " + transformString} }
           100% { transform: ${initialString + " " + cssTransform + " " + transformString} }
       }`;
 
       const keyframes2: string = `@keyframes fadeIn {
           to { opacity: 1 }
       }`;
-
-      console.log(keyframes1);
 
       const element: HTMLElement = document.createElement("button");
       element.textContent = transform;
@@ -76,7 +74,7 @@ export class Animator {
       shape.style.transform =
         initialString + " " + cssTransform + " " + transformString;
 
-      transformString = transformString + " " + cssTransform;
+      transformString = cssTransform + " " + transformString;
       self.styleSheet!.innerHTML = "";
     }
 
