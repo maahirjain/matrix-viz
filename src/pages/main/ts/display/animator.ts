@@ -86,7 +86,9 @@ export class Animator {
       self.styleSheet!.innerHTML = "";
     }
 
-    DisplayController.pauseOrPlay(true);
+    DisplayController.shapeTransforms = window
+      .getComputedStyle(shape)
+      .getPropertyValue("transform");
     div!.style.display = "none";
     document.documentElement.classList.remove("animate");
   }

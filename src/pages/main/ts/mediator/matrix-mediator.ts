@@ -9,27 +9,29 @@ export class MatrixMediator {
    */
   public static enterAndAnimate(): void {
     document.getElementById("enter-btn")!.addEventListener("click", () => {
-      const processedMatrix: string[][] =
-        ValidatorMediator.processInputMatrix();
+      if (Validator.areBtnsClickable()) {
+        const processedMatrix: string[][] =
+          ValidatorMediator.processInputMatrix();
 
-      if (Validator.isMatrixValid(processedMatrix)) {
-        const matrix: Matrix = new Matrix(processedMatrix);
-        const computedTransforms: string[] = matrix.computeTransforms();
-        const det: number = matrix.det();
-        const eigenMathJax: string = matrix.eigenMathJax();
-        const matricesMathJax: string[] =
-          matrix.computeTransformMatricesMathJax();
-        const cssTransforms: string[] = this.scaleCSSTransforms(
-          matrix.computeCSSTransforms()
-        );
+        if (Validator.isMatrixValid(processedMatrix)) {
+          const matrix: Matrix = new Matrix(processedMatrix);
+          const computedTransforms: string[] = matrix.computeTransforms();
+          const det: number = matrix.det();
+          const eigenMathJax: string = matrix.eigenMathJax();
+          const matricesMathJax: string[] =
+            matrix.computeTransformMatricesMathJax();
+          const cssTransforms: string[] = this.scaleCSSTransforms(
+            matrix.computeCSSTransforms()
+          );
 
-        Animator.animate(
-          computedTransforms,
-          cssTransforms,
-          det,
-          eigenMathJax,
-          matricesMathJax
-        );
+          Animator.animate(
+            computedTransforms,
+            cssTransforms,
+            det,
+            eigenMathJax,
+            matricesMathJax
+          );
+        }
       }
     });
   }

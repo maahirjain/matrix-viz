@@ -56,7 +56,7 @@ export class DisplayController {
     let currentY: number = 0;
 
     graph!.addEventListener("mousedown", (e) => {
-      if (this.is3DSelected() && this.is3DPaused()) {
+      if (this.is3DSelected() && Validator.areBtnsClickable()) {
         isDragging = true;
         startX = e.clientX - currentX;
         startY = e.clientY - currentY;
@@ -64,7 +64,7 @@ export class DisplayController {
     });
 
     graph!.addEventListener("mousemove", (e) => {
-      if (this.is3DSelected() && this.is3DPaused()) {
+      if (this.is3DSelected() && Validator.areBtnsClickable()) {
         const cube: HTMLElement | null = document.getElementById("cube");
         const transformCube: HTMLElement | null =
           document.getElementById("transform-cube");
@@ -108,13 +108,13 @@ export class DisplayController {
     });
 
     graph!.addEventListener("mouseup", () => {
-      if (this.is3DSelected() && this.is3DPaused()) {
+      if (this.is3DSelected() && Validator.areBtnsClickable()) {
         isDragging = false;
       }
     });
 
     graph!.addEventListener("mouseleave", () => {
-      if (this.is3DSelected() && this.is3DPaused()) {
+      if (this.is3DSelected() && Validator.areBtnsClickable()) {
         isDragging = false;
       }
     });
@@ -171,22 +171,14 @@ export class DisplayController {
     if (btn!.textContent === "Pause" || pause) {
       if (transformCube != null) {
         transformCube.classList.add("paused");
-        this.cubeTransform = window
-          .getComputedStyle(document.getElementById("cube")!)
-          .getPropertyValue("transform");
-        this.transformCubeTransform = window
-          .getComputedStyle(document.getElementById("transform-cube")!)
-          .getPropertyValue("transform");
+        this.cubeTransform = this.currTransform;
+        this.transformCubeTransform = this.currTransform;
       }
 
       if (transformPyramid != null) {
         transformPyramid.classList.add("paused");
-        this.pyramidTransform = window
-          .getComputedStyle(document.getElementById("pyramid")!)
-          .getPropertyValue("transform");
-        this.transformPyramidTransform = window
-          .getComputedStyle(document.getElementById("pyramid-transform")!)
-          .getPropertyValue("transform");
+        this.pyramidTransform = this.currTransform;
+        this.transformPyramidTransform = this.currTransform;
       }
 
       transforms.forEach((transform) => transform.classList.add("paused"));
@@ -199,9 +191,7 @@ export class DisplayController {
         transformTriangle.classList.add("paused");
       }
 
-      this.axesTransform = window
-        .getComputedStyle(document.getElementById("axes")!)
-        .getPropertyValue("transform");
+      this.axesTransform = this.currTransform;
 
       btn!.textContent = "Resume";
     } else {
@@ -299,6 +289,14 @@ export class DisplayController {
 
   public static get transform() {
     return this.currTransform;
+  }
+
+  public static set shapeTransforms(str: string) {
+    this.transformCubeTransform = str;
+    this.transformPyramidTransform = str;
+    this.pyramidTransform = this.currTransform;
+    this.cubeTransform = this.currTransform;
+    this.axesTransform = this.currTransform;
   }
 
   private static pauseOrPlayListener() {
