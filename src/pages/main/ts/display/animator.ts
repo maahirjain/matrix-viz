@@ -21,9 +21,10 @@ export class Animator {
     matricesMathJax: string[]
   ): Promise<void> {
     this.reset();
+    const shape: HTMLElement = this.getCurrentShape();
     const stack: HTMLElement = document.getElementById("transform-stack")!;
     document.documentElement.classList.add("animate");
-    this.getCurrentShape().classList.remove("paused");
+    shape.classList.remove("paused");
     const div: HTMLElement | null = document.querySelector(
       "#options div:last-child"
     );
@@ -35,15 +36,17 @@ export class Animator {
     if (
       document.getElementById("three-d-btn")!.classList.contains("selected")
     ) {
-      initialString = `rotateX(-25deg) rotateY(-25deg)`;
+      initialString = DisplayController.transform;
     }
 
     let transformString: string = "";
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
 
+    document.getElementById("axes")!.style.transform = initialString;
+    this.getInitialShape().style.transform = initialString;
+
     for (let i = 0; i < cssTransforms.length; i++) {
-      const shape: HTMLElement = this.getCurrentShape();
       const cssTransform: string = cssTransforms[i];
       const transform: string = computedTransforms[i];
       const matrixMathJax: string = matricesMathJax[i];
@@ -59,12 +62,14 @@ export class Animator {
 
       const element: HTMLElement = document.createElement("button");
       element.textContent = transform;
+
       DisplayController.revealMatrix(element, matrixMathJax);
       stack.insertBefore(element, stack.firstChild);
 
-      const time: number = 180 / self.speed;
+      const time: number = 60 / self.speed;
 
       self.styleSheet!.innerHTML = `${keyframes1} ${keyframes2}`;
+      shape.style.animationPlayState = "paused";
 
       shape.style.animation = `graphTransform${i} ${time}s 1`;
       element.style.animation = `fadeIn ${time}s 1`;
@@ -112,6 +117,22 @@ export class Animator {
     document.getElementById("transform-stack")!.innerHTML =
       `<button id="identity-btn">identity</button>`;
     DisplayController.identityHover();
+  }
+
+  private static getInitialShape(): HTMLElement {
+    if (document.getElementById("cube-btn")!.classList.contains("selected")) {
+      if (document.getElementById("cube-btn")!.textContent === "Cube") {
+        return document.getElementById("cube")!;
+      } else {
+        return document.getElementById("square")!;
+      }
+    } else {
+      if (document.getElementById("pyramid-btn")!.textContent === "Pyramid") {
+        return document.getElementById("pyramid")!;
+      } else {
+        return document.getElementById("triangle")!;
+      }
+    }
   }
 
   private static getCurrentShape(): HTMLElement {

@@ -7,6 +7,7 @@ export class DisplayController {
   private static transformCubeTransform = `rotateX(-25deg) rotateY(-25deg)`;
   private static pyramidTransform = `rotateX(-25deg) rotateY(-25deg)`;
   private static transformPyramidTransform = `rotateX(-25deg) rotateY(-25deg)`;
+  private static currTransform = `rotateX(-25deg) rotateY(-25deg)`;
 
   /**
    * Toggles between light and dark modes.
@@ -79,20 +80,29 @@ export class DisplayController {
         if (this.isCubeSelected()) {
           cube!.style.transform =
             `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+            " " +
             this.cubeTransform;
           transformCube!.style.transform =
             `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+            " " +
             this.transformCubeTransform;
         } else {
           pyramid!.style.transform =
             `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+            " " +
             this.pyramidTransform;
           transformPyramid!.style.transform =
             `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+            " " +
             this.transformPyramidTransform;
         }
         axes!.style.transform =
           `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+          " " +
+          this.axesTransform;
+        this.currTransform =
+          `rotateX(${-currentY}deg) rotateY(${currentX}deg)` +
+          " " +
           this.axesTransform;
       }
     });
@@ -265,14 +275,6 @@ export class DisplayController {
       this.selectCubeSquare();
       if (document.getElementById("cube-btn")!.textContent === "Cube") {
         this.addCubeContent();
-
-        document.getElementById("axes")!.style.transform =
-          `rotateX(-25deg) rotateY(-25deg)`;
-        document.getElementById("cube")!.style.transform =
-          `rotateX(-25deg) rotateY(-25deg)`;
-        document.getElementById("transform-cube")!.style.transform =
-          `rotateX(-25deg) rotateY(-25deg)`;
-
         this.addInteractivity();
       } else {
         this.addSquareContent();
@@ -289,14 +291,6 @@ export class DisplayController {
       this.selectPyramidTriangle();
       if (document.getElementById("pyramid-btn")!.textContent === "Pyramid") {
         this.addPyramidContent();
-
-        document.getElementById("axes")!.style.transform =
-          `rotateX(-25deg) rotateY(-25deg)`;
-        document.getElementById("pyramid")!.style.transform =
-          `rotateX(-25deg) rotateY(-25deg)`;
-        document.getElementById("transform-pyramid")!.style.transform =
-          `rotateX(-25deg) rotateY(-25deg)`;
-
         this.addInteractivity();
       } else {
         this.addTriangleContent();
@@ -305,14 +299,56 @@ export class DisplayController {
     }
   }
 
+  public static get transform() {
+    return this.currTransform;
+  }
+
   private static addCubeSquareBtnListener() {
     const btn: HTMLElement | null = document.getElementById("cube-btn");
-    btn!.addEventListener("click", this.cubeSquareReset.bind(this));
+    btn!.addEventListener("click", () => {
+      if (Validator.areBtnsClickable()) {
+        this.selectCubeSquare();
+        if (document.getElementById("cube-btn")!.textContent === "Cube") {
+          this.addCubeContent();
+
+          document.getElementById("axes")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("cube")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("transform-cube")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+
+          this.addInteractivity();
+        } else {
+          this.addSquareContent();
+          btn!.style.transform = "";
+        }
+      }
+    });
   }
 
   private static addPyramidTriangleBtnListener() {
     const btn: HTMLElement | null = document.getElementById("pyramid-btn");
-    btn!.addEventListener("click", this.pyramidTriangleReset.bind(this));
+    btn!.addEventListener("click", () => {
+      if (Validator.areBtnsClickable()) {
+        this.selectPyramidTriangle();
+        if (document.getElementById("pyramid-btn")!.textContent === "Pyramid") {
+          this.addPyramidContent();
+
+          document.getElementById("axes")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("pyramid")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+          document.getElementById("transform-pyramid")!.style.transform =
+            `rotateX(-25deg) rotateY(-25deg)`;
+
+          this.addInteractivity();
+        } else {
+          this.addTriangleContent();
+          btn!.style.transform = "";
+        }
+      }
+    });
   }
 
   private static addTwoDBtnListener(): void {
