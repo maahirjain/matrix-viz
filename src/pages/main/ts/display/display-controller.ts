@@ -452,7 +452,9 @@ export class DisplayController {
           document.querySelectorAll("#transform-stack *")!
         );
         stackChildren.forEach((btn) => {
-          this.revealMatrix(btn, this.matricesStr[+btn.dataset.index!]);
+          if (btn.dataset.index != undefined) {
+            this.revealMatrix(btn, this.matricesStr[+btn.dataset.index!]);
+          }
         });
         this.identityHover();
 

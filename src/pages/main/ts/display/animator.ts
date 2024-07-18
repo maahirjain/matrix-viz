@@ -98,7 +98,10 @@ export class Animator {
       DisplayController.shapeTransforms = window
         .getComputedStyle(shape)
         .getPropertyValue("transform");
-      DisplayController.rawTransforms = addedTransforms;
+      DisplayController.rawTransforms = addedTransforms
+        .split(" ")
+        .reverse()
+        .join(" ");
       DisplayController.matricesMathJax = matricesMathJax;
       DisplayController.stack = stack.innerHTML;
     }
