@@ -574,7 +574,11 @@ button {
     -moz-animation-play-state: paused !important; 
     -o-animation-play-state: paused !important;
      animation-play-state: paused !important;
- }
+}
+
+.short-text {
+    display: none;
+}
 
 @keyframes spin { 
     100% { 
@@ -595,4 +599,53 @@ button {
     100% { 
         transform:rotate(25deg); 
     } 
+}
+
+@media (max-width: 1200px) {
+    #main {
+        display: grid;
+        grid-template-columns: 70% 30%;
+        overflow: auto;
+    }
+
+    #matrix-facts {
+        flex-direction: row;
+        grid-column: 1 / -1;
+
+        > div {
+            padding: 8px;
+            min-width: 230%;
+            min-height: 100%;
+            box-sizing: border-box;
+        }
+    }
+
+    #viz, #transforms {
+        aspect-ratio: 2 / 1;
+        width: 100%;
+        height: 40%;
+    }
+
+    #transforms-direction, #mmul-direction {
+        display: none;
+    }
+
+    #transform-stack {
+        grid-column: 1 / -1;
+        width: 77%;
+    }
+
+    #matrix-mathjax {
+        padding: 0;
+        width: 77%;
+        grid-column: 1 / -1;
+    }
+
+    .short-text {
+        display: block;
+    }
+
+    .long-text {
+        display: none;
+    }
 }
