@@ -638,7 +638,7 @@ button {
         padding: 0;
         width: 77%;
         grid-column: 1 / -1;
-        font-size: 0.5rem;
+        font-size: 2vw;
     }
 
     .short-text {
@@ -647,5 +647,13 @@ button {
 
     .long-text {
         display: none;
+    }
+
+    #options {
+        flex-wrap: wrap;
+
+        > div:last-child {
+            flex-wrap: wrap;
+        }
     }
 }
