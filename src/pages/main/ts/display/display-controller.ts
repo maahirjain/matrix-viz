@@ -44,6 +44,7 @@ export class DisplayController {
     this.addPyramidTriangleBtnListener();
     this.pauseOrPlayListener();
     this.identityHover();
+    this.adaptErrorDiv();
   }
 
   /**
@@ -550,5 +551,27 @@ export class DisplayController {
     } else {
       return false;
     }
+  }
+
+  private static adaptErrorDiv() {
+    window.addEventListener("resize", () => {
+      const errorDiv: HTMLElement | null =
+        document.getElementById("invalid-msg");
+
+      if (errorDiv != null) {
+        errorDiv.remove();
+
+        if (window.innerWidth <= 1200) {
+          document.getElementById("matrix-grid")?.appendChild(errorDiv);
+        } else {
+          document
+            .getElementById("matrix-facts")!
+            .insertBefore(
+              errorDiv,
+              document.getElementById("matrix-facts")!.firstChild
+            );
+        }
+      }
+    });
   }
 }

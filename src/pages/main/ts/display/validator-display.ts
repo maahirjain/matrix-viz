@@ -12,12 +12,16 @@ export class ValidatorDisplay {
     errorDiv.id = "invalid-msg";
 
     if (document.getElementById("invalid-msg") === null) {
-      document
-        .getElementById("matrix-facts")!
-        .insertBefore(
-          errorDiv,
-          document.getElementById("matrix-facts")!.firstChild
-        );
+      if (window.innerWidth <= 1200) {
+        document.getElementById("matrix-grid")?.appendChild(errorDiv);
+      } else {
+        document
+          .getElementById("matrix-facts")!
+          .insertBefore(
+            errorDiv,
+            document.getElementById("matrix-facts")!.firstChild
+          );
+      }
     }
   }
 
