@@ -147,7 +147,7 @@ export class DisplayController {
       }
 
       document.getElementById("matrix-mathjax")!.innerHTML =
-        `${identityStr}<div><div>Hover over a transformation below to see its associated matrix</div></div>`;
+        `${identityStr}<div><div class="long-text">Hover over a transformation below to see its associated matrix</div><div class="short-text">Hover below to see matrix</div></div>`;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mathjax: any = MathJax;
       mathjax.typeset();
@@ -251,7 +251,7 @@ export class DisplayController {
       }
 
       document.getElementById("matrix-mathjax")!.innerHTML =
-        `${identityStr}<div><div>Hover over a transformation below to see its associated matrix</div></div>`;
+        `${identityStr}<div><div class="long-text">Hover over a transformation below to see its associated matrix</div><div class="short-text">Hover below to see matrix</div></div>`;
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mathjax: any = MathJax;
       mathjax.typeset();
@@ -407,7 +407,7 @@ export class DisplayController {
           "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\end{bmatrix}}$$";
 
         document.getElementById("matrix-mathjax")!.innerHTML =
-          "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$<div><div>Hover over a transformation below to see its associated matrix</div></div>";
+          "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$<div><div class='long-text'>Hover over a transformation below to see its associated matrix</div><div class='short-text'>Hover below to see matrix</div></div>";
 
         const invalidDiv: HTMLElement | null =
           document.getElementById("invalid-msg");
@@ -469,7 +469,7 @@ export class DisplayController {
           "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\\\0\\end{bmatrix}\\\\\\lambda_3 = 1, \\quad \\mathbf{v_3} = \\begin{bmatrix}0\\\\0\\\\1\\end{bmatrix}}$$";
 
         document.getElementById("matrix-mathjax")!.innerHTML =
-          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$<div><div>Hover over a transformation below to see its associated matrix</div></div>";
+          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$<div><div class='long-text'>Hover over a transformation below to see its associated matrix</div><div class='short-text'>Hover below to see matrix</div></div>";
 
         const invalidDiv: HTMLElement | null =
           document.getElementById("invalid-msg");

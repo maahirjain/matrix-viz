@@ -621,9 +621,7 @@ button {
     }
 
     #viz, #transforms {
-        aspect-ratio: 2 / 1;
         width: 100%;
-        height: 40%;
     }
 
     #transforms-direction, #mmul-direction {
@@ -633,12 +631,14 @@ button {
     #transform-stack {
         grid-column: 1 / -1;
         width: 77%;
+        overflow: auto;
     }
 
     #matrix-mathjax {
         padding: 0;
         width: 77%;
         grid-column: 1 / -1;
+        font-size: 0.5rem;
     }
 
     .short-text {
