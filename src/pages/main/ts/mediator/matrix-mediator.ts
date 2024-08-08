@@ -61,7 +61,7 @@ export class MatrixMediator {
 
     for (const str of cssTransforms) {
       if (str.includes("(0)") || str.includes(",0)") || str.includes(", 0)")) {
-        const newStr: string = str.replaceAll("0", "0.01");
+        const newStr: string = str.replace(/0/g, "0.01");
         scaledArr.push(newStr);
       } else {
         scaledArr.push(str);
