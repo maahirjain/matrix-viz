@@ -20,17 +20,18 @@ A linear algebra tool that identifies linear transformations associated with any
 - Stores 3D transform data across various interactions 
 - Responsive to various devices 
 
+## Documentation
+You can access TypeDoc documentation for the project [here](https://maahirjain.github.io/matrix-viz/docs/).
+
 ## Behind the Scenes
 Here is a sketch of how the linear transformations associated with the input matrix are computed:
 
 The input matrix is first compared against some common matrix forms associated with scaling, shears, reflections, and projections – specifically, the following, where $*$ represents any real number.
 
 ### 2 x 2
-
 $\begin{bmatrix}* & 0 \\ 0 & *\end{bmatrix}, \quad \begin{bmatrix}1 & * \\ * & 1\end{bmatrix}$
 
 ### 3 x 3
-
 $\begin{bmatrix}* & 0 & 0\\ 0 & * & 0 \\ 0 & 0 & *\end{bmatrix}, \quad \begin{bmatrix}1 & * & 0\\ * & 1 & 0 \\ 0 & 0 & 1\end{bmatrix}$
 
 If the input matrix $M$ is not in one of these forms, its [singular value decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition) $M = U\Sigma V^T$ is computed.
@@ -44,6 +45,5 @@ The determinant of an orthogonal matrix $Q$ is $\pm 1$ – if it is $1$, it repr
 Thus, if $\det(Q) = 1$, we can decompose $Q$ into rotateX, rotateY, and rotateZ matrices by [computing Euler angles](https://eecs.qmul.ac.uk/%7Egslabaugh/publications/euler.pdf). 
 
 If $\det(Q) = -1$, we can decompose $Q = (QR)R$ where $R = \begin{bmatrix}1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & -1\end{bmatrix}$, which represents a reflection with respect to the $x$-$y$ plane. We have $(QR)^T = R^TQ^T = R^{-1}Q^{-1}$ and $\det(QR) = \det(Q)\det(R) = -1 \cdot -1 = 1$. Hence, $QR$ represents a proper rotation and can be decomposed as above.
-
 
 
