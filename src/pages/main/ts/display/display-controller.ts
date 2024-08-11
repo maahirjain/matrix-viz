@@ -291,6 +291,70 @@ export class DisplayController {
     }
   }
 
+  /**
+   * Set initial scene.
+   */
+  public static setScene(): void {
+    if (Validator.areBtnsClickable()) {
+      document.getElementById("two-d-btn")!.classList.remove("selected");
+      document.getElementById("three-d-btn")!.classList.add("selected");
+
+      const matrixGrid: HTMLElement | null =
+        document.getElementById("matrix-grid");
+
+      matrixGrid!.style.gridTemplateRows = "repeat(3, 35px)";
+      matrixGrid!.style.gridTemplateColumns = "repeat(3, 30%)";
+      matrixGrid!.innerHTML = `<input type="text" class="valid" value="1"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="1"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="1"><p>Supports expressions like sin(45deg), sqrt(2)/2</p>`;
+
+      const p: HTMLElement | null = document.querySelector("#matrix-input p");
+      p!.style.gridColumn = "1 / 4";
+
+      document.getElementById("cube-btn")!.textContent = "Cube";
+      document.getElementById("pyramid-btn")!.textContent = "Pyramid";
+
+      this.addCubeContent();
+      this.selectCubeSquare();
+
+      document.getElementById("transform-stack")!.innerHTML =
+        this.transformStack;
+
+      const stackChildren: HTMLElement[] = Array.from(
+        document.querySelectorAll("#transform-stack *")!
+      );
+      stackChildren.forEach((btn) => {
+        if (btn.dataset.index != undefined) {
+          this.revealMatrix(btn, this.matricesStr[+btn.dataset.index!]);
+        }
+      });
+      this.identityHover();
+
+      document.getElementById("axes")!.style.transform = this.currTransform;
+      document.getElementById("cube")!.style.transform = this.currTransform;
+      document.getElementById("transform-cube")!.style.transform =
+        this.currTransform + " " + this.addedTransforms;
+
+      document.querySelector("#facts span")!.textContent = "\\(1\\)";
+
+      document.querySelector("#facts div")!.innerHTML =
+        "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\\\0\\end{bmatrix}\\\\\\lambda_3 = 1, \\quad \\mathbf{v_3} = \\begin{bmatrix}0\\\\0\\\\1\\end{bmatrix}}$$";
+
+      document.getElementById("matrix-mathjax")!.innerHTML =
+        "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$<div><div class='long-text'>Hover over a transformation below to see its associated matrix</div><div class='short-text'>Hover below to see matrix</div></div>";
+
+      const invalidDiv: HTMLElement | null =
+        document.getElementById("invalid-msg");
+      if (invalidDiv != null) {
+        invalidDiv.remove();
+      }
+
+      ValidatorMediator.addEventListeners();
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const mathjax: any = MathJax;
+      mathjax.typeset();
+    }
+  }
+
   public static get transform() {
     return this.currTransform;
   }
@@ -426,64 +490,7 @@ export class DisplayController {
 
   private static addThreeDBtnListener(): void {
     document.getElementById("three-d-btn")!.addEventListener("click", () => {
-      if (Validator.areBtnsClickable()) {
-        document.getElementById("two-d-btn")!.classList.remove("selected");
-        document.getElementById("three-d-btn")!.classList.add("selected");
-
-        const matrixGrid: HTMLElement | null =
-          document.getElementById("matrix-grid");
-
-        matrixGrid!.style.gridTemplateRows = "repeat(3, 35px)";
-        matrixGrid!.style.gridTemplateColumns = "repeat(3, 30%)";
-        matrixGrid!.innerHTML = `<input type="text" class="valid" value="1"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="1"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="1"><p>Supports expressions like sin(45deg), sqrt(2)/2</p>`;
-
-        const p: HTMLElement | null = document.querySelector("#matrix-input p");
-        p!.style.gridColumn = "1 / 4";
-
-        document.getElementById("cube-btn")!.textContent = "Cube";
-        document.getElementById("pyramid-btn")!.textContent = "Pyramid";
-
-        this.addCubeContent();
-        this.selectCubeSquare();
-
-        document.getElementById("transform-stack")!.innerHTML =
-          this.transformStack;
-
-        const stackChildren: HTMLElement[] = Array.from(
-          document.querySelectorAll("#transform-stack *")!
-        );
-        stackChildren.forEach((btn) => {
-          if (btn.dataset.index != undefined) {
-            this.revealMatrix(btn, this.matricesStr[+btn.dataset.index!]);
-          }
-        });
-        this.identityHover();
-
-        document.getElementById("axes")!.style.transform = this.currTransform;
-        document.getElementById("cube")!.style.transform = this.currTransform;
-        document.getElementById("transform-cube")!.style.transform =
-          this.currTransform + " " + this.addedTransforms;
-
-        document.querySelector("#facts span")!.textContent = "\\(1\\)";
-
-        document.querySelector("#facts div")!.innerHTML =
-          "$$\\displaylines{\\lambda_1 = 1, \\quad \\mathbf{v_1} = \\begin{bmatrix}1\\\\0\\\\0\\end{bmatrix}\\\\\\lambda_2 = 1, \\quad \\mathbf{v_2} = \\begin{bmatrix}0\\\\1\\\\0\\end{bmatrix}\\\\\\lambda_3 = 1, \\quad \\mathbf{v_3} = \\begin{bmatrix}0\\\\0\\\\1\\end{bmatrix}}$$";
-
-        document.getElementById("matrix-mathjax")!.innerHTML =
-          "$$\\begin{bmatrix}1&0&0\\\\0&1&0\\\\0&0&1\\end{bmatrix}$$<div><div class='long-text'>Hover over a transformation below to see its associated matrix</div><div class='short-text'>Hover below to see matrix</div></div>";
-
-        const invalidDiv: HTMLElement | null =
-          document.getElementById("invalid-msg");
-        if (invalidDiv != null) {
-          invalidDiv.remove();
-        }
-
-        ValidatorMediator.addEventListeners();
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const mathjax: any = MathJax;
-        mathjax.typeset();
-      }
+      this.setScene();
     });
   }
 
