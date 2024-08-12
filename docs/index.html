@@ -1,0 +1,61 @@
+<!DOCTYPE html><html class="default" lang="en"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>matrix-viz</title><meta name="description" content="Documentation for matrix-viz"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar"><div class="tsd-toolbar-contents container"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget tsd-toolbar-icon search no-caption"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-search"></use></svg></label><input type="text" id="tsd-search-field" aria-label="Search"/></div><div class="field"><div id="tsd-toolbar-links"></div></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">matrix-viz</a></div><div class="table-cell" id="tsd-widgets"><a href="#" class="tsd-widget tsd-toolbar-icon menu no-caption" data-toggle="menu" aria-label="Menu"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><use href="assets/icons.svg#icon-menu"></use></svg></a></div></div></header><div class="container container-main"><div class="col-content"><div class="tsd-page-title"><h2>matrix-viz</h2></div><div class="tsd-panel tsd-typography"><a id="md:matrixviz" class="tsd-anchor"></a><h1 class="tsd-anchor-link">MatrixViz<a href="#md:matrixviz" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1><p>A linear algebra tool that identifies linear transformations associated with any 3 x 3 or 2 x 2 matrix, and creates an interactive animation displaying the transformations.</p>
+<p><img src="media/screenshot_dark_mode.png" alt="Dark mode screenshot">
+<img src="media/screenshot_light_mode.png" alt="Light mode screenshot"></p>
+<a id="md:features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Features<a href="#md:features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
+<li>Computes a series of linear transformations associated with the input matrix from rotations, scaling, reflections, shears, and projections</li>
+<li>Generates and displays an animation showing each linear transformation applied on the starting shape until the final effect of the matrix on the shape is seen</li>
+<li>Includes controls for the speed of the animation and to pause and play the ongoing animation</li>
+<li>Includes animations for 4 shapes - cube, pyramid, square and triangle</li>
+<li>Allows interactivity with the 3D graph to change the view of the animation</li>
+<li>Displays the matrix associated with each linear transform</li>
+<li>Accepts 2 x 2 and 3 x 3 matrices with support for math expression inputs such as sin(45deg) and sqrt(2)/2</li>
+<li>Displays the determinant, eigenvalues and corresponding eigenvectors of the input matrix, using MathJax</li>
+<li>Has both dark mode and light mode options</li>
+<li>Shows an outline of the initial shape showing a visual comparison between the starting and end result</li>
+<li>Implements form validation checks to ensure an input matrix is valid</li>
+<li>Stores 3D transform data across various interactions</li>
+<li>Responsive to various devices</li>
+</ul>
+<a id="md:documentation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Documentation<a href="#md:documentation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>You can access TypeDoc documentation for the project <a href="https://maahirjain.github.io/matrix-viz/docs/">here</a>.</p>
+<a id="md:behind-the-scenes" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Behind the Scenes<a href="#md:behind-the-scenes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Here is a sketch of how the linear transformations associated with the input matrix are computed:</p>
+<p>The input matrix is first compared against some common matrix forms associated with scaling, shears, reflections, and projections – specifically, the following, where $*$ represents any real number.</p>
+<a id="md:2-x-2" class="tsd-anchor"></a><h3 class="tsd-anchor-link">2 x 2<a href="#md:2-x-2" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="math">  \begin{bmatrix} 
+    * & 0 \\ 
+    0 & * 
+  \end{bmatrix},
+  \quad
+  \begin{bmatrix} 
+    1 & * \\ 
+    * & 1 
+  \end{bmatrix}
+</code><button type="button">Copy</button></pre>
+
+<a id="md:3-x-3" class="tsd-anchor"></a><h3 class="tsd-anchor-link">3 x 3<a href="#md:3-x-3" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3><pre><code class="math">  \begin{bmatrix} 
+    * & 0 & 0 \\ 
+    0 & * & 0 \\
+    0 & 0 & *
+  \end{bmatrix},
+  \quad
+  \begin{bmatrix} 
+    1 & * & 0 \\ 
+    * & 1 & 0 \\
+    0 & 0 & 0
+  \end{bmatrix}
+</code><button type="button">Copy</button></pre>
+
+<p>If the input matrix $M$ is not in one of these forms, its <a href="https://en.wikipedia.org/wiki/Singular_value_decomposition">singular value decomposition</a> $M = U\Sigma V^T$ is computed.</p>
+<p>We know that $\Sigma$ is a diagonal matrix and hence represents the product of a scaleX, scaleY, and scaleZ matrix.</p>
+<p>$U$ and $V^T$ are orthogonal, and it is known that every orthogonal matrix can be expressed as a product of rotation and reflection matrices. We find a decomposition of $U$ and $V^T$ into rotation and reflection matrices, as follows.</p>
+<p>The determinant of an orthogonal matrix $Q$ is $\pm 1$ – if it is $1$, it represents a <em>proper</em> rotation, and if it is $-1$, it represents a reflection followed by a <em>proper</em> rotation.</p>
+<p>Thus, if $\det(Q) = 1$, we can decompose $Q$ into rotateX, rotateY, and rotateZ matrices by <a href="https://eecs.qmul.ac.uk/%7Egslabaugh/publications/euler.pdf">computing Euler angles</a>.</p>
+<p>If $\det(Q) = -1$, we can decompose $Q = (QR)R$ where</p>
+<pre><code class="math">  R =  
+  \begin{bmatrix} 
+    1 & 0 & 0 \\ 
+    0 & 1 & 0 \\
+    0 & 0 & -1
+  \end{bmatrix}
+</code><button type="button">Copy</button></pre>
+
+<p>which represents a reflection with respect to the $XY$-plane. We have $(QR)^T = R^TQ^T = R^{-1}Q^{-1}$ and $\det(QR) = \det(Q)\det(R) = -1 \cdot -1 = 1$. Hence, $QR$ represents a proper rotation and can be decomposed as above.</p>
+</div></div><div class="col-sidebar"><div class="page-menu"><div class="tsd-navigation settings"><details class="tsd-accordion"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>Settings</h3></summary><div class="tsd-accordion-details"><div class="tsd-filter-visibility"><span class="settings-label">Member Visibility</span><ul id="tsd-filter-options"><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-protected" name="protected"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Protected</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-inherited" name="inherited" checked/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>Inherited</span></label></li><li class="tsd-filter-item"><label class="tsd-filter-input"><input type="checkbox" id="tsd-filter-external" name="external"/><svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true"><rect class="tsd-checkbox-background" width="30" height="30" x="1" y="1" rx="6" fill="none"></rect><path class="tsd-checkbox-checkmark" d="M8.35422 16.8214L13.2143 21.75L24.6458 10.25" stroke="none" stroke-width="3.5" stroke-linejoin="round" fill="none"></path></svg><span>External</span></label></li></ul></div><div class="tsd-theme-toggle"><label class="settings-label" for="tsd-theme">Theme</label><select id="tsd-theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></div></div></details></div><details open class="tsd-accordion tsd-page-navigation"><summary class="tsd-accordion-summary"><h3><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><use href="assets/icons.svg#icon-chevronDown"></use></svg>On This Page</h3></summary><div class="tsd-accordion-details"><a href="#md:matrixviz"><span>Matrix<wbr/>Viz</span></a><ul><li><a href="#md:features"><span>Features</span></a></li><li><a href="#md:documentation"><span>Documentation</span></a></li><li><a href="#md:behind-the-scenes"><span>Behind the <wbr/>Scenes</span></a></li><li><ul><li><a href="#md:2-x-2"><span>2 x 2</span></a></li><li><a href="#md:3-x-3"><span>3 x 3</span></a></li></ul></li></ul></div></details></div><div class="site-menu"><nav class="tsd-navigation"><a href="index.html" class="current"><svg class="tsd-kind-icon" viewBox="0 0 24 24"><use href="assets/icons.svg#icon-1"></use></svg><span>matrix-viz</span></a><ul class="tsd-small-nested-navigation" id="tsd-nav-container" data-base="."><li>Loading...</li></ul></nav></div></div></div><footer><p class="tsd-generator">Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></footer><div class="overlay"></div></body></html>
