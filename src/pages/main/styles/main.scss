@@ -105,6 +105,10 @@
         color: themed(text);
         border: 1px solid themed(text);
     }
+
+    #footer a {
+        color: themed(quarternary);
+    }
 }
 
 body {
@@ -568,6 +572,10 @@ button {
     justify-content: center;
     align-items: center;
     flex-grow: 1;
+
+    a {
+        text-decoration: underline;
+    }
 }
 
 .paused {
