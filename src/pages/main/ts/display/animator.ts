@@ -76,14 +76,11 @@ export class Animator {
 
       self.styleSheet!.innerHTML = `${keyframes1} ${keyframes2}`;
 
+      const animationComplete = this.animationEnd(shape);
       shape.style.animation = `graphTransform${i} ${time}s 1`;
       element.style.animation = `fadeIn ${time}s 1`;
 
-      await this.timeout(time * 1000);
-
-      if (shape.classList.contains("paused")) {
-        await this.pauseClick();
-      }
+      await animationComplete;
 
       shape.style.transform =
         initialString + " " + cssTransform + " " + transformString;
@@ -110,13 +107,6 @@ export class Animator {
     document.documentElement.classList.remove("animate");
   }
 
-  private static async pauseClick() {
-    return new Promise<void>(
-      (resolve) =>
-        (document.getElementById("pause-play-btn")!.onclick = () => resolve())
-    );
-  }
-
   private static getInitialTransform(str: string) {
     let replacement: string = "1";
 
@@ -132,8 +122,10 @@ export class Animator {
     return newStr;
   }
 
-  private static timeout(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  private static animationEnd(element: HTMLElement): Promise<void> {
+    return new Promise((resolve) => {
+      element.addEventListener("animationend", () => resolve(), { once: true });
+    });
   }
 
   private static reset(): void {

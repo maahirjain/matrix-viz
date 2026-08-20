@@ -165,7 +165,7 @@ export class DisplayController {
     const transformPyramid: HTMLElement | null =
       document.getElementById("transform-pyramid");
     const transforms: HTMLElement[] = Array.from(
-      document.querySelectorAll("transform-stack *")
+      document.querySelectorAll("#transform-stack *")
     );
     const transformSquare: HTMLElement | null =
       document.getElementById("transform-square");
