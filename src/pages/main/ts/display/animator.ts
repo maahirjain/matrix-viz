@@ -30,7 +30,6 @@ export class Animator {
       "#options div:last-child"
     );
     div!.style.display = "flex";
-    this.addSpeedBarListener();
     this.fillTeX(det, eigenMathJax);
 
     let initialString: string = "";
@@ -172,7 +171,7 @@ export class Animator {
     }
   }
 
-  private static addSpeedBarListener() {
+  public static addSpeedBarListener(): void {
     const speedBar: HTMLElement = document.getElementById("speed")!;
     speedBar!.addEventListener("input", () => {
       this.speed = +(<HTMLInputElement>speedBar).value;
