@@ -57,6 +57,7 @@ export const plugins = [
   new HtmlWebpackPlugin({
     template: "./src/pages/main/index.html",
     filename: "index.html",
+    favicon: "./cube.svg",
     chunks: ["main"]
   }),
 
