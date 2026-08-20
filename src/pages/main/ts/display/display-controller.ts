@@ -267,7 +267,6 @@ export class DisplayController {
       this.selectCubeSquare();
       if (document.getElementById("cube-btn")!.textContent === "Cube") {
         this.addCubeContent();
-        this.addInteractivity();
       } else {
         this.addSquareContent();
         document.getElementById("transform-square")!.style.transform = "";
@@ -283,7 +282,6 @@ export class DisplayController {
       this.selectPyramidTriangle();
       if (document.getElementById("pyramid-btn")!.textContent === "Pyramid") {
         this.addPyramidContent();
-        this.addInteractivity();
       } else {
         this.addTriangleContent();
         document.getElementById("transform-triangle")!.style.transform = "";
@@ -397,8 +395,6 @@ export class DisplayController {
           document.getElementById("cube")!.style.transform = this.currTransform;
           document.getElementById("transform-cube")!.style.transform =
             this.currTransform + " " + this.addedTransforms;
-
-          this.addInteractivity();
         } else {
           this.addSquareContent();
 
@@ -425,8 +421,6 @@ export class DisplayController {
             this.currTransform;
           document.getElementById("transform-pyramid")!.style.transform =
             this.currTransform + " " + this.addedTransforms;
-
-          this.addInteractivity();
         } else {
           this.addTriangleContent();
 
