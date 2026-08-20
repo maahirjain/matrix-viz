@@ -3,7 +3,6 @@
 @include themify($themes) {
     * {
         color: themed(text);
-        font-family: inherit;
     }
 
     body {
@@ -109,24 +108,297 @@
     #footer a {
         color: themed(quarternary);
     }
+
+    #intro-overlay {
+        background-color: rgba(0, 0, 0, 0.62);
+    }
+
+    #intro-dialog {
+        background-color: themed(bg);
+        border: 1px solid themed(text);
+    }
+
+    #intro-close, #about-btn {
+        background-color: transparent;
+        color: themed(text);
+    }
+
+    .intro-result::before {
+        border: 2px solid themed(text);
+    }
 }
 
 body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    margin: 0;
+    padding: 8px;
+    box-sizing: border-box;
     overflow: hidden;
 }
 
-body:not(.mathjax) {
+body {
     font-family: Avenir, Montserrat, Corbel, "URW Gothic", source-sans-pro, sans-serif;
+}
+
+button,
+input {
+    font-family: inherit;
 }
 
 #header {
     display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    margin-bottom: 8px;
+}
+
+#brand,
+#header-actions {
+    display: flex;
+    align-items: center;
     justify-content: center;
     gap: 8px;
-    margin-bottom: 8px;
+}
+
+#header-actions button {
+    min-width: 56px;
+    padding: 0 10px;
+    background-color: transparent;
+    border-radius: 999px;
+    font-size: 0.7rem;
+}
+
+.intro-mobile-copy {
+    display: none;
+}
+
+#intro-overlay[hidden] {
+    display: none;
+}
+
+#intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#intro-dialog {
+    position: relative;
+    width: min(680px, 100%);
+    max-height: calc(100vh - 40px);
+    padding: 32px;
+    border-radius: 10px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    text-align: center;
+}
+
+#intro-dialog h2 {
+    margin: 0 32px 8px;
+}
+
+#intro-description {
+    margin: 0 auto 8px;
+    max-width: 580px;
+    line-height: 1.45;
+}
+
+#intro-description p {
+    margin: 0;
+}
+
+#intro-description p + p {
+    margin-top: 16px;
+    font-size: 0.9rem;
+}
+
+#intro-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    min-width: 40px;
+    padding: 0;
+    border: 0;
+    font-size: 1.5rem;
+}
+
+#intro-examples {
+    width: 100%;
+    margin-right: auto;
+    margin-bottom: 28px;
+    margin-left: auto;
+}
+
+.intro-example {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.8rem;
+}
+
+.intro-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 110px;
+}
+
+.intro-matrix {
+    font-size: 1.1rem;
+}
+
+.intro-arrow {
+    flex: 0 0 auto;
+    margin: 0 28px;
+    font-size: 1.8rem;
+}
+
+.intro-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.75rem;
+}
+
+.intro-result {
+    display: grid;
+    place-items: center;
+    width: 90px;
+    height: 80px;
+    overflow: visible;
+}
+
+.intro-result span,
+.intro-result::before {
+    display: block;
+    width: 42px;
+    height: 42px;
+    box-sizing: border-box;
+}
+
+.intro-result::before {
+    grid-area: 1 / 1;
+    content: "";
+    opacity: 0.25;
+}
+
+.intro-result span {
+    grid-area: 1 / 1;
+    z-index: 1;
+    background-color: rgba(0, 70, 173, 0.6);
+}
+
+.intro-rotation span {
+    animation: intro-rotate 2s ease-in-out infinite alternate;
+}
+
+.intro-scale > span {
+    animation: intro-scale 2s ease-in-out infinite alternate;
+}
+
+#intro-start {
+    padding: 0 18px;
+}
+
+@keyframes intro-rotate {
+    to {
+        transform: rotate(45deg);
+    }
+}
+
+@keyframes intro-scale {
+    from {
+        transform: rotate(45deg);
+    }
+
+    to {
+        transform: scaleX(2) rotate(45deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .intro-rotation span {
+        animation: none;
+        transform: rotate(45deg);
+    }
+
+    .intro-scale > span {
+        animation: none;
+        transform: scaleX(2) rotate(45deg);
+    }
+}
+
+@media (max-width: 480px) {
+    #intro-overlay {
+        padding: 12px;
+    }
+
+    #intro-dialog {
+        max-height: calc(100vh - 24px);
+        padding: 20px 16px;
+    }
+
+    #intro-dialog h2 {
+        margin: 0 32px 10px;
+        font-size: 1.65rem;
+        line-height: 1.15;
+    }
+
+    #intro-description {
+        margin-bottom: 6px;
+        font-size: 0.9rem;
+        line-height: 1.35;
+    }
+
+    .intro-desktop-copy {
+        display: none;
+    }
+
+    .intro-mobile-copy {
+        display: block;
+    }
+
+    #intro-examples {
+        margin-bottom: 12px;
+    }
+
+    .intro-stage {
+        height: 76px;
+    }
+
+    .intro-matrix {
+        font-size: 0.65rem;
+    }
+
+    .intro-arrow {
+        margin: 0 5px;
+        font-size: 1rem;
+    }
+
+    .intro-step {
+        gap: 2px;
+        font-size: 0.55rem;
+    }
+
+    .intro-result {
+        width: 52px;
+        height: 52px;
+    }
+
+    .intro-result span,
+    .intro-result::before {
+        width: 20px;
+        height: 20px;
+    }
 }
 
 svg {
@@ -146,9 +418,7 @@ h1 {
 }
 
 #header button {
-    height: 50%;
-    border: none;
-    border-radius: 0px 0px 10px 10px;
+    height: 24px;
 }
 
 #main {

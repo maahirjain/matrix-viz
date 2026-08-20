@@ -19,9 +19,51 @@
     </script>
 </head>
 <body>
+    <div id="intro-overlay" hidden>
+        <section id="intro-dialog" role="dialog" aria-modal="true" aria-labelledby="intro-title" aria-describedby="intro-description">
+            <button id="intro-close" type="button" aria-label="Close introduction">&times;</button>
+            <h2 id="intro-title">
+                <span class="intro-desktop-copy">Visualize matrices as geometric transformations.</span>
+                <span class="intro-mobile-copy">Visualize matrix transformations.</span>
+            </h2>
+            <div id="intro-description">
+                <div class="intro-desktop-copy">
+                    <p>MatrixViz decomposes any 2 x 2 or 3 x 3 matrix into familiar geometric steps: rotations, scales, reflections, shears, and projections.</p>
+                    <p>Watch those steps reshape a square, triangle, cube, or pyramid while the original remains visible for comparison.</p>
+                </div>
+                <p class="intro-mobile-copy">Decompose a 2 x 2 or 3 x 3 matrix into familiar transformations, then watch them reshape a square, triangle, cube, or pyramid.</p>
+            </div>
+
+            <div id="intro-examples">
+                <div class="intro-example">
+                    <div class="intro-stage">
+                        <span class="intro-matrix mathjax">\(\begin{bmatrix}\sqrt{2}&-\sqrt{2}\\\frac{\sqrt{2}}{2}&\frac{\sqrt{2}}{2}\end{bmatrix}\)</span>
+                        <span class="intro-arrow" aria-hidden="true">&rarr;</span>
+                        <span class="intro-step">
+                            <span class="intro-result intro-rotation" aria-hidden="true"><span></span></span>
+                            <span>rotate(45deg)</span>
+                        </span>
+                        <span class="intro-arrow" aria-hidden="true">&rarr;</span>
+                        <span class="intro-step">
+                            <span class="intro-result intro-scale" aria-hidden="true"><span></span></span>
+                            <span>scaleX(2)</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <button id="intro-start" type="button">Start exploring</button>
+        </section>
+    </div>
+
     <div id="header">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M17.75,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.2,9.5"/></svg>          
-        <h1>MatrixViz</h1>
+        <div id="brand">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="white" d="M17.75,10.95L21.25,11M18.97,15.95C19.8,15.87 20.69,17.05 20.16,17.8C19.84,18.25 19.5,18.67 19.08,19.07C15.17,23 8.84,23 4.94,19.07C1.03,15.17 1.03,8.83 4.94,4.93C5.34,4.53 5.76,4.17 6.21,3.85C6.96,3.32 8.14,4.21 8.06,5.04C7.79,7.9 8.75,10.87 10.95,13.06C13.14,15.26 16.1,16.22 18.97,15.95M17.33,17.97C14.5,17.81 11.7,16.64 9.53,14.5C7.36,12.31 6.2,9.5 6.2,9.5"/></svg>
+            <h1>MatrixViz</h1>
+        </div>
+        <div id="header-actions">
+            <button id="about-btn" type="button">About</button>
+        </div>
     </div>
 
     <div id="main">

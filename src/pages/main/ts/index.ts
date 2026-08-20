@@ -3,7 +3,9 @@ import { ValidatorMediator } from "./mediator/validator-mediator";
 import { DisplayController } from "./display/display-controller";
 import { MatrixMediator } from "./mediator/matrix-mediator";
 import { Animator } from "./display/animator";
+import { Introduction } from "./display/introduction";
 
+Introduction.initialize();
 DisplayController.toggleTheme();
 DisplayController.addEventListeners();
 DisplayController.addInteractivity();
