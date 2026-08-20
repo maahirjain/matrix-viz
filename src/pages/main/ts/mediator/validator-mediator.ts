@@ -44,7 +44,9 @@ export class ValidatorMediator {
   }
 
   private static addInputEventListeners(): void {
-    Array.from(document.querySelectorAll("input")).forEach((input) => {
+    Array.from(
+      document.querySelectorAll<HTMLInputElement>('input[type="text"]')
+    ).forEach((input) => {
       input.addEventListener("input", () => {
         if (Validator.isCellValid("" + input.value)) {
           ValidatorDisplay.displayValidCell(input);
