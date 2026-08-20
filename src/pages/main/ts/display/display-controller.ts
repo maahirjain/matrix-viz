@@ -1,5 +1,6 @@
 import { Validator } from "../model/validator";
 import { ValidatorMediator } from "../mediator/validator-mediator";
+import { typesetMath } from "./mathjax";
 
 export class DisplayController {
   private static axesTransform = `rotateX(-25deg) rotateY(-25deg)`;
@@ -133,9 +134,7 @@ export class DisplayController {
   public static revealMatrix(btn: HTMLElement, matrixStr: string): void {
     btn.addEventListener("mouseover", () => {
       document.getElementById("matrix-mathjax")!.innerHTML = matrixStr;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mathjax: any = MathJax;
-      mathjax.typeset();
+      typesetMath();
     });
 
     btn.addEventListener("mouseout", () => {
@@ -149,9 +148,7 @@ export class DisplayController {
 
       document.getElementById("matrix-mathjax")!.innerHTML =
         `${identityStr}<div><div class="long-text">Hover over a transformation below to see its associated matrix</div><div class="short-text">Hover below to see matrix</div></div>`;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mathjax: any = MathJax;
-      mathjax.typeset();
+      typesetMath();
     });
   }
 
@@ -237,9 +234,7 @@ export class DisplayController {
         identityStr = "$$\\begin{bmatrix}1&0\\\\0&1\\end{bmatrix}$$";
       }
       document.getElementById("matrix-mathjax")!.innerHTML = identityStr;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mathjax: any = MathJax;
-      mathjax.typeset();
+      typesetMath();
     });
 
     btn!.addEventListener("mouseout", () => {
@@ -253,9 +248,7 @@ export class DisplayController {
 
       document.getElementById("matrix-mathjax")!.innerHTML =
         `${identityStr}<div><div class="long-text">Hover over a transformation below to see its associated matrix</div><div class="short-text">Hover below to see matrix</div></div>`;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mathjax: any = MathJax;
-      mathjax.typeset();
+      typesetMath();
     });
   }
 
@@ -346,10 +339,7 @@ export class DisplayController {
       }
 
       ValidatorMediator.addEventListeners();
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const mathjax: any = MathJax;
-      mathjax.typeset();
+      typesetMath();
     }
   }
 
@@ -475,9 +465,7 @@ export class DisplayController {
         }
 
         ValidatorMediator.addEventListeners();
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const mathjax: any = MathJax;
-        mathjax.typeset();
+        typesetMath();
       }
     });
   }

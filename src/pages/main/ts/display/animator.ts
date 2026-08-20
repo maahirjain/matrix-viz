@@ -1,4 +1,5 @@
 import { DisplayController } from "./display-controller";
+import { typesetMath } from "./mathjax";
 
 export class Animator {
   private static speed: number = 30;
@@ -182,8 +183,6 @@ export class Animator {
     document.getElementById("facts")!.innerHTML =
       `<p><strong>Determinant: </strong><span class="mathjax">\\(${det}\\)</span></p><p><strong>Eigenvalues and Eigenvectors:</strong><div class="mathjax">$$\\displaylines{${eigenMathJax}}$$</div></p>`;
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const mathjax: any = MathJax;
-    mathjax.typeset();
+    typesetMath();
   }
 }
