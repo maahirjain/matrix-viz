@@ -218,9 +218,7 @@ export class Matrix {
     decimalPlaces: number,
     scale: number
   ): string {
-    if (scale === 0 || scale === Infinity || isNaN(scale)) {
-      return str;
-    }
+    const safeScale = Number.isFinite(scale) && scale !== 0 ? scale : 1;
 
     const splitStr: string[] = str.split(" ");
 
@@ -239,12 +237,12 @@ export class Matrix {
       let roundedRealStr: string = "";
       if (splitStr.length === 3) {
         roundedReal = +splitStr[0];
-        roundedRealStr = (roundedReal * scale).toFixed(decimalPlaces);
+        roundedRealStr = (roundedReal * safeScale).toFixed(decimalPlaces);
       }
 
-      const roundedImaginaryStr: string = (roundedImaginary * scale).toFixed(
-        decimalPlaces
-      );
+      const roundedImaginaryStr: string = (
+        roundedImaginary * safeScale
+      ).toFixed(decimalPlaces);
 
       if (isNaN(roundedReal) || isNaN(roundedImaginary)) {
         return str;
@@ -254,7 +252,7 @@ export class Matrix {
         return `${roundedRealStr} ${splitStr[1]} ${roundedImaginaryStr}i`;
       }
     } else {
-      return (+str * scale).toFixed(decimalPlaces);
+      return (+str * safeScale).toFixed(decimalPlaces);
     }
   }
 

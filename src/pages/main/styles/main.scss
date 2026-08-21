@@ -99,7 +99,7 @@
         }
     }
 
-    #transform-stack * {
+    #transform-stack > * {
         background-color: themed(primary);
         color: themed(text);
         border: 1px solid themed(text);
@@ -141,6 +141,11 @@
 
     .example-choice strong {
         color: themed(text);
+    }
+
+    #mobile-desktop-toast {
+        background-color: themed(bg);
+        border: 1px solid themed(text);
     }
 
     .intro-result::before {
@@ -215,6 +220,14 @@ input {
 #examples-list {
     display: flex;
     flex-direction: column;
+}
+
+#mobile-desktop-toast[hidden] {
+    display: none !important;
+}
+
+#mobile-desktop-toast {
+    display: none;
 }
 
 .example-choice {
@@ -611,6 +624,27 @@ button {
     align-items: center;
 }
 
+#axis-direction {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    z-index: 3;
+    opacity: 0.72;
+    font-size: 0.68rem;
+    text-align: center;
+}
+
+#axis-direction span {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 2px;
+}
+
+#axis-direction .axis-x { text-decoration-color: red; }
+#axis-direction .axis-y { text-decoration-color: green; }
+#axis-direction .axis-z { text-decoration-color: blue; }
+
 #options div {
     display: flex;
     align-items: center;
@@ -922,11 +956,24 @@ button {
     justify-content: end;
 }
 
-#transform-stack * {
+#transform-stack > * {
     font-size: large;
     height: min-content;
     width: 100%;
     border-radius: 5px;
+}
+
+#transform-stack .rotation-transform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.rotation-direction {
+    flex: 0 0 auto;
+    font-size: 1em;
+    line-height: 1;
 }
 
 #footer {
@@ -1031,5 +1078,60 @@ button {
     #invalid-msg {
         grid-column: 1 / -1;
         font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 480px) {
+    #matrix-mathjax > div > div {
+        padding: 8px;
+        font-size: 0.72rem;
+        line-height: 1.25;
+    }
+
+    #matrix-mathjax .short-text::after {
+        content: "Tap a transform to view its matrix";
+        font-size: 0.72rem;
+    }
+
+    #matrix-mathjax .short-text {
+        font-size: 0;
+    }
+
+    #examples-popover {
+        position: fixed;
+        top: 96px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-height: calc(100vh - 120px);
+        transform: none;
+        overflow-y: auto;
+    }
+
+    #mobile-desktop-toast {
+        position: fixed;
+        bottom: 12px;
+        left: 50%;
+        z-index: 9;
+        width: min(300px, calc(100vw - 48px));
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 12px;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+        font-size: 0.78rem;
+        transform: translateX(-50%);
+    }
+
+    #mobile-desktop-toast-close {
+        width: 28px;
+        min-width: 28px;
+        height: 28px;
+        padding: 0;
+        font-size: 1.1rem;
+        line-height: 1;
     }
 }

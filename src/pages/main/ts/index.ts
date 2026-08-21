@@ -15,3 +15,13 @@ ValidatorMediator.addEventListeners();
 MatrixMediator.enterAndAnimate();
 DisplayController.setScene();
 Examples.initialize();
+
+const mobileToast = document.getElementById("mobile-desktop-toast")!;
+if (window.matchMedia("(max-width: 480px)").matches) {
+  mobileToast.hidden = false;
+}
+document
+  .getElementById("mobile-desktop-toast-close")!
+  .addEventListener("click", () => {
+    mobileToast.hidden = true;
+  });

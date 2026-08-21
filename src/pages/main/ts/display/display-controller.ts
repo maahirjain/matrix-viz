@@ -11,7 +11,10 @@ export class DisplayController {
   private static currTransform = `rotateX(-25deg) rotateY(-25deg)`;
   private static addedTransforms = "";
   private static transformStack = `<button id="identity-btn">identity</button>`;
-  private static matricesStr: string[];
+  private static matricesStr: string[] = [];
+  private static twoDAddedTransforms = "";
+  private static twoDTransformStack = `<button id="identity-btn">identity</button>`;
+  private static twoDMatricesStr: string[] = [];
 
   /**
    * Toggles between light and dark modes.
@@ -132,10 +135,13 @@ export class DisplayController {
    * @param matrixStr a MathJax representation of the associated matrix
    */
   public static revealMatrix(btn: HTMLElement, matrixStr: string): void {
-    btn.addEventListener("mouseover", () => {
+    const showMatrix = (): void => {
       document.getElementById("matrix-mathjax")!.innerHTML = matrixStr;
       typesetMath();
-    });
+    };
+
+    btn.addEventListener("mouseover", showMatrix);
+    btn.addEventListener("click", showMatrix);
 
     btn.addEventListener("mouseout", () => {
       let identityStr: string;
@@ -289,7 +295,6 @@ export class DisplayController {
     if (Validator.areBtnsClickable()) {
       document.getElementById("two-d-btn")!.classList.remove("selected");
       document.getElementById("three-d-btn")!.classList.add("selected");
-
       const matrixGrid: HTMLElement | null =
         document.getElementById("matrix-grid");
 
@@ -356,15 +361,27 @@ export class DisplayController {
   }
 
   public static set rawTransforms(str: string) {
-    this.addedTransforms = str;
+    if (this.is3DSelected()) {
+      this.addedTransforms = str;
+    } else {
+      this.twoDAddedTransforms = str;
+    }
   }
 
   public static set stack(str: string) {
-    this.transformStack = str;
+    if (this.is3DSelected()) {
+      this.transformStack = str;
+    } else {
+      this.twoDTransformStack = str;
+    }
   }
 
   public static set matricesMathJax(arr: string[]) {
-    this.matricesStr = arr;
+    if (this.is3DSelected()) {
+      this.matricesStr = arr;
+    } else {
+      this.twoDMatricesStr = arr;
+    }
   }
 
   private static pauseOrPlayListener() {
@@ -387,12 +404,7 @@ export class DisplayController {
             this.currTransform + " " + this.addedTransforms;
         } else {
           this.addSquareContent();
-
-          document.getElementById("transform-stack")!.innerHTML =
-            `<button id="identity-btn">identity</button>`;
-          this.identityHover();
-
-          btn!.style.transform = "";
+          this.restoreTwoDState("transform-square");
         }
       }
     });
@@ -413,12 +425,7 @@ export class DisplayController {
             this.currTransform + " " + this.addedTransforms;
         } else {
           this.addTriangleContent();
-
-          document.getElementById("transform-stack")!.innerHTML =
-            `<button id="identity-btn">identity</button>`;
-          this.identityHover();
-
-          btn!.style.transform = "";
+          this.restoreTwoDState("transform-triangle");
         }
       }
     });
@@ -445,10 +452,7 @@ export class DisplayController {
 
         this.addSquareContent();
         this.selectCubeSquare();
-
-        document.getElementById("transform-stack")!.innerHTML =
-          `<button id="identity-btn">identity</button>`;
-        this.identityHover();
+        this.restoreTwoDState("transform-square");
 
         document.querySelector("#facts span")!.textContent = "\\(1\\)";
 
@@ -497,21 +501,35 @@ export class DisplayController {
   private static addCubeContent(): void {
     document.getElementById("graph")!.innerHTML =
       `<div id="cube"><div id="cube-face-front"></div><div id="cube-face-back"></div><div id="cube-face-right"></div><div id="cube-face-left"></div><div id="cube-face-top"></div><div id="cube-face-bottom"></div></div><div id="transform-cube" class="paused"><div id="transform-cube-face-front"></div><div id="transform-cube-face-back"></div><div id="transform-cube-face-right"></div><div id="transform-cube-face-left"></div><div id="transform-cube-face-top"></div><div id="transform-cube-face-bottom"></div></div><div id="axes"><div id="x-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div><div id="y-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div><div id="z-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div></div>`;
+    this.addAxisDirection(3);
   }
 
   private static addPyramidContent(): void {
     document.getElementById("graph")!.innerHTML =
       `<div id="pyramid"><div id = "pyramid-side-one" class="pyramid-side">&#9650;</div><div id = "pyramid-side-two" class="pyramid-side">&#9650;</div><div id = "pyramid-side-three" class="pyramid-side">&#9650;</div><div id = "pyramid-side-four" class="pyramid-side">&#9650;</div></div><div id="transform-pyramid" class="paused"><div id="transform-pyramid-side-one" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-two" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-three" class="transform-pyramid-side">&#9650;</div><div id="transform-pyramid-side-four" class="transform-pyramid-side">&#9650;</div></div><div id="axes"><div id="x-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div><div id="y-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div><div id="z-axis" class="axis"><div class="face face-front"></div><div class="face face-back"></div><div class="face face-left"></div><div class="face face-right"></div><div class="face face-top"></div><div class="face face-bottom"></div></div></div>`;
+    this.addAxisDirection(3);
   }
 
   private static addSquareContent(): void {
     document.getElementById("graph")!.innerHTML =
       `<div id="square"></div><div id="transform-square" class="paused"></div><div id="two-d-axes"><div id="two-d-x-axis"></div><div id="two-d-y-axis"></div></div>`;
+    this.addAxisDirection(2);
   }
 
   private static addTriangleContent(): void {
     document.getElementById("graph")!.innerHTML =
       `<div id="triangle">&#9650;</div><div id="transform-triangle" class="paused">&#9650;</div><div id="two-d-axes"><div id="two-d-x-axis"></div><div id="two-d-y-axis"></div></div>`;
+    this.addAxisDirection(2);
+  }
+
+  private static addAxisDirection(dimension: 2 | 3): void {
+    const direction = document.createElement("small");
+    direction.id = "axis-direction";
+    direction.innerHTML =
+      dimension === 3
+        ? 'Initial axes: <span class="axis-x">+x</span> right · <span class="axis-y">+y</span> up · <span class="axis-z">+z</span> toward you'
+        : 'Initial axes: <span class="axis-x">+x</span> right · <span class="axis-y">+y</span> up';
+    document.getElementById("graph")!.appendChild(direction);
   }
 
   private static isCubeSelected(): boolean {
@@ -540,6 +558,23 @@ export class DisplayController {
     } else {
       return false;
     }
+  }
+
+  private static restoreTwoDState(shapeId: string): void {
+    document.getElementById(shapeId)!.style.transform =
+      this.twoDAddedTransforms;
+    document.getElementById("transform-stack")!.innerHTML =
+      this.twoDTransformStack;
+
+    const stackChildren: HTMLElement[] = Array.from(
+      document.querySelectorAll("#transform-stack *")
+    );
+    stackChildren.forEach((btn) => {
+      if (btn.dataset.index != undefined) {
+        this.revealMatrix(btn, this.twoDMatricesStr[+btn.dataset.index]);
+      }
+    });
+    this.identityHover();
   }
 
   private static adaptErrorDiv() {

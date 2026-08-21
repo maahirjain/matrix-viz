@@ -66,7 +66,7 @@ export class Animator {
       }`;
 
       const element: HTMLElement = document.createElement("button");
-      element.textContent = transform;
+      this.addTransformLabel(element, transform);
       element.dataset.index = "" + i;
 
       DisplayController.revealMatrix(element, matrixMathJax);
@@ -95,16 +95,32 @@ export class Animator {
       DisplayController.shapeTransforms = window
         .getComputedStyle(shape)
         .getPropertyValue("transform");
-      DisplayController.rawTransforms = addedTransforms
-        .split(" ")
-        .reverse()
-        .join(" ");
-      DisplayController.matricesMathJax = matricesMathJax;
-      DisplayController.stack = stack.innerHTML;
     }
+    DisplayController.rawTransforms = addedTransforms
+      .split(" ")
+      .reverse()
+      .join(" ");
+    DisplayController.matricesMathJax = matricesMathJax;
+    DisplayController.stack = stack.innerHTML;
 
     div!.style.display = "none";
     document.documentElement.classList.remove("animate");
+  }
+
+  private static addTransformLabel(
+    element: HTMLElement,
+    transform: string
+  ): void {
+    if (!transform.startsWith("rotate(")) {
+      element.textContent = transform;
+      return;
+    }
+
+    const angle = Number(transform.match(/-?\d+(?:\.\d+)?/)?.[0] ?? 0);
+    const direction = angle < 0 ? "clockwise" : "counterclockwise";
+    element.classList.add("rotation-transform");
+    element.title = `${direction} with +y pointing up`;
+    element.innerHTML = `<span>${transform}</span><span class="rotation-direction" aria-hidden="true">${angle < 0 ? "↻" : "↺"}</span>`;
   }
 
   private static getInitialTransform(str: string) {
