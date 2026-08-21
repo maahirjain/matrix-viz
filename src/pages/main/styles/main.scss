@@ -118,8 +118,28 @@
         border: 1px solid themed(text);
     }
 
-    #intro-close, #about-btn {
+    #intro-close, #about-btn, #examples-btn {
         background-color: transparent;
+        color: themed(text);
+    }
+
+    #examples-popover {
+        background-color: themed(bg);
+        border: 1px solid themed(text);
+    }
+
+    .example-choice {
+        background-color: transparent;
+        border-bottom: 1px solid themed(primary);
+    }
+
+    .example-choice:hover,
+    .example-choice:focus-visible {
+        background-color: themed(primary);
+        color: themed(text);
+    }
+
+    .example-choice strong {
         color: themed(text);
     }
 
@@ -169,6 +189,78 @@ input {
     background-color: transparent;
     border-radius: 999px;
     font-size: 0.7rem;
+}
+
+#examples-control {
+    position: relative;
+}
+
+#examples-popover[hidden] {
+    display: none;
+}
+
+#examples-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    z-index: 8;
+    width: min(360px, calc(100vw - 24px));
+    border-radius: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateX(-50%);
+    overflow: hidden;
+}
+
+#examples-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.example-choice {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 2px 12px;
+    width: 100%;
+    height: auto;
+    min-height: 62px;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 0;
+    text-align: left;
+}
+
+.example-choice:last-child {
+    border-bottom: 0;
+}
+
+.example-choice strong,
+.example-choice span {
+    grid-column: 1;
+}
+
+.example-choice span {
+    font-size: 0.72rem;
+    line-height: 1.3;
+}
+
+.example-choice small {
+    grid-column: 2;
+    grid-row: 1 / 3;
+    align-self: center;
+    white-space: nowrap;
+}
+
+#header-actions .example-choice {
+    display: grid;
+    width: 100%;
+    height: auto;
+    min-height: 62px;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 0;
+    font-size: inherit;
 }
 
 .intro-mobile-copy {
@@ -311,29 +403,29 @@ input {
 
 @keyframes intro-rotate {
     to {
-        transform: rotate(45deg);
+        transform: rotate(-45deg);
     }
 }
 
 @keyframes intro-scale {
     from {
-        transform: rotate(45deg);
+        transform: rotate(-45deg);
     }
 
     to {
-        transform: scaleX(2) rotate(45deg);
+        transform: scaleX(2) rotate(-45deg);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .intro-rotation span {
         animation: none;
-        transform: rotate(45deg);
+        transform: rotate(-45deg);
     }
 
     .intro-scale > span {
         animation: none;
-        transform: scaleX(2) rotate(45deg);
+        transform: scaleX(2) rotate(-45deg);
     }
 }
 

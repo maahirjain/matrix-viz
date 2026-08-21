@@ -18,11 +18,17 @@ export class MatrixMediator {
           const matrix: Matrix = new Matrix(processedMatrix);
           const computedTransforms: string[] = matrix.computeTransforms();
           const det: number = matrix.det();
-          const eigenMathJax: string = matrix.eigenMathJax();
+          let eigenMathJax: string;
+          try {
+            eigenMathJax = matrix.eigenMathJax();
+          } catch {
+            eigenMathJax = "\\text{Unavailable for this matrix}";
+          }
           const matricesMathJax: string[] =
             matrix.computeTransformMatricesMathJax();
-          const cssTransforms: string[] = this.scaleCSSTransforms(
-            matrix.computeCSSTransforms()
+          const cssTransforms: string[] = this.prepareCSSTransforms(
+            matrix.computeCSSTransforms(),
+            matrix.dimension
           );
 
           const identityMatrix3D = [
@@ -56,18 +62,43 @@ export class MatrixMediator {
     });
   }
 
-  private static scaleCSSTransforms(cssTransforms: string[]): string[] {
-    const scaledArr: string[] = [];
+  private static prepareCSSTransforms(
+    cssTransforms: string[],
+    dimension: number
+  ): string[] {
+    const preparedTransforms: string[] = [];
 
     for (const str of cssTransforms) {
-      if (str.includes("(0)") || str.includes(",0)") || str.includes(", 0)")) {
-        const newStr: string = str.replace(/0/g, "0.01");
-        scaledArr.push(newStr);
+      const displayTransform = this.toCSSCoordinates(str, dimension);
+
+      if (
+        displayTransform.includes("(0)") ||
+        displayTransform.includes(",0)") ||
+        displayTransform.includes(", 0)")
+      ) {
+        preparedTransforms.push(displayTransform.replace(/0/g, "0.01"));
       } else {
-        scaledArr.push(str);
+        preparedTransforms.push(displayTransform);
       }
     }
 
-    return scaledArr;
+    return preparedTransforms;
+  }
+
+  private static toCSSCoordinates(
+    transform: string,
+    dimension: number
+  ): string {
+    const requiresSignChange =
+      transform.startsWith("skew") ||
+      (dimension === 2 && transform.startsWith("rotate(")) ||
+      (dimension === 3 &&
+        (transform.startsWith("rotateX(") || transform.startsWith("rotateZ(")));
+
+    if (!requiresSignChange) return transform;
+
+    return transform.replace(/-?\d+(?:\.\d+)?(?=deg)/g, (angle) => {
+      return `${-Number(angle)}`;
+    });
   }
 }

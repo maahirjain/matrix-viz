@@ -4,6 +4,7 @@ import { DisplayController } from "./display/display-controller";
 import { MatrixMediator } from "./mediator/matrix-mediator";
 import { Animator } from "./display/animator";
 import { Introduction } from "./display/introduction";
+import { Examples } from "./display/examples";
 
 Introduction.initialize();
 DisplayController.toggleTheme();
@@ -13,3 +14,4 @@ Animator.addSpeedBarListener();
 ValidatorMediator.addEventListeners();
 MatrixMediator.enterAndAnimate();
 DisplayController.setScene();
+Examples.initialize();

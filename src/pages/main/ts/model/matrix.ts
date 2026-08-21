@@ -408,6 +408,10 @@ export class Matrix {
       return this.diagTransforms(mlMatrix);
     } else if (this.isShear(mlMatrix)) {
       return this.shearTransforms(mlMatrix);
+    } else if (this.isOrthogonal(mlMatrix)) {
+      return this.isDetPositive(mlMatrix)
+        ? this.properRotationTransforms(mlMatrix)
+        : this.improperRotationTransforms(mlMatrix);
     } else {
       const SVD: { U: MLMatrix; D: MLMatrix; V: MLMatrix } = this.SVD(mlMatrix);
       const U: MLMatrix = SVD.U;
@@ -513,6 +517,17 @@ export class Matrix {
     return (
       this.isDiagonal(mlMatrix) &&
       mlMatrix.diag().every((element) => element === 1)
+    );
+  }
+
+  private isOrthogonal(mlMatrix: MLMatrix): boolean {
+    const product = mlMatrix.transpose().mmul(mlMatrix).to2DArray();
+
+    return product.every((row, rowIndex) =>
+      row.every(
+        (value, columnIndex) =>
+          abs(value - (rowIndex === columnIndex ? 1 : 0)) < 1e-10
+      )
     );
   }
 
