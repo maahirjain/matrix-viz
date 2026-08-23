@@ -87,8 +87,13 @@
         border: 1px solid themed(text);
     }
 
-    #triangle, .pyramid-side {
+    #triangle {
         -webkit-text-stroke: 1px themed(text);
+    }
+
+    .pyramid-side polygon {
+        fill: transparent;
+        stroke: themed(text);
     }
 
     #matrix-mathjax, #transform-stack {
@@ -799,7 +804,7 @@ button {
 
 #cube, #square, #pyramid, #triangle { z-index: 1; }
 
-#triangle, .pyramid-side {
+#triangle {
     opacity: 100%;
     color: transparent;
 }
@@ -810,7 +815,9 @@ button {
 
 #cube * { box-sizing: border-box; }
 
-#transform-cube *, #transform-pyramid * { opacity: 60%; }
+#transform-cube * { opacity: 60%; }
+
+.transform-pyramid-side { opacity: 60%; }
 
 #cube *, #transform-cube *, #square, #transform-square {
     position: absolute;
@@ -819,10 +826,31 @@ button {
     color: white;
 }
 
-#triangle, #transform-triangle, .pyramid-side, .transform-pyramid-side {
+#triangle, #transform-triangle {
     position: absolute;
     font-size: 70px;
     text-align: center;
+}
+
+.pyramid-side, .transform-pyramid-side {
+    position: absolute;
+    top: -8.262px;
+    left: 0;
+    width: 70px;
+    height: 78.262px;
+    overflow: visible;
+    transform-origin: 35px 78.262px;
+    transform-style: preserve-3d;
+}
+
+.pyramid-side polygon, .transform-pyramid-side polygon {
+    vector-effect: non-scaling-stroke;
+    stroke-width: 1px;
+    stroke-linejoin: round;
+}
+
+.transform-pyramid-side polygon {
+    stroke: none;
 }
 
 #cube-face-front, #transform-cube-face-front { 
@@ -858,19 +886,19 @@ button {
 }
 
 #pyramid-side-one, #transform-pyramid-side-one {
-    transform: rotateY(0deg) translateZ(15px) rotateX(35deg);
+    transform: rotateY(0deg) translateZ(35px) rotateX(26.565deg);
 }
 
 #pyramid-side-two, #transform-pyramid-side-two {
-    transform: rotateY(90deg) translateZ(15px) rotateX(35deg); 
+    transform: rotateY(90deg) translateZ(35px) rotateX(26.565deg);
 }
 
 #pyramid-side-three, #transform-pyramid-side-three {
-    transform: rotateY(180deg) translateZ(15px) rotateX(35deg);
+    transform: rotateY(180deg) translateZ(35px) rotateX(26.565deg);
 }
 
 #pyramid-side-four, #transform-pyramid-side-four {
-    transform: rotateY(270deg) translateZ(15px) rotateX(35deg);
+    transform: rotateY(270deg) translateZ(35px) rotateX(26.565deg);
 }
   
 #transform-cube-face-back   { background-color: #009b48; }
@@ -883,13 +911,13 @@ button {
 
 #transform-cube-face-bottom { background-color: #ffffff; }
 
-#transform-pyramid-side-one   { color: #009b48; }
+#transform-pyramid-side-one polygon   { fill: #009b48; }
 
-#transform-pyramid-side-two  { color: #ff5800; }
+#transform-pyramid-side-two polygon  { fill: #ff5800; }
 
-#transform-pyramid-side-three { color: #b71234; }
+#transform-pyramid-side-three polygon { fill: #b71234; }
 
-#transform-pyramid-side-four   { color: #ffd500; }
+#transform-pyramid-side-four polygon   { fill: #ffd500; }
 
 #transform-square, #transform-triangle {
     opacity: 60%;
