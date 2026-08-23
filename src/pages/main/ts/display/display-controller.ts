@@ -298,7 +298,7 @@ export class DisplayController {
       const matrixGrid: HTMLElement | null =
         document.getElementById("matrix-grid");
 
-      matrixGrid!.style.gridTemplateRows = "repeat(3, 35px)";
+      matrixGrid!.style.gridTemplateRows = "repeat(3, 36px)";
       matrixGrid!.style.gridTemplateColumns = "repeat(3, 30%)";
       matrixGrid!.innerHTML = `<input type="text" class="valid" value="1"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="1"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="1"><p>Supports expressions like sin(45deg), sqrt(2)/2</p>`;
 
@@ -440,7 +440,7 @@ export class DisplayController {
         const matrixGrid: HTMLElement | null =
           document.getElementById("matrix-grid");
 
-        matrixGrid!.style.gridTemplateRows = "repeat(2, 35px)";
+        matrixGrid!.style.gridTemplateRows = "repeat(2, 36px)";
         matrixGrid!.style.gridTemplateColumns = "repeat(2, 30%)";
         matrixGrid!.innerHTML = `<input type="text" class="valid" value="1"><input type="text" class="valid" value="0"><input type="text" class="valid" value="0"><input type="text" class="valid" value="1"><p>Supports expressions like sin(45deg), sqrt(2)/2</p>`;
 
