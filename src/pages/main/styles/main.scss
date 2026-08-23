@@ -13,16 +13,17 @@
         background-color: themed(primary);
     }
 
-    button:hover {
+    button:not(:disabled):hover {
         background-color: themed(secondary);
         color: themed(contrast);
     }
 
-    .option:hover, .valid-matrix:hover {
+    .option:not(:disabled):hover,
+    .valid-matrix:not(:disabled):hover {
         background-color: themed(tertiary);
     }
 
-    .invalid-matrix:hover {
+    .invalid-matrix:not(:disabled):hover {
         background-color: themed(error);
     }
 
@@ -37,6 +38,16 @@
 
     #header button {
         border: 1px solid themed(text);
+    }
+
+    button:focus-visible,
+    input:focus-visible {
+        outline: 2px solid themed(secondary);
+        outline-offset: 2px;
+    }
+
+    button:disabled {
+        color: themed(quinary);
     }
 
     .invalid {
@@ -118,14 +129,24 @@
         border: 1px solid themed(text);
     }
 
-    #intro-close, #about-btn, #examples-btn {
+    #intro-close, #about-btn, #examples-btn, #share-btn {
         background-color: transparent;
         color: themed(text);
     }
 
-    #examples-popover {
+    #examples-popover, #share-popover {
         background-color: themed(bg);
         border: 1px solid themed(text);
+    }
+
+    #header-actions #share-copy-btn {
+        background-color: themed(primary);
+        color: themed(text);
+    }
+
+    #header-actions #share-copy-btn:not(:disabled):hover {
+        background-color: themed(secondary);
+        color: themed(contrast);
     }
 
     .example-choice {
@@ -133,7 +154,7 @@
         border-bottom: 1px solid themed(primary);
     }
 
-    .example-choice:hover,
+    .example-choice:not(:disabled):hover,
     .example-choice:focus-visible {
         background-color: themed(primary);
         color: themed(text);
@@ -170,6 +191,27 @@ body {
 button,
 input {
     font-family: inherit;
+    transition:
+        background-color 140ms ease,
+        border-color 140ms ease,
+        color 140ms ease,
+        box-shadow 140ms ease,
+        transform 100ms ease;
+}
+
+button,
+input[type="range"] {
+    cursor: pointer;
+}
+
+button:not(:disabled):active {
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.24);
+    transform: translateY(1px);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 #header {
@@ -196,11 +238,13 @@ input {
     font-size: 0.7rem;
 }
 
-#examples-control {
+#examples-control,
+#share-control {
     position: relative;
 }
 
-#examples-popover[hidden] {
+#examples-popover[hidden],
+#share-popover[hidden] {
     display: none;
 }
 
@@ -220,6 +264,45 @@ input {
 #examples-list {
     display: flex;
     flex-direction: column;
+}
+
+#share-popover {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    z-index: 8;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    width: min(420px, calc(100vw - 24px));
+    padding: 12px;
+    border-radius: 6px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transform: translateX(-50%);
+}
+
+#share-popover label,
+#share-copy-status {
+    grid-column: 1 / -1;
+    text-align: left;
+}
+
+#share-link-output {
+    min-width: 0;
+    padding: 0 8px;
+    border-radius: 4px;
+}
+
+#header-actions #share-copy-btn {
+    width: auto;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 4px;
+}
+
+#share-copy-status {
+    min-height: 1em;
 }
 
 #mobile-desktop-toast[hidden] {
@@ -431,6 +514,15 @@ input {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    button,
+    input {
+        transition: none;
+    }
+
+    button:not(:disabled):active {
+        transform: none;
+    }
+
     .intro-rotation span {
         animation: none;
         transform: rotate(-45deg);

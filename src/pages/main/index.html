@@ -69,6 +69,15 @@
                     <div id="examples-list"></div>
                 </div>
             </div>
+            <div id="share-control">
+                <button id="share-btn" type="button" aria-expanded="false" aria-controls="share-popover">Share</button>
+                <div id="share-popover" role="dialog" aria-label="Share current matrix" hidden>
+                    <label for="share-link-output">Shareable link</label>
+                    <input id="share-link-output" type="text" readonly>
+                    <button id="share-copy-btn" type="button">Copy link</button>
+                    <small id="share-copy-status" aria-live="polite"></small>
+                </div>
+            </div>
         </div>
     </div>
 

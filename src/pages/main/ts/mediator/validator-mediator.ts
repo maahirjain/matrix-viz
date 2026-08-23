@@ -9,7 +9,7 @@ export class ValidatorMediator {
    */
   public static processInputMatrix(): string[][] {
     const inputArr: string[] = Array.from(
-      document.querySelectorAll('input[type="text"]')
+      document.querySelectorAll('#matrix-grid input[type="text"]')
     ).map((input) => "" + (<HTMLInputElement>input).value);
     const length: number = inputArr.length;
 
@@ -45,7 +45,9 @@ export class ValidatorMediator {
 
   private static addInputEventListeners(): void {
     Array.from(
-      document.querySelectorAll<HTMLInputElement>('input[type="text"]')
+      document.querySelectorAll<HTMLInputElement>(
+        '#matrix-grid input[type="text"]'
+      )
     ).forEach((input) => {
       input.addEventListener("input", () => {
         if (Validator.isCellValid("" + input.value)) {
