@@ -164,11 +164,6 @@
         color: themed(text);
     }
 
-    #mobile-desktop-toast {
-        background-color: themed(bg);
-        border: 1px solid themed(text);
-    }
-
     .intro-result::before {
         border: 2px solid themed(text);
     }
@@ -305,14 +300,6 @@ button:disabled {
 
 #share-copy-status {
     min-height: 1em;
-}
-
-#mobile-desktop-toast[hidden] {
-    display: none !important;
-}
-
-#mobile-desktop-toast {
-    display: none;
 }
 
 .example-choice {
@@ -1207,30 +1194,4 @@ button {
         overflow-y: auto;
     }
 
-    #mobile-desktop-toast {
-        position: fixed;
-        bottom: 12px;
-        left: 50%;
-        z-index: 9;
-        width: min(300px, calc(100vw - 48px));
-        box-sizing: border-box;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-        padding: 10px 12px;
-        border-radius: 6px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
-        font-size: 0.78rem;
-        transform: translateX(-50%);
-    }
-
-    #mobile-desktop-toast-close {
-        width: 28px;
-        min-width: 28px;
-        height: 28px;
-        padding: 0;
-        font-size: 1.1rem;
-        line-height: 1;
-    }
 }
