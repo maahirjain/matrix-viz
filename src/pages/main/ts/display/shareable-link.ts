@@ -88,7 +88,12 @@ export class ShareableLink {
       url.search = "";
       url.hash = "";
       url.searchParams.set("shape", shape);
-      url.searchParams.set("matrix", matrix.join(","));
+      url.searchParams.set(
+        "matrix",
+        matrix.some((value) => value.includes(","))
+          ? JSON.stringify(matrix)
+          : matrix.join(",")
+      );
       this.output.value = url.toString().replace(/%2C/gi, ",");
       this.copyButton.disabled = false;
     }
@@ -133,7 +138,17 @@ export class ShareableLink {
       return null;
     }
 
-    const values = matrix.split(",").map((value) => value.trim());
+    let values: string[];
+    try {
+      const parsed = JSON.parse(matrix);
+      values =
+        Array.isArray(parsed) &&
+        parsed.every((value) => typeof value === "string")
+          ? parsed.map((value) => value.trim())
+          : [];
+    } catch {
+      values = matrix.split(",").map((value) => value.trim());
+    }
     const dimension = shape === "square" || shape === "triangle" ? 2 : 3;
     if (
       values.length !== dimension * dimension ||

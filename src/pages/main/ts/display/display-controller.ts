@@ -299,6 +299,7 @@ export class DisplayController {
    */
   public static setScene(): void {
     if (Validator.areBtnsClickable()) {
+      document.getElementById("graph")!.classList.remove("two-dimensional");
       document.getElementById("two-d-btn")!.classList.remove("selected");
       document.getElementById("three-d-btn")!.classList.add("selected");
       const matrixGrid: HTMLElement | null =
@@ -440,6 +441,7 @@ export class DisplayController {
   private static addTwoDBtnListener(): void {
     document.getElementById("two-d-btn")!.addEventListener("click", () => {
       if (Validator.areBtnsClickable()) {
+        document.getElementById("graph")!.classList.add("two-dimensional");
         document.getElementById("three-d-btn")!.classList.remove("selected");
         document.getElementById("two-d-btn")!.classList.add("selected");
 

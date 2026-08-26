@@ -775,6 +775,10 @@ button {
     touch-action: none;
 }
 
+#graph.two-dimensional {
+    touch-action: pan-y;
+}
+
 #graph * {
     -webkit-touch-callout: none; 
     -webkit-user-select: none;

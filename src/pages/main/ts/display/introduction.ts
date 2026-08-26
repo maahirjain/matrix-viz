@@ -34,12 +34,18 @@ export class Introduction {
 
   private static show(): void {
     const overlay = document.getElementById("intro-overlay")!;
+    const dialog = document.getElementById("intro-dialog")!;
     this.previousFocus =
       document.activeElement instanceof HTMLElement
         ? document.activeElement
         : null;
     overlay.hidden = false;
-    document.getElementById("intro-start")!.focus();
+    dialog.scrollTop = 0;
+    const focusTarget =
+      dialog.scrollHeight > dialog.clientHeight
+        ? document.getElementById("intro-close")!
+        : document.getElementById("intro-start")!;
+    focusTarget.focus({ preventScroll: true });
   }
 
   private static dismiss(): void {
