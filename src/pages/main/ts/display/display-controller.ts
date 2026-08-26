@@ -63,15 +63,21 @@ export class DisplayController {
     let currentX: number = 0;
     let currentY: number = 0;
 
-    graph!.addEventListener("mousedown", (e) => {
-      if (this.is3DSelected() && Validator.areBtnsClickable()) {
+    graph!.addEventListener("pointerdown", (e) => {
+      if (
+        e.isPrimary &&
+        e.button === 0 &&
+        this.is3DSelected() &&
+        Validator.areBtnsClickable()
+      ) {
         isDragging = true;
         startX = e.clientX - currentX;
         startY = e.clientY - currentY;
+        graph!.setPointerCapture(e.pointerId);
       }
     });
 
-    graph!.addEventListener("mousemove", (e) => {
+    graph!.addEventListener("pointermove", (e) => {
       if (this.is3DSelected() && Validator.areBtnsClickable()) {
         const cube: HTMLElement | null = document.getElementById("cube");
         const transformCube: HTMLElement | null =
@@ -115,17 +121,17 @@ export class DisplayController {
       }
     });
 
-    graph!.addEventListener("mouseup", () => {
-      if (this.is3DSelected() && Validator.areBtnsClickable()) {
+    const endDrag = (e: PointerEvent): void => {
+      if (e.isPrimary) {
         isDragging = false;
+        if (graph!.hasPointerCapture(e.pointerId)) {
+          graph!.releasePointerCapture(e.pointerId);
+        }
       }
-    });
+    };
 
-    graph!.addEventListener("mouseleave", () => {
-      if (this.is3DSelected() && Validator.areBtnsClickable()) {
-        isDragging = false;
-      }
-    });
+    graph!.addEventListener("pointerup", endDrag);
+    graph!.addEventListener("pointercancel", endDrag);
   }
 
   /**

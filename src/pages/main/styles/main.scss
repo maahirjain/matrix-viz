@@ -769,6 +769,7 @@ button {
     perspective-origin: center;
     overflow: hidden;
     position: relative;
+    touch-action: none;
 }
 
 #graph * {
@@ -1134,26 +1135,65 @@ button {
 }
 
 @media (max-width: 1200px) {
+    body {
+        height: auto;
+        min-height: 100vh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
     #main {
         display: grid;
-        grid-template-columns: 70% 30%;
-        overflow: auto;
+        grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
+        gap: 16px 12px;
+        height: auto;
     }
 
     #matrix-facts {
-        flex-direction: row;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
         grid-column: 1 / -1;
+        width: 100%;
 
         > div {
             padding: 8px;
-            min-width: 230%;
-            min-height: 100%;
+            min-width: 0;
+            height: auto;
             box-sizing: border-box;
         }
     }
 
+    #matrix-input {
+        grid-template-rows: auto auto auto;
+        min-height: 230px;
+    }
+
+    #matrix-facts > #facts {
+        min-height: 230px;
+        overflow: visible;
+        padding: 24px;
+    }
+
+    #facts .mathjax {
+        max-height: none;
+        overflow-x: auto;
+    }
+
+    #facts p:first-child {
+        margin: 0 0 12px;
+    }
+
     #viz, #transforms {
         width: 100%;
+    }
+
+    #graph {
+        min-height: 520px;
+    }
+
+    #transforms {
+        grid-template-rows: minmax(140px, auto) minmax(360px, auto);
     }
 
     #transforms-direction, #mmul-direction {
@@ -1162,15 +1202,16 @@ button {
 
     #transform-stack {
         grid-column: 1 / -1;
-        width: 77%;
-        overflow: auto;
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
     }
 
     #matrix-mathjax {
         padding: 0;
-        width: 77%;
+        width: 100%;
         grid-column: 1 / -1;
-        font-size: 2vw;
+        font-size: clamp(0.85rem, 1.6vw, 1rem);
     }
 
     .short-text {
@@ -1193,6 +1234,65 @@ button {
         grid-column: 1 / -1;
         font-size: 0.6rem;
     }
+
+    #footer {
+        flex-grow: 0;
+        padding: 16px 0 8px;
+    }
+}
+
+@media (max-width: 760px) {
+    body {
+        padding: 8px 10px;
+    }
+
+    #main {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #matrix-facts {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #matrix-facts > #matrix-input,
+    #matrix-facts > #facts {
+        min-height: 0;
+        padding: 16px;
+    }
+
+    #viz,
+    #transforms {
+        grid-column: 1;
+    }
+
+    #graph {
+        height: min(100vw, 480px);
+        min-height: 340px;
+    }
+
+    #transforms {
+        grid-template-rows: minmax(130px, auto) auto;
+        min-height: 0;
+    }
+
+    #transform-stack {
+        min-height: 220px;
+        overflow: visible;
+    }
+
+    button {
+        min-height: 44px;
+    }
+
+    #header button {
+        height: 36px;
+        min-height: 36px;
+    }
+
+    #header-actions button {
+        padding-right: 14px;
+        padding-left: 14px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1211,14 +1311,18 @@ button {
         font-size: 0;
     }
 
-    #examples-popover {
+    #examples-popover,
+    #share-popover {
         position: fixed;
         top: 96px;
         right: 12px;
         left: 12px;
         width: auto;
-        max-height: calc(100vh - 120px);
         transform: none;
+    }
+
+    #examples-popover {
+        max-height: calc(100vh - 120px);
         overflow-y: auto;
     }
 
