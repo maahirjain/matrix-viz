@@ -3,19 +3,18 @@
 <p><img src="media/screenshot_dark_mode.png" alt="Dark mode screenshot">
 <img src="media/screenshot_light_mode.png" alt="Light mode screenshot"></p>
 <a id="md:features" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Features<a href="#md:features" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><ul>
-<li>Computes a series of linear transformations associated with the input matrix from rotations, scaling, reflections, shears, and projections</li>
-<li>Generates and displays an animation showing each linear transformation applied on the starting shape until the final effect of the matrix on the shape is seen</li>
-<li>Includes controls for the speed of the animation and to pause and play the ongoing animation</li>
-<li>Includes animations for 4 shapes - cube, pyramid, square and triangle</li>
-<li>Allows interactivity with the 3D graph to change the view of the animation</li>
-<li>Displays the matrix associated with each linear transform</li>
-<li>Accepts 2 x 2 and 3 x 3 matrices with support for math expression inputs such as sin(45deg) and sqrt(2)/2</li>
-<li>Displays the determinant, eigenvalues and corresponding eigenvectors of the input matrix, using MathJax</li>
-<li>Has both dark mode and light mode options</li>
-<li>Shows an outline of the initial shape showing a visual comparison between the starting and end result</li>
-<li>Implements form validation checks to ensure an input matrix is valid</li>
-<li>Stores 3D transform data across various interactions</li>
-<li>Responsive to various devices</li>
+<li>Decomposes 2×2 and 3×3 matrices into sequences of recognizable transformations, including rotations, scaling, reflections, shears, and projections</li>
+<li>Animates each transformation in sequence on a square, triangle, cube, or pyramid while retaining an outline of the original shape for comparison</li>
+<li>Includes curated examples demonstrating common 2D and 3D transformations</li>
+<li>Accepts mathematical expressions such as <code>sin(45deg)</code> and <code>sqrt(2)/2</code></li>
+<li>Displays the determinant, eigenvalues, and eigenvectors of the input matrix</li>
+<li>Reveals the matrix associated with each step in the transformation sequence</li>
+<li>Provides animation speed controls and pause/resume functionality</li>
+<li>Supports shareable links that preserve the selected shape and matrix</li>
+<li>Supports mouse, touch, and pen interaction for changing the 3D viewing angle</li>
+<li>Preserves independent visualization state when switching between 2D and 3D modes</li>
+<li>Includes responsive phone, tablet, and desktop layouts</li>
+<li>Supports light and dark themes and reduced-motion preferences</li>
 </ul>
 <a id="md:documentation" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Documentation<a href="#md:documentation" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>You can access TypeDoc documentation for the project <a href="https://maahirjain.github.io/matrix-viz/docs/">here</a>.</p>
 <a id="md:behind-the-scenes" class="tsd-anchor"></a><h2 class="tsd-anchor-link">Behind the Scenes<a href="#md:behind-the-scenes" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2><p>Here is a sketch of how the linear transformations associated with the input matrix are computed:</p>
