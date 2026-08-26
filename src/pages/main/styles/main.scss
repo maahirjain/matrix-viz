@@ -1260,6 +1260,14 @@ button {
         padding: 16px;
     }
 
+    #three-d-btn.selected ~ #matrix-grid {
+        grid-template-rows: repeat(3, 44px) !important;
+    }
+
+    #two-d-btn.selected ~ #matrix-grid {
+        grid-template-rows: repeat(2, 44px) !important;
+    }
+
     #viz,
     #transforms {
         grid-column: 1;
@@ -1282,6 +1290,10 @@ button {
 
     button {
         min-height: 44px;
+    }
+
+    #speed {
+        height: 44px;
     }
 
     #header button {
