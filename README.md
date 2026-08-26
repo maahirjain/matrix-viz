@@ -9,19 +9,18 @@ Visit at [maahirjain.github.io/matrix-viz](https://maahirjain.github.io/matrix-v
 ![Light mode screenshot](./screenshot_light_mode.png)
 
 ## Features
-- Computes a series of linear transformations associated with the input matrix from rotations, scaling, reflections, shears, and projections 
-- Generates and displays an animation showing each linear transformation applied on the starting shape until the final effect of the matrix on the shape is seen 
-- Includes controls for the speed of the animation and to pause and play the ongoing animation 
-- Includes animations for 4 shapes - cube, pyramid, square and triangle
-- Allows interactivity with the 3D graph to change the view of the animation 
-- Displays the matrix associated with each linear transform 
-- Accepts 2 x 2 and 3 x 3 matrices with support for math expression inputs such as sin(45deg) and sqrt(2)/2 
-- Displays the determinant, eigenvalues and corresponding eigenvectors of the input matrix, using MathJax 
-- Has both dark mode and light mode options 
-- Shows an outline of the initial shape showing a visual comparison between the starting and end result 
-- Implements form validation checks to ensure an input matrix is valid 
-- Stores 3D transform data across various interactions 
-- Responsive to various devices 
+- Decomposes 2×2 and 3×3 matrices into sequences of recognizable transformations, including rotations, scaling, reflections, shears, and projections
+- Animates each transformation in sequence on a square, triangle, cube, or pyramid while retaining an outline of the original shape for comparison
+- Includes curated examples demonstrating common 2D and 3D transformations
+- Accepts mathematical expressions such as `sin(45deg)` and `sqrt(2)/2`
+- Displays the determinant, eigenvalues, and eigenvectors of the input matrix
+- Reveals the matrix associated with each step in the transformation sequence
+- Provides animation speed controls and pause/resume functionality
+- Supports shareable links that preserve the selected shape and matrix
+- Supports mouse, touch, and pen interaction for changing the 3D viewing angle
+- Preserves independent visualization state when switching between 2D and 3D modes
+- Includes responsive phone, tablet, and desktop layouts
+- Supports light and dark themes and reduced-motion preferences
 
 ## Documentation
 You can access TypeDoc documentation for the project [here](https://maahirjain.github.io/matrix-viz/docs/).
@@ -79,5 +78,4 @@ If $\det(Q) = -1$, we can decompose $Q = (QR)R$ where
   \end{bmatrix}
 ```
 which represents a reflection with respect to the $XY$-plane. We have $(QR)^T = R^TQ^T = R^{-1}Q^{-1} = (QR)^{-1}$ and $\det(QR) = \det(Q)\det(R) = -1 \cdot -1 = 1$. Hence, $QR$ represents a proper rotation and can be decomposed as above.
-
 
