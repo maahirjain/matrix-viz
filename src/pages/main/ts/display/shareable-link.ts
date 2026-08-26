@@ -100,8 +100,6 @@ export class ShareableLink {
 
     this.popover.hidden = false;
     this.trigger.setAttribute("aria-expanded", "true");
-    this.output.focus();
-    this.output.select();
   }
 
   private static close(returnFocus = false): void {
@@ -111,15 +109,18 @@ export class ShareableLink {
   }
 
   private static async copy(): Promise<void> {
-    this.output.select();
     try {
       if (navigator.clipboard !== undefined) {
         await navigator.clipboard.writeText(this.output.value);
-      } else if (!document.execCommand("copy")) {
-        throw new Error("Copy command unavailable");
+      } else {
+        this.output.select();
+        if (!document.execCommand("copy")) {
+          throw new Error("Copy command unavailable");
+        }
       }
       this.status.textContent = "Link copied.";
     } catch {
+      this.output.select();
       this.status.textContent = "Select and copy the link manually.";
     }
   }

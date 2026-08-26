@@ -296,6 +296,7 @@ button:disabled {
     background-color: white;
     color: black;
     border-radius: 4px;
+    font-size: 1rem;
 }
 
 #header-actions #share-copy-btn {
@@ -472,13 +473,16 @@ button:disabled {
 .intro-result::before {
     grid-area: 1 / 1;
     content: "";
-    opacity: 0.25;
 }
 
 .intro-result span {
     grid-area: 1 / 1;
     z-index: 1;
     background-color: rgba(0, 70, 173, 0.6);
+}
+
+.dark-theme .intro-result span {
+    background-color: rgba(200, 177, 94, 0.85);
 }
 
 .intro-rotation span {
@@ -565,7 +569,7 @@ button:disabled {
     }
 
     .intro-stage {
-        height: 76px;
+        height: 92px;
     }
 
     .intro-matrix {
@@ -583,14 +587,14 @@ button:disabled {
     }
 
     .intro-result {
-        width: 52px;
-        height: 52px;
+        width: 68px;
+        height: 68px;
     }
 
     .intro-result span,
     .intro-result::before {
-        width: 20px;
-        height: 20px;
+        width: 32px;
+        height: 32px;
     }
 }
 
@@ -1326,6 +1330,15 @@ button {
         padding-right: 14px;
         padding-left: 14px;
     }
+
+    #share-popover {
+        position: fixed;
+        top: 96px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        transform: none;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1344,8 +1357,7 @@ button {
         font-size: 0;
     }
 
-    #examples-popover,
-    #share-popover {
+    #examples-popover {
         position: fixed;
         top: 96px;
         right: 12px;
