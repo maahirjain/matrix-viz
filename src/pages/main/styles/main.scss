@@ -485,11 +485,11 @@ button:disabled {
     background-color: rgba(200, 177, 94, 0.85);
 }
 
-.intro-rotation span {
+.intro-animations-active .intro-rotation span {
     animation: intro-rotate 2s ease-in-out infinite alternate;
 }
 
-.intro-scale > span {
+.intro-animations-active .intro-scale > span {
     animation: intro-scale 2s ease-in-out infinite alternate;
 }
 
@@ -523,12 +523,12 @@ button:disabled {
         transform: none;
     }
 
-    .intro-rotation span {
+    .intro-animations-active .intro-rotation span {
         animation: none;
         transform: rotate(-45deg);
     }
 
-    .intro-scale > span {
+    .intro-animations-active .intro-scale > span {
         animation: none;
         transform: scaleX(2) rotate(-45deg);
     }

@@ -40,6 +40,9 @@ export class Introduction {
         ? document.activeElement
         : null;
     overlay.hidden = false;
+    overlay.classList.remove("intro-animations-active");
+    void overlay.offsetWidth;
+    overlay.classList.add("intro-animations-active");
     dialog.scrollTop = 0;
     const focusTarget =
       dialog.scrollHeight > dialog.clientHeight
@@ -49,7 +52,9 @@ export class Introduction {
   }
 
   private static dismiss(): void {
-    document.getElementById("intro-overlay")!.hidden = true;
+    const overlay = document.getElementById("intro-overlay")!;
+    overlay.classList.remove("intro-animations-active");
+    overlay.hidden = true;
     this.saveDismissal();
     this.previousFocus?.focus();
     this.previousFocus = null;
