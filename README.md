@@ -2,8 +2,8 @@
 
 A linear algebra tool that identifies linear transformations associated with any 3 x 3 or 2 x 2 matrix, and creates an interactive animation displaying the transformations.
 
-## [Live Preview](https://maahirjain.github.io/matrix-viz/)
-Visit at [maahirjain.github.io/matrix-viz](https://maahirjain.github.io/matrix-viz/).
+## [Live Preview](https://matrixviz.com/)
+Visit at [matrixviz.com](https://matrixviz.com/).
 
 ![Dark mode screenshot](./screenshot_dark_mode.png)
 ![Light mode screenshot](./screenshot_light_mode.png)
